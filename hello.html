@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>|Hello|</title>
+</head>
+
+<body>
+  <svg id="chart" width="600" height="200"></svg>
+  <script src="d3.v7.min.js"></script>
+  <script>
+
+    const array = [100, 200, 300, 350, 375, 400, 500];
+    // d3.select("#chart").selectAll("circle").data([100]).enter().append("circle").attr("r", 10).attr("cx", 100).attr("cy", d => d);
+    d3.select("#chart").selectAll("circle").data(array).enter().append("circle").attr("r", 10).attr("cy", 100).attr("cx", d => d);
+
+    // setTimeout(function () {
+    //   d3.select("#chart").selectAll("circle")
+    //     .data([50, 75, 125, 225, 325, 425, 450])
+    //     .attr("r", 5)
+    //     .attr("cx", d => d)
+    //     .style("fill", "red")
+    // }, 2000);
+  </script>
+</body>
+
+</html>
