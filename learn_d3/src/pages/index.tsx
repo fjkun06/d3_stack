@@ -1,11 +1,136 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import * as d3 from "d3";
+import { useEffect, useMemo } from "react";
 
 export default function Home() {
+  const planets = [
+    { name: "Mercury", avg: 0.387, min: 0.31, max: 0.47 },
+    { name: "Venus", avg: 0.723, min: 0.72, max: 0.73 },
+    { name: "Earth", avg: 1, min: 0.98, max: 1.02 },
+    { name: "Mars", avg: 1.52, min: 1.38, max: 1.67 },
+    { name: "Jupiter", avg: 5.2, min: 2.55, max: 3.0 },
+    { name: "Saturn", avg: 9.54, min: 4.95, max: 5.46 },
+    { name: "Uranus", avg: 19.2, min: 9.05, max: 10.12 },
+    { name: "Neptune", avg: 30.1, min: 18.3, max: 20.1 },
+    { name: "Ceres", avg: 2.765, min: 29.66, max: 30.44 },
+    { name: "Pluto", avg: 39.481, min: 29.77, max: 49.3 },
+    { name: "Eris", avg: 67.67, min: 34.48, max: 51.52 },
+    { name: "Haumea", avg: 43, min: 37.77, max: 52.77 },
+    { name: "Makemake", avg: 45.346, min: 37.92, max: 97.56 },
+  ];
+  planets.sort((a, b) => d3.ascending(a.avg, b.avg));
+
+  // const numberplanets = planets.map(d => d.avg)
+  // console.log(numberplanets)
+  // const max = d3.max(numberplanets) as number
+
+  const barScale = d3.scaleLinear();
+  const colorScale = d3
+    .scaleLinear()
+    .domain([0, d3.max(planets, (d) => d.avg) as number])
+    .range([0, 1]);
+  //setting up domain
+  // barScale.domain([0, max]);
+  // barScale.domain([0, d3.max(numberplanets) as number]);
+  barScale.domain([0, d3.max(planets, (d) => d.avg) as number]);
+  //setting up range
+  barScale.range([0, 600]);
+  const format = d3.format(".2f");
+
+  // console.log(d3.color("orange")?.darker(0.5).formatRgb());
+
+  //  d3 html chart useeffect
+  useEffect(() => {
+    if (document.getElementsByClassName("bar-chart").length === 0) {
+      // creating chart
+      const chart = d3
+        .select("body")
+        .append("div")
+        .attr("class", "bar-chart") // container div for
+        // the chart
+        .style("height", () => `${planets.length * 21}px`); // set chart
+
+      //creating child div entries
+      const entries = chart
+        .selectAll("div")
+        .data(planets) // binds dat
+        .enter()
+        .append("div") // appends a div for each data element
+        .attr("class", "entry") // these divs are the bars of
+        // the chart
+        .style("top", (d, i) => `${i * 21}px`); // stacks bars
+
+      //creating 3 divs in child
+      //label
+      entries
+        .append("div")
+        .attr("class", "label category")
+        .text((d) => d.name);
+      //bar
+      entries
+        .append("div")
+        .attr("class", "bar")
+        .style("width", (d) => `${barScale(d.avg)}px`)
+        //coloring bars based on value //avg
+        .style("background-color", (d) => `${d3.color("orange")?.darker(colorScale(d.avg)).formatRgb()}`);
+      //value
+      entries
+        .append("div")
+        .attr("class", "label value")
+        .style("left", (d) => `${barScale(d.avg) + 100}px`)
+        .text((d) => `${d.avg} AU`);
+    }
+  });
+  //  d3 svg chart useeffect
+  useEffect(() => {
+    if (document.getElementsByClassName("svg_bar-chart").length === 1) {
+      // creating chart
+      const chart = d3
+        .select("svg")
+        .insert("svg",'form')
+        .attr("class", "svg_bar-chart") // container div for
+        // the chart
+        .style("height", () => `${planets.length * 21}px`); // set chart
+
+      //creating child div entries
+      const entries = chart
+        .selectAll("svg")
+        .data(planets) // binds dat
+        .enter()
+        .append("g") // appends a div for each data element
+        .attr("class", "svg_entry") // these divs are the bars of
+        // the chart
+        .attr("transform", (d, i) => `translate(0,${i * 21})`); // stacks bars
+
+      //creating 3 divs in child
+      //label
+      entries
+        .append("text")
+        .attr("class", "label category")
+        .text((d) => d.name)
+        .attr("text-anchor", "end")
+        .attr("transform", "translate(85,15)");
+
+      //bar
+      entries
+        .append("rect")
+        .attr("class", "bar")
+        .attr("width", (d) => `${barScale(d.avg)}px`)
+        .attr("transform", "translate(100,0)")
+        //coloring bars based on value //avg
+        .style("fill", (d) => `${d3.color("orange")?.darker(colorScale(d.avg)).formatRgb()}`);
+      //value
+      entries
+        .append("text")
+        .attr("class", "label value")
+        .attr("transform", (d) => `translate(${barScale(d.avg) + 105},15)`)
+        .text((d) => d.avg + " AU");
+    }
+  });
+
   return (
     <>
       <Head>
@@ -14,110 +139,22 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+      <>
+        <h1>
+          <span id="chart">Average</span> distance from the Sun
+        </h1>
+        <form>
+          <button type="button" id="avg">
+            Average
+          </button>
+          <button type="button" id="max">
+            Maximum
+          </button>
+          <button type="button" id="min">
+            Minimum
+          </button>
+        </form>
+      </>
     </>
-  )
+  );
 }
