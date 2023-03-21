@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binding</title>
+</head>
+
+<body>
+  <!-- <div id="section">
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+  </div> -->
+
+  <script src="d3.v7.min.js"></script>
+  <script>
+    const numbers = [6, 2, 5, 7, 9];
+    // const selection = d3.select("#section").selectAll("p").data(numbers).text(d => d);
+    // const newSelection = selection.enter().append("p").text(d => d)
+    // selection.text(d => d)
+    d3.select("body") // select the body element
+      .append("div") // append a div element inside <body>
+      .selectAll("p") // select all <p> elements (there are none)
+      .data(numbers) // load the data from the numbers array
+      .enter() // bind the data to enter array with
+      // 5 placeholders
+      .append("p") // create 5 new <p> elements and add to end of
+      // <div>
+      .text(d => d); // set the contents of the new paragraphs
+
+
+    d3.select("body") // select the body element
+      .append("ul") // append an <ul> element inside <body>
+      .selectAll("li") // select all <li> elements (there are none)
+      .data(numbers) // load the data from the numbers array
+      .enter() // create an enter array with 5 objects
+      .append("li") // create 5 new <li> elements and append to <ul>
+      .text(function (d, i) {
+        return "Item " + (i + 1) + ": " + d;
+      })
+      .style("font-size", function (d, i) {
+        return ((i + 2) * 5) + "pt";
+      });
+
+    const distances = [
+      { name: "Mercury", distance: 0.387 },
+      { name: "Venus", distance: 0.723 },
+      { name: "Earth", distance: 1 },
+      { name: "Mars", distance: 1.52 },
+      { name: "Jupiter", distance: 5.2 },
+      { name: "Saturn", distance: 9.54 },
+      { name: "Uranus", distance: 19.2 },
+      { name: "Neptune", distance: 30.1 },
+      { name: "Ceres", distance: 2.765 },
+      { name: "Pluto", distance: 39.481 },
+      { name: "Eris", distance: 67.67 },
+      { name: "Haumea", distance: 43 },
+      { name: "Makemake", distance: 45.346 }
+    ];
+
+    d3.select("body") // select the body element
+      .append("ul") // append an <ul> element inside <body>
+      .selectAll("li") // select all <li> elements (there are none)
+      .data(distances) // load the data from the numbers array
+      .join("li")
+      // .enter() // bind the data to enter array with 5 placeholders
+      // .append("li") // create <li> from enter selection and append to < ul >
+      .text(function ({ name, distance }, i) {
+        return name + ": " + distance;
+      });
+  </script>
+</body>
+
+</html>
