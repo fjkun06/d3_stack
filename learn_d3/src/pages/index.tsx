@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import * as d3 from "d3";
 import { useEffect, useMemo } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const planets = [
@@ -166,13 +167,14 @@ export default function Home() {
       svg
         .selectAll("g")
         .data(planets)
-        .join("g")
+        .enter()
+        .append("g")
         .attr("class", "entry")
         .attr("transform", (d, i) => `translate(0,${i * 21})`)
         .each(function (d: any) {
           const entry = d3.select(this);
 
-          entry.append("text").attr("class", "label category").attr("y", 15).attr("x", 90).attr("text-anchor", "end").text(d.name);
+          entry.append("text").attr("class", "category").attr("y", 15).attr("x", 90).attr("text-anchor", "end").text(d.name);
           entry
             .append("rect")
             .attr("class", "bar")
@@ -182,15 +184,45 @@ export default function Home() {
             .style("fill", `${d3.color(chart.current.color)?.darker(colorScale(d[chart.current.key])).formatRgb()}`);
           entry
             .append("text")
-            .attr("class", "label value")
+            .attr("class", "value")
             .attr("y", 15)
             .attr("x", `${barScale(d[chart.current.key]) + 105}`)
             .text(`${format(d[chart.current.key])} AU`);
         });
     }
 
+    function draw() {
+      setupView();
+      console.log("current key: ", chart.current.key);
+
+      svg
+        .selectAll("g.entry")
+        .data(planets)
+        .each(function (d: any,i) {
+          d3.select(this).selectAll(".category").text(d.name);
+          d3.select(this)
+            .selectAll(".bar").transition().duration(1000).delay(50 * i) 
+            .attr("width", barScale(d[chart.current.key]))
+            .style("fill", `${d3.color(chart.current.color)?.darker(colorScale(d[chart.current.key])).formatRgb()}`);
+          d3.select(this)
+            .select(".value").transition().duration(1000).delay(50 * i) 
+            .attr("x", barScale(d[chart.current.key]) + 105)
+            .text(`${format(d[chart.current.key])} AU`);
+        });
+    }
+
+    d3.selectAll("button").on("click", (e) => {
+      chart.current = charts.filter((c) => c.key === e.target.id)[0];
+      console.dir(chart.current);
+      if (document.getElementsByClassName("svg_bar-chart").length === 1) {
+        draw();
+      }
+    });
+
     //start everything
-    init();
+    if (document.getElementsByClassName("svg_bar-chart").length === 1) {
+      init();
+    }
   });
 
   return (
@@ -216,7 +248,8 @@ export default function Home() {
           <button type="button" id="min">
             Minimum
           </button>
-        </form>
+        </form><br/>
+        <Link href={"/worldmap"}>World Map</Link>
       </>
     </>
   );
