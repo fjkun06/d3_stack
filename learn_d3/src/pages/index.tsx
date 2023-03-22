@@ -23,112 +23,174 @@ export default function Home() {
   ];
   planets.sort((a, b) => d3.ascending(a.avg, b.avg));
 
-  // const numberplanets = planets.map(d => d.avg)
-  // console.log(numberplanets)
-  // const max = d3.max(numberplanets) as number
+  const charts = [
+    { key: "avg", title: "Average", color: "orange" },
+    { key: "max", title: "Maximum", color: "blue" },
+    { key: "min", title: "Minimum", color: "red" },
+  ];
 
-  const barScale = d3.scaleLinear();
-  const colorScale = d3
-    .scaleLinear()
-    .domain([0, d3.max(planets, (d) => d.avg) as number])
-    .range([0, 1]);
-  //setting up domain
-  // barScale.domain([0, max]);
-  // barScale.domain([0, d3.max(numberplanets) as number]);
-  barScale.domain([0, d3.max(planets, (d) => d.avg) as number]);
-  //setting up range
-  barScale.range([0, 600]);
-  const format = d3.format(".2f");
-
-  // console.log(d3.color("orange")?.darker(0.5).formatRgb());
+  const chart = {
+    width: 800,
+    height: 0, // the height is set after data is loaded
+    current: charts[0], // chart to display first
+  };
 
   //  d3 html chart useeffect
-  useEffect(() => {
-    if (document.getElementsByClassName("bar-chart").length === 0) {
-      // creating chart
-      const chart = d3
-        .select("body")
-        .append("div")
-        .attr("class", "bar-chart") // container div for
-        // the chart
-        .style("height", () => `${planets.length * 21}px`); // set chart
+  // useEffect(() => {
+  //   if (document.getElementsByClassName("bar-chart").length !== 0) {
+  //     // creating chart
+  //     const chart = d3
+  //       .select("body")
+  //       .append("div")
+  //       .attr("class", "bar-chart") // container div for
+  //       // the chart
+  //       .style("height", () => `${planets.length * 21}px`); // set chart
 
-      //creating child div entries
-      const entries = chart
-        .selectAll("div")
-        .data(planets) // binds dat
-        .enter()
-        .append("div") // appends a div for each data element
-        .attr("class", "entry") // these divs are the bars of
-        // the chart
-        .style("top", (d, i) => `${i * 21}px`); // stacks bars
+  //     //creating child div entries
+  //     const entries = chart
+  //       .selectAll("div")
+  //       .data(planets) // binds dat
+  //       .enter()
+  //       .append("div") // appends a div for each data element
+  //       .attr("class", "entry") // these divs are the bars of
+  //       // the chart
+  //       .style("top", (d, i) => `${i * 21}px`); // stacks bars
 
-      //creating 3 divs in child
-      //label
-      entries
-        .append("div")
-        .attr("class", "label category")
-        .text((d) => d.name);
-      //bar
-      entries
-        .append("div")
-        .attr("class", "bar")
-        .style("width", (d) => `${barScale(d.avg)}px`)
-        //coloring bars based on value //avg
-        .style("background-color", (d) => `${d3.color("orange")?.darker(colorScale(d.avg)).formatRgb()}`);
-      //value
-      entries
-        .append("div")
-        .attr("class", "label value")
-        .style("left", (d) => `${barScale(d.avg) + 100}px`)
-        .text((d) => `${d.avg} AU`);
-    }
-  });
+  //     //creating 3 divs in child
+  //     //label
+  //     entries
+  //       .append("div")
+  //       .attr("class", "label category")
+  //       .text((d) => d.name);
+  //     //bar
+  //     entries
+  //       .append("div")
+  //       .attr("class", "bar")
+  //       .style("width", (d) => `${barScale(d.avg)}px`)
+  //       //coloring bars based on value //avg
+  //       .style("background-color", (d) => `${d3.color("orange")?.darker(colorScale(d.avg)).formatRgb()}`);
+
+  //     //value
+  //     entries
+  //       .append("div")
+  //       .attr("class", "label value")
+  //       .style("left", (d) => `${barScale(d.avg) + 100}px`)
+  //       .text((d) => `${d.avg} AU`);
+  //   }
+  // });
   //  d3 svg chart useeffect
+  // useEffect(() => {
+  //   if (document.getElementsByClassName("svg_bar-chart").length === 1) {
+  //     // creating chart
+  //     const chart = d3
+  //       .select("svg")
+  //       // the chart
+  //       .style("height", () => `${planets.length * 21}px`); // set chart
+
+  //     //creating child div entries
+  //     const entries = chart
+  //       .selectAll("svg")
+  //       .data(planets) // binds dat
+  //       .enter()
+  //       .append("g") // appends a div for each data element
+  //       .attr("class", "svg_entry") // these divs are the bars of
+  //       // the chart
+  //       .attr("transform", (d, i) => `translate(0,${i * 21})`); // stacks bars
+
+  //     //creating 3 divs in child
+  //     //label
+  //     entries
+  //       .append("text")
+  //       .attr("class", "label category")
+  //       .text((d) => d.name)
+  //       .attr("text-anchor", "end")
+  //       .attr("transform", "translate(85,15)");
+
+  //     //bar
+  //     entries
+  //       .append("rect")
+  //       .attr("class", "bar")
+  //       .attr("width", (d) => `${barScale(d.avg)}px`)
+  //       .attr("transform", "translate(100,0)")
+  //       //coloring bars based on value //avg
+  //       .style("fill", (d) => `${d3.color("orange")?.darker(colorScale(d.avg)).formatRgb()}`);
+  //     //value
+  //     entries
+  //       .append("text")
+  //       .attr("class", "label value")
+  //       .attr("transform", (d) => `translate(${barScale(d.avg) + 105},15)`)
+  //       .text((d) => d.avg + " AU");
+  //   }
+  // });
+
+  //dnamic useeffect
   useEffect(() => {
-    if (document.getElementsByClassName("svg_bar-chart").length === 1) {
-      // creating chart
-      const chart = d3
-        .select("svg")
-        .insert("svg",'form')
-        .attr("class", "svg_bar-chart") // container div for
-        // the chart
-        .style("height", () => `${planets.length * 21}px`); // set chart
+    //scaling
+    const barScale = d3.scaleLinear();
+    const colorScale = d3
+      .scaleLinear()
+      .domain([0, d3.max(planets, (d) => d.avg) as number])
+      .range([0, 1]);
 
-      //creating child div entries
-      const entries = chart
-        .selectAll("svg")
-        .data(planets) // binds dat
-        .enter()
-        .append("g") // appends a div for each data element
-        .attr("class", "svg_entry") // these divs are the bars of
-        // the chart
-        .attr("transform", (d, i) => `translate(0,${i * 21})`); // stacks bars
+    barScale.domain([0, d3.max(planets, (d) => d.avg) as number]);
+    //setting up range
+    barScale.range([0, 600]);
+    const format = d3.format(".2f");
 
-      //creating 3 divs in child
-      //label
-      entries
-        .append("text")
-        .attr("class", "label category")
-        .text((d) => d.name)
-        .attr("text-anchor", "end")
-        .attr("transform", "translate(85,15)");
+    const svg = d3.select(".svg_bar-chart");
+    //setup view fxn
+    function setupView() {
+      //disable all buttons
+      d3.selectAll("button").property("disabled", false);
+      //enable unselected buttons
+      d3.select(`#${chart.current.key}`).property("disabled", true);
 
-      //bar
-      entries
-        .append("rect")
-        .attr("class", "bar")
-        .attr("width", (d) => `${barScale(d.avg)}px`)
-        .attr("transform", "translate(100,0)")
-        //coloring bars based on value //avg
-        .style("fill", (d) => `${d3.color("orange")?.darker(colorScale(d.avg)).formatRgb()}`);
-      //value
-      entries
-        .append("text")
-        .attr("class", "label value")
-        .attr("transform", (d) => `translate(${barScale(d.avg) + 105},15)`)
-        .text((d) => d.avg + " AU");
+      //update page title
+      d3.select("#chart").text(chart.current.title);
+
+      //sort palnets
+      planets.sort((a: any, b: any) => d3.ascending(a[chart.current.key], b[chart.current.key]));
+
+      //update scale domain with current data
+      const maxValue = d3.max(planets, (d: any) => d[chart.current.key]);
+      barScale.domain([0, maxValue]);
+      colorScale.domain([0, maxValue]);
     }
+
+    function init() {
+      chart.height = planets.length * 21;
+      svg.attr("height", chart.height).attr("width", chart.width);
+
+      setupView();
+
+      svg
+        .selectAll("g")
+        .data(planets)
+        .join("g")
+        .attr("class", "entry")
+        .attr("transform", (d, i) => `translate(0,${i * 21})`)
+        .each(function (d: any) {
+          const entry = d3.select(this);
+
+          entry.append("text").attr("class", "label category").attr("y", 15).attr("x", 90).attr("text-anchor", "end").text(d.name);
+          entry
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", 100)
+            .attr("height", 20)
+            .attr("width", barScale(d[chart.current.key]))
+            .style("fill", `${d3.color(chart.current.color)?.darker(colorScale(d[chart.current.key])).formatRgb()}`);
+          entry
+            .append("text")
+            .attr("class", "label value")
+            .attr("y", 15)
+            .attr("x", `${barScale(d[chart.current.key]) + 105}`)
+            .text(`${format(d[chart.current.key])} AU`);
+        });
+    }
+
+    //start everything
+    init();
   });
 
   return (
@@ -143,6 +205,7 @@ export default function Home() {
         <h1>
           <span id="chart">Average</span> distance from the Sun
         </h1>
+        <svg className="svg_bar-chart"></svg>
         <form>
           <button type="button" id="avg">
             Average
