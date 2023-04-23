@@ -7,20 +7,8 @@
         stroke-miterlimit: 10;
         stroke-width: 4px;
       }
-
-      <!-- .cls-1 {
-        stroke: url(#White_Black);
-      }
-
-      .cls-2 {
-        stroke: url(#White_Black-2);
-      } -->
     </style>
-    <linearGradient id="White_Black" x1="93.19" y1="37.4" x2="119.03" y2="37.4" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2D3436" />
-      <stop offset="1" stop-color="#494d5f" />
-    </linearGradient>
-    <linearGradient id="White_Black-2" x1="0" y1="95.54" x2="203.08" y2="95.54" xlink:href="#White_Black" />
+
   </defs>
   <g id="Layer_2" data-name="Layer 2">
     <g id="Layer_1-2" data-name="Layer 1">
