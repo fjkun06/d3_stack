@@ -17,18 +17,17 @@
     opacity: 0;
   }
 }
-.fadeout {
-  animation: fadeout 0.25s ease-out 4.74s 1 forwards;
-}
-
 main {
-  background-color: #000;
+  background-color: #d5b8b8;
   width: 100vw;
   height: 100vh;
   display: grid;
   place-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
   /***************************************Loader Section******************************/
+}
+main #body {
+  display: none;
 }
 main section {
   width: 100vw;
@@ -36,9 +35,9 @@ main section {
   display: grid;
   place-items: center;
   background-color: #1b2845;
-  background-color: #2D3436;
+  background-color: #2d3436;
   background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
-  background-image: linear-gradient(315deg, #2D3436 0%, #494d5f 74%);
+  background-image: linear-gradient(315deg, #2d3436 0%, #494d5f 74%);
 }
 main section div {
   display: flex;
@@ -46,9 +45,52 @@ main section div {
   place-items: center;
   flex-direction: column;
 }
+main section div div {
+  margin-bottom: 30px;
+}
+main section div div img {
+  width: 250px;
+}
+@media only screen and (width <= 850px) {
+  main section div div img {
+    width: 180px;
+  }
+}
+@media only screen and (width <= 750px) {
+  main section div div img {
+    width: 150px;
+  }
+}
+@media only screen and (width <= 550px) {
+  main section div div img {
+    width: 120px;
+  }
+}
+@media only screen and (width <= 480px) {
+  main section div div img {
+    width: 90px;
+  }
+}
 main section div p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 40px;
+  width: 100%;
+  text-align: center;
+}
+@media only screen and (width <= 750px) {
+  main section div p {
+    font-size: 30px;
+  }
+}
+@media only screen and (width <= 550px) {
+  main section div p {
+    font-size: 25px;
+  }
+}
+@media only screen and (width <= 480px) {
+  main section div p {
+    font-size: 18px;
+  }
 }
 main section div .loader2 {
   width: 200px;
@@ -58,6 +100,21 @@ main section div .loader2 {
   gap: 5px;
   place-items: center;
   padding-inline: 50px;
+}
+@media only screen and (width <= 750px) {
+  main section div .loader2 {
+    transform: scale(0.85);
+  }
+}
+@media only screen and (width <= 550px) {
+  main section div .loader2 {
+    transform: scale(0.75);
+  }
+}
+@media only screen and (width <= 480px) {
+  main section div .loader2 {
+    transform: scale(0.65);
+  }
 }
 main section div .loader2 span {
   width: 10px;
