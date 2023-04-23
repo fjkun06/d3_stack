@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>|Hello|</title>
+  <title>Hello</title>
 </head>
 
 <body>
@@ -15,13 +15,24 @@
     <p>Paragraph 2</p>
   </div>
   <p>Paragraph 3</p>
+  <div aria-busy="true" aria-describedby="progress-bar">
+    <!-- content is for this region is loading -->
+  </div>
+
+  <!-- ... -->
+
+  <progress id="progress-bar" aria-label="Content loading…"></progress>
+
   <script src="d3.v7.min.js"></script>
   <script>
 
-    // const div = d3.select("#section"); // selects element with the
+    //TODO: const div = d3.select("#section"); // selects element with the
     // // "section" ID
-    // const domDiv = div.node(); // converts the object into a
-    // DOM node
+    // TODO const domDiv = div.node(); // converts the object into a
+    // * DOM node
+    // ? DOM node
+    // ! DOM node
+    // ! DOM node
     const firstP = d3.select("p"); // selects the first <p>
     // in the page
     const allParagraphs = d3.selectAll("p"); // selects all four <p> nodes

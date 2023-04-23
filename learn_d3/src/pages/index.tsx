@@ -1,9 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import * as d3 from "d3";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 
 export default function Home() {
@@ -198,14 +195,20 @@ export default function Home() {
       svg
         .selectAll("g.entry")
         .data(planets)
-        .each(function (d: any,i) {
+        .each(function (d: any, i) {
           d3.select(this).selectAll(".category").text(d.name);
           d3.select(this)
-            .selectAll(".bar").transition().duration(1000).delay(50 * i) 
+            .selectAll(".bar")
+            .transition()
+            .duration(1000)
+            .delay(50 * i)
             .attr("width", barScale(d[chart.current.key]))
             .style("fill", `${d3.color(chart.current.color)?.darker(colorScale(d[chart.current.key])).formatRgb()}`);
           d3.select(this)
-            .select(".value").transition().duration(1000).delay(50 * i) 
+            .select(".value")
+            .transition()
+            .duration(1000)
+            .delay(50 * i)
             .attr("x", barScale(d[chart.current.key]) + 105)
             .text(`${format(d[chart.current.key])} AU`);
         });
@@ -224,6 +227,9 @@ export default function Home() {
       init();
     }
   });
+
+  const uri = "https://mozilla.org/?google chrome";
+  const encoded = encodeURI(uri);
 
   return (
     <>
@@ -248,8 +254,13 @@ export default function Home() {
           <button type="button" id="min">
             Minimum
           </button>
-        </form><br/>
+        </form>
+        <br />
         <Link href={"/worldmap"}>World Map</Link>
+        <br />
+        <span>
+          <a href={`https://wa.me/237675416098?text=${encoded}`}>Open WhatsApp</a>
+        </span>
       </>
     </>
   );

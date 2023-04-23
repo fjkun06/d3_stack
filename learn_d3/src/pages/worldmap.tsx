@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import * as d3 from "d3";
+import { NextPage } from "next";
 export async function getStaticProps() {
   const data = await fetch("http://localhost:3000/api/test/").then((res) => res.json());
   return {
@@ -15,27 +16,28 @@ interface Datum {
     test: string;
   };
 }
-
-const WorldMap = ({ data }: Datum) => {
-  interface Country {
+interface Country {
+  name: string;
+  id: string;
+}
+interface Feature {
+  type: string;
+  id: string;
+  properties: {
     name: string;
-    id: string;
-  }
-  interface Feature {
+  };
+  geometry: {
     type: string;
-    id: string;
-    properties: {
-      name: string;
-    };
-    geometry: {
-      type: string;
-      coordinates: [];
-    };
-  }
-  interface Data {
-    type: string;
-    features: Feature[];
-  }
+    coordinates: [];
+  };
+}
+interface Data {
+  type: string;
+  features: Feature[];
+}
+
+const WorldMap:NextPage<Datum> = ({ data }) => {
+
 
   React.useEffect(() => {
     console.log("data: ", data?.test);
