@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/***************************************Animation Section******************************/
 @keyframes loader2 {
   0%, 50%, 85%, 100% {
     transform: scale(1);
@@ -22,6 +23,8 @@
 }
 
 main {
+  background-color: #2d3436;
+  background-image: linear-gradient(315deg, #2d3436 0%, #494d5f 74%);
   background: url(../background.svg);
   background-position: center;
   background-size: cover;
@@ -30,10 +33,12 @@ main {
   display: grid;
   place-items: center;
   overflow: hidden;
+  /***************************************Abstract Section******************************/
   /***************************************Loader Section******************************/
+  /***************************************Content Section******************************/
 }
-main #body {
-  display: none;
+main p {
+  color: white;
 }
 main section {
   width: 100vw;
@@ -171,6 +176,46 @@ main section div .loader2 span:nth-child(8) {
 main p {
   color: white;
 }
-main p {
-  color: white;
+main #body {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  display: none;
+  width: inherit;
+  height: inherit;
+  /***************************************Navbar Section******************************/
+}
+main #body nav {
+  align-self: flex-start;
+  width: inherit;
+  height: 100px;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  gap: 20px;
+  padding-inline: 50px;
+}
+main #body nav img {
+  width: 70px;
+}
+main #body nav p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+  font-size: 30px;
+  text-align: center;
+}
+@media only screen and (width <= 750px) {
+  main #body nav p {
+    font-size: 30px;
+  }
+}
+@media only screen and (width <= 550px) {
+  main #body nav p {
+    font-size: 25px;
+  }
+}
+@media only screen and (width <= 480px) {
+  main #body nav p {
+    font-size: 18px;
+  }
 }/*# sourceMappingURL=main.css.map */

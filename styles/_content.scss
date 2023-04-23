@@ -1,0 +1,35 @@
+@use "mixins";
+@mixin body {
+  #body {
+    @include mixins.flex;
+    display: none;
+    @include mixins.size(inherit);
+    /***************************************Navbar Section******************************/
+    nav {
+      align-self: flex-start;
+      @include mixins.size(inherit, 100px);
+      border: 1px solid red;
+      @include mixins.flex;
+      gap: 20px;
+      padding-inline: 50px;
+      img {
+        width: 70px;
+      }
+      p {
+        font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+        font-size: 30px;
+        // width: 100%;
+        text-align: center;
+        @media only screen and (width <= 750px) {
+          font-size: 30px;
+        }
+        @media only screen and (width <= 550px) {
+          font-size: 25px;
+        }
+        @media only screen and (width <= 480px) {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
