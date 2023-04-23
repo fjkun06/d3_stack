@@ -189,33 +189,48 @@ main #body nav {
   align-self: flex-start;
   width: inherit;
   height: 100px;
-  border: 1px solid red;
+  box-shadow: 0 0 20px #2d3436;
   display: flex;
   flex-direction: row;
   place-items: center;
   gap: 20px;
   padding-inline: 50px;
 }
+@media only screen and (width <= 750px) {
+  main #body nav {
+    padding-inline: 40px;
+  }
+}
+@media only screen and (width <= 550px) {
+  main #body nav {
+    padding-inline: 30px;
+  }
+}
+@media only screen and (width <= 480px) {
+  main #body nav {
+    padding-inline: 20px;
+  }
+}
 main #body nav img {
   width: 70px;
 }
 main #body nav p {
-  font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+  font-family: Poppins, Verdana, Geneva, Tahoma, sans-serif, sans-serif;
   font-size: 30px;
   text-align: center;
 }
 @media only screen and (width <= 750px) {
   main #body nav p {
-    font-size: 30px;
+    font-size: 25px;
   }
 }
 @media only screen and (width <= 550px) {
   main #body nav p {
-    font-size: 25px;
+    font-size: 22px;
   }
 }
 @media only screen and (width <= 480px) {
   main #body nav p {
-    font-size: 18px;
+    font-size: 20px;
   }
 }/*# sourceMappingURL=main.css.map */

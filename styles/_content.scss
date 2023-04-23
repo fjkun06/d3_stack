@@ -8,26 +8,36 @@
     nav {
       align-self: flex-start;
       @include mixins.size(inherit, 100px);
-      border: 1px solid red;
+      box-shadow: 0 0 20px #2d3436;
+      // border: 1px solid red;
       @include mixins.flex;
       gap: 20px;
       padding-inline: 50px;
+      @media only screen and (width <= 750px) {
+        padding-inline: 40px;
+      }
+      @media only screen and (width <= 550px) {
+        padding-inline: 30px;
+      }
+      @media only screen and (width <= 480px) {
+        padding-inline: 20px;
+      }
       img {
         width: 70px;
       }
       p {
-        font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+        font-family: Poppins,Verdana, Geneva, Tahoma, sans-serif, sans-serif;
         font-size: 30px;
         // width: 100%;
         text-align: center;
         @media only screen and (width <= 750px) {
-          font-size: 30px;
-        }
-        @media only screen and (width <= 550px) {
           font-size: 25px;
         }
+        @media only screen and (width <= 550px) {
+          font-size: 22px;
+        }
         @media only screen and (width <= 480px) {
-          font-size: 18px;
+          font-size: 20px;
         }
       }
     }
