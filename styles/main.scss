@@ -3,6 +3,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+@keyframes loader2 {
+  0%,
+  50%,
+  85%,
+  100% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(2);
+  }
+}
+
 main {
   background-color: #000;
   width: 100vw;
@@ -10,13 +23,103 @@ main {
   display: grid;
   place-items: center;
   overflow-x: hidden;
-  p{
+  /***************************************Loader Section******************************/
+  section {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: #1b2845;
+    background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
+
+    // background-color: gold;
+    div {
+      display: flex;
+      gap: 5px;
+      place-items: center;
+      .loader2 {
+        width: 200px;
+        height: 150px;
+        // background-color: rgb(0, 255, 89);
+
+        display: flex;
+        gap: 5px;
+        place-items: center;
+        padding-inline: 50px;
+        span {
+          width: 10px;
+          height: 80px;
+          // position: absolute;
+          // top: 0;
+          display: inline-block;
+          border-radius: 15px;
+
+          &:nth-child(1) {
+            // left: 0;
+            background-color: white;
+            animation: loader2 2s ease infinite;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(2) {
+            // left: 25px;
+            background-color: white;
+            animation: loader2 2s ease infinite 0.15s;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(3) {
+            // left: 50px;
+            background-color: white;
+            animation: loader2 2s ease infinite 0.3s;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(4) {
+            // left: 75px;
+            background-color: white;
+            animation: loader2 2s ease infinite 0.45s;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(5) {
+            // left: 100px;
+            background-color: white;
+            animation: loader2 2s ease infinite 0.6s;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(6) {
+            // left: 125px;
+            background-color: white;
+            animation: loader2 2s ease infinite 0.75s;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(7) {
+            // left: 150px;
+            background-color: white;
+            animation: loader2 2s ease infinite 0.9s;
+            box-shadow: 0 0 20px #000;
+          }
+
+          &:nth-child(8) {
+            // left: 175px;
+            background-color: white;
+            animation: loader2 2s ease infinite 1.02s;
+            box-shadow: 0 0 20px #000;
+          }
+        }
+      }
+    }
+  }
+  p {
     color: white;
   }
 
   svg {
-    width: inherit;
-    height: inherit;
+    // width: inherit;
+    // height: inherit;
     // border: 1px solid gold;
     rect {
       // width: inherit;
