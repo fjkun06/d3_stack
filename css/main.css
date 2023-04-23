@@ -21,6 +21,8 @@ main {
   background-color: #d5b8b8;
   width: 100vw;
   height: 100vh;
+  width: 100vw;
+  height: 100vh;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -34,16 +36,15 @@ main section {
   height: 100vh;
   display: grid;
   place-items: center;
-  background-color: #1b2845;
   background-color: #2d3436;
   background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
   background-image: linear-gradient(315deg, #2d3436 0%, #494d5f 74%);
 }
 main section div {
-  display: flex;
   gap: 5px;
-  place-items: center;
+  display: flex;
   flex-direction: column;
+  place-items: center;
 }
 main section div div {
   margin-bottom: 30px;
@@ -95,10 +96,10 @@ main section div p {
 main section div .loader2 {
   width: 200px;
   height: 150px;
-  flex-direction: row;
   display: flex;
-  gap: 5px;
+  flex-direction: row;
   place-items: center;
+  gap: 5px;
   padding-inline: 50px;
 }
 @media only screen and (width <= 750px) {
@@ -119,12 +120,15 @@ main section div .loader2 {
 main section div .loader2 span {
   width: 10px;
   height: 60px;
+  width: 10px;
+  height: 60px;
   display: inline-block;
   border-radius: 15px;
+  border-radius: 4s;
 }
 main section div .loader2 span:nth-child(1) {
   background-color: white;
-  animation: loader2 2s ease infinite;
+  animation: loader2 2s ease infinite 0s;
   box-shadow: 0 0 20px #000;
 }
 main section div .loader2 span:nth-child(2) {
@@ -159,8 +163,11 @@ main section div .loader2 span:nth-child(7) {
 }
 main section div .loader2 span:nth-child(8) {
   background-color: white;
-  animation: loader2 2s ease infinite 1.02s;
+  animation: loader2 2s ease infinite 1.05s;
   box-shadow: 0 0 20px #000;
+}
+main p {
+  color: white;
 }
 main p {
   color: white;
