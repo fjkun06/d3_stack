@@ -4,9 +4,7 @@
   section {
     @include mixins.size(min(100vw, 100vw), 100vh);
     @include mixins.grid;
-    background-color: #2d3436;
-    background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
-    background-image: linear-gradient(315deg, #2d3436 0%, #494d5f 74%);
+    background: transparent;
 
     div {
       gap: 5px;
@@ -71,11 +69,11 @@
 
           $children: 1, 2, 3, 4, 5, 6, 7, 8;
           $i: 0.15;
-          
+
           //assigning each succssive span its delay time
           @each $child in $children {
             &:nth-child(#{$child}) {
-              @include mixins.styleloader(#{calc(calc($child - 1 ) * $i)}s);
+              @include mixins.styleloader(#{calc(calc($child - 1) * $i)}s);
             }
           }
         }
