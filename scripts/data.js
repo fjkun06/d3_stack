@@ -44,3 +44,28 @@ const editFilter = (val) => {
   console.log(`Filter value: ${val}`);
   heading.textContent = `Filter by Year:  ${val}`;
 };
+
+const bigSet = {};
+// creating sets automatically
+[...new Array(8).keys()].forEach((val, index) => {
+  bigSet[`set${index}`] = {
+    data: [
+      {
+        subject: "",
+        year: "",
+      },
+      [...new Array(8).keys()].map((item) =>
+        Object.assign(
+          {},
+          {
+            subject: "",
+            year: "",
+          }
+        )
+      ),
+    ],
+    range: "",
+  };
+});
+
+console.dir(bigSet);
