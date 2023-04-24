@@ -1,31 +1,4 @@
-/*************************Handling inputs********************* */
-let filter;
-const heading = document.querySelector("h4");
-const inputs = Array.from(document.querySelectorAll("input"));
-const main = document.querySelector("#body main section ul");
-const mainHeading = document.querySelector("#body main section h3");
-console.log(main);
 
-window.onload = () => {
-  editFilter("2011-12");
-  getStructuredData({ period: "2011-12", index: 0 });
-};
-
-inputs.forEach((input, i) => {
-  input.addEventListener("change", (e) => {
-    console.log(e.target.value);
-    editFilter(e.target.value);
-
-    //calling function to update data
-    getStructuredData({ period: e.target.value, index: i });
-  });
-});
-
-//setting filter aside heading dynamically
-const editFilter = (val) => {
-  console.log(`Filter value: ${val}`);
-  heading.textContent = `Filter by Year:  ${val}`;
-};
 
 /*************************Structuring Data********************* */
 const bigSet = {};
@@ -39,7 +12,6 @@ const classifier = (source, destination) => {
       destination.push(source[i]);
     }
   }
-
 };
 
 // creating sets automatically
@@ -60,6 +32,7 @@ const getStructuredData = (criteria) => {
     console.log(filteredSubjects);
     console.log(filteredYears);
 
+    /*************************Grouping Data********************* */
     //grouping data based on year ranges (sets) and creating skeleton for final data
     filteredYears.forEach((val, index) => {
       finalYearData[`set${index}`] = {
@@ -68,7 +41,15 @@ const getStructuredData = (criteria) => {
       };
     });
 
-    //feeding data into bigSet
+    //grouping data based on subject
+    filteredSubjects.forEach((val, index) => {
+      finalSubjectData[`${val}`] = {
+        numberOfStudents: [],
+        years: filteredYears,
+      };
+    });
+
+    /*************************Feeding Data********************* */
     [...new Array(8).keys()].forEach(async (val, index) => {
       //returning data by year (period)
       await data.forEach(async (item, dataIndex) => {
@@ -86,14 +67,25 @@ const getStructuredData = (criteria) => {
       });
     });
 
+    [...new Array(10).keys()].forEach(async (val, index) => {
+      //returning data by subject
+      await data.forEach(async (item, dataIndex) => {
+        if (item.Subject === filteredSubjects[index] && dataIndex !== 80) {
+          // data.f
+          await finalSubjectData[`${filteredSubjects[index]}`].numberOfStudents.push(item["Number of Students"]);
+        }
+      });
+    });
+
     /*************************Passing Data to UI********************* */
+    console.log(finalSubjectData);
 
     console.log(criteria.period, ":", finalYearData[`set${criteria.index}`].data);
-    //making heading dynamic
-    mainHeading.textContent = `Current Period: ${criteria.period}`;
+   
     //injecting data into page
-    const list = finalYearData[`set${criteria.index}`].data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
-    main.innerHTML = list.join("");
+    feedList(finalYearData,criteria.index,criteria.period);
+    feedYears(filteredYears)
   });
 };
+
 
