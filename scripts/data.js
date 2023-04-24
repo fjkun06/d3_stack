@@ -2,47 +2,62 @@
 let filter;
 const heading = document.querySelector("h4");
 const inputs = Array.from(document.querySelectorAll("input"));
-// console.dir(inputs);
+const main = document.querySelector("#body main section ul");
+const mainHeading = document.querySelector("#body main section h3");
+console.log(main);
 
-window.onload = () => editFilter("2011-12");
+window.onload = () => {
+  editFilter("2011-12");
+  getStructuredData({ period: "2011-12", index: 0 });
+};
 
-inputs.forEach((input) => {
+inputs.forEach((input, i) => {
   input.addEventListener("change", (e) => {
     console.log(e.target.value);
     editFilter(e.target.value);
+
+    //calling function to update data
+    getStructuredData({ period: e.target.value, index: i });
   });
 });
 
+//setting filter aside heading dynamically
 const editFilter = (val) => {
-  // filter = val;
   console.log(`Filter value: ${val}`);
   heading.textContent = `Filter by Year:  ${val}`;
 };
 
 /*************************Structuring Data********************* */
 const bigSet = {};
-// creating sets automatically
+//function to group data by category
+const classifier = (source, destination) => {
+  for (let i = 0; i < source.length; i++) {
+    if (i === 0) {
+      destination.push(source[0]);
+    }
+    if (i > 0 && !destination.some((item) => item === source[i])) {
+      destination.push(source[i]);
+    }
+  }
 
+};
+
+// creating sets automatically
 const getStructuredData = (criteria) => {
   const finalData = {};
 
   d3.csv("StanfordTopTenMajors2010s.csv").then(async (data) => {
     // filter data to get just the years
     const years = await data.map((data) => data.Year);
+    const courses = await data.map((data) => data.Subject);
 
     //getting the year ranges (sets)
-    let comparer;
     const filteredYears = [];
-    for (let i = 0; i < years.length; i++) {
-      if (i === 0) {
-        comparer = years[0];
-        filteredYears.push(comparer);
-      }
-      if (years[i] !== comparer) {
-        comparer = years[i];
-        filteredYears.push(comparer);
-      }
-    }
+    const filteredSubjects = [];
+    classifier(years, filteredYears);
+    classifier(courses, filteredSubjects);
+    console.log(filteredSubjects);
+    console.log(filteredYears);
 
     //grouping data based on year ranges (sets) and creating skeleton for final data
     filteredYears.forEach((val, index) => {
@@ -70,38 +85,15 @@ const getStructuredData = (criteria) => {
       });
     });
 
-    // const newData = [
-    //   {
-    //     year: {
-    //       subject: "",
-    //       numberOfStudents: 0,
-    //     },
-    //   },
-    // ];
-    // data.forEach(item => {
+    /*************************Passing Data to UI********************* */
 
-    // });
-    // console.dir(newData);
-    // drawMap(newData.features);
-
-    // newData.features?.forEach((obj) => {
-    //   countries.push({
-    //     name: obj.properties.name,
-    //     id: obj.id,
-    //   });
-    // });
-    // draw(countries);
-    // [...finalData.data].forEach((obj) => {
-
-    // })
-    // console.log(criteria.period)
-    console.log(criteria.period, ":", finalData[`set${criteria.index}`].data);
+    // console.log(criteria.period, ":", finalData[`set${criteria.index}`].data);
+    //making heading dynamic
+    mainHeading.textContent = `Current Period: ${criteria.period}`;
+    //injecting data into page
+    const list = finalData[`set${criteria.index}`].data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
+    main.innerHTML = list.join("");
   });
 };
-getStructuredData({ period: "2011-12", index: 0 });
-getStructuredData({ period: "2012-13", index: 1 });
-getStructuredData({ period: "2013-14", index: 2 });
-getStructuredData({ period: "2014-15", index: 3 });
-getStructuredData({ period: "2015-16", index: 4 });
 
 console.log(bigSet);
