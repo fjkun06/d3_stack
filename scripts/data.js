@@ -23,30 +23,14 @@ const editFilter = (val) => {
 const bigSet = {};
 // creating sets automatically
 
-
-const getStructuredData = (range) =>{
+const getStructuredData = (criteria) => {
   const finalData = {};
-  [...new Array(8).keys()].forEach((val, index) => {
-    finalData[`set${index}`] = {
-      data: [
-        ...[...new Array(8).keys()].map((item) =>
-          Object.assign(
-            {},
-            {
-              subject: "",
-              year: "",
-            }
-          )
-        ),
-      ],
-      range: "",
-    };
-  });
+
   d3.csv("StanfordTopTenMajors2010s.csv").then(async (data) => {
-    // const newData = await data.filter((data) => data.Year === "2011-12");
+    // filter data to get just the years
     const years = await data.map((data) => data.Year);
-  
-    //getting the year ranges
+
+    //getting the year ranges (sets)
     let comparer;
     const filteredYears = [];
     for (let i = 0; i < years.length; i++) {
@@ -59,21 +43,21 @@ const getStructuredData = (range) =>{
         filteredYears.push(comparer);
       }
     }
-    // console.dir(data);
-    // console.log(newData);
-    // console.log(years);
-    // console.log(filteredYears);
-  
-    //feeding data into bigSet
-    [...new Array(8).keys()].forEach(async (val, index) => {
+
+    //grouping data based on year ranges (sets) and creating skeleton for final data
+    filteredYears.forEach((val, index) => {
       finalData[`set${index}`] = {
         data: [],
-        range: filteredYears[index],
+        range: val,
       };
-  
+    });
+
+    //feeding data into bigSet
+    [...new Array(8).keys()].forEach(async (val, index) => {
+      //returning data by year (period)
       await data.forEach(async (item, dataIndex) => {
-        if (item.Year === filteredYears[index] && dataIndex !== 80) {
-        await  finalData[`set${index}`].data.push(
+        if (item.Year === criteria.period && dataIndex !== 80 && finalData[`set${index}`].range === criteria.period) {
+          await finalData[`set${index}`].data.push(
             Object.assign(
               {},
               {
@@ -83,11 +67,9 @@ const getStructuredData = (range) =>{
             )
           );
         }
-      })
-  
-  
+      });
     });
-  
+
     // const newData = [
     //   {
     //     year: {
@@ -97,11 +79,11 @@ const getStructuredData = (range) =>{
     //   },
     // ];
     // data.forEach(item => {
-  
+
     // });
     // console.dir(newData);
     // drawMap(newData.features);
-  
+
     // newData.features?.forEach((obj) => {
     //   countries.push({
     //     name: obj.properties.name,
@@ -109,11 +91,17 @@ const getStructuredData = (range) =>{
     //   });
     // });
     // draw(countries);
-    console.log(finalData);
-  
-  });
+    // [...finalData.data].forEach((obj) => {
 
-}
-getStructuredData()
+    // })
+    // console.log(criteria.period)
+    console.log(criteria.period, ":", finalData[`set${criteria.index}`].data);
+  });
+};
+getStructuredData({ period: "2011-12", index: 0 });
+getStructuredData({ period: "2012-13", index: 1 });
+getStructuredData({ period: "2013-14", index: 2 });
+getStructuredData({ period: "2014-15", index: 3 });
+getStructuredData({ period: "2015-16", index: 4 });
 
 console.log(bigSet);
