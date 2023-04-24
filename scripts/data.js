@@ -44,7 +44,8 @@ const classifier = (source, destination) => {
 
 // creating sets automatically
 const getStructuredData = (criteria) => {
-  const finalData = {};
+  const finalYearData = {};
+  const finalSubjectData = {};
 
   d3.csv("StanfordTopTenMajors2010s.csv").then(async (data) => {
     // filter data to get just the years
@@ -61,7 +62,7 @@ const getStructuredData = (criteria) => {
 
     //grouping data based on year ranges (sets) and creating skeleton for final data
     filteredYears.forEach((val, index) => {
-      finalData[`set${index}`] = {
+      finalYearData[`set${index}`] = {
         data: [],
         range: val,
       };
@@ -71,8 +72,8 @@ const getStructuredData = (criteria) => {
     [...new Array(8).keys()].forEach(async (val, index) => {
       //returning data by year (period)
       await data.forEach(async (item, dataIndex) => {
-        if (item.Year === criteria.period && dataIndex !== 80 && finalData[`set${index}`].range === criteria.period) {
-          await finalData[`set${index}`].data.push(
+        if (item.Year === criteria.period && dataIndex !== 80 && finalYearData[`set${index}`].range === criteria.period) {
+          await finalYearData[`set${index}`].data.push(
             Object.assign(
               {},
               {
@@ -87,13 +88,12 @@ const getStructuredData = (criteria) => {
 
     /*************************Passing Data to UI********************* */
 
-    // console.log(criteria.period, ":", finalData[`set${criteria.index}`].data);
+    console.log(criteria.period, ":", finalYearData[`set${criteria.index}`].data);
     //making heading dynamic
     mainHeading.textContent = `Current Period: ${criteria.period}`;
     //injecting data into page
-    const list = finalData[`set${criteria.index}`].data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
+    const list = finalYearData[`set${criteria.index}`].data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
     main.innerHTML = list.join("");
   });
 };
 
-console.log(bigSet);
