@@ -23,8 +23,8 @@ const feedYears = (data = []) => {
   yearFilter.innerHTML += jahr.join("");
   console.log(Array.from(document.querySelectorAll("input")));
   // window.onload = () => {
-    // editFilter("2011-14");+
-    // getStructuredData({ period: "2011-13", index: 0 });
+  // editFilter("2011-14");+
+  // getStructuredData({ period: "2011-13", index: 0 });
   // };
 };
 
@@ -35,11 +35,11 @@ const inputs = Array.from(document.querySelectorAll("input"));
 const main = document.querySelector("#body main section ul");
 const yearFilter = document.querySelector("#body main aside");
 const mainHeading = document.querySelector("#body main section h3");
-console.log(inputs);
+// console.log(inputs);
 
 window.onload = () => {
   editFilter("2011-12");
-  getStructuredData({ period: "2011-12", index: 0 });
+  getStructuredData({ period: "2012-13", index: 0 });
 };
 
 inputs.forEach((input, i) => {
@@ -56,3 +56,5 @@ const editFilter = (val) => {
   console.log(`Filter value: ${val}`);
   heading.textContent = `Filter by Year:  ${val}`;
 };
+
+const handleInputs = () => {};
