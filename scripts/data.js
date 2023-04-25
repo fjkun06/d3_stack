@@ -13,7 +13,7 @@ const classifier = (source, destination) => {
 };
 
 // creating sets automatically
-const getStructuredData = (criteria) => {
+const getStructuredData = ({period,type}) => {
   const finalYearData = {};
   const finalSubjectData = {};
   const SubjectData = [];
@@ -51,7 +51,7 @@ const getStructuredData = (criteria) => {
 
     /*************************Feeding Data********************* */
     data.forEach(async (item, dataIndex) => {
-      if (item.Year === criteria.period && dataIndex !== 80) {
+      if (item.Year === period && dataIndex !== 80) {
         await YearlyData.push(
           Object.assign(
             {},
@@ -70,7 +70,8 @@ const getStructuredData = (criteria) => {
       }
     });
     //injecting data into page
-    feedYearList(YearlyData, criteria.period);
+    if (type === "year") feedYearList(YearlyData, period);
+    if (type === "subject") feedSubjectList(YearlyData, period);
     if (!yearFilter.textContent.includes("2012-13")) feedYears(filteredYears);
     if (!subjectFilter.textContent.includes("Computer Science")) feedSubjects(SubjectData);
   });

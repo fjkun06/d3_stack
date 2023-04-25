@@ -71,7 +71,7 @@ const handleInputs = () => {
   inputsYear.forEach((input, i) => {
     input.addEventListener("change", (e) => {
       //calling function to update data
-      getStructuredData({ period: e.target.value, index: i });
+      getStructuredData({ period: e.target.value, type: "year" });
       yearh.textContent = `Filter by Year:  ${e.target.value}`;
     });
   });
@@ -81,7 +81,7 @@ const handleInputs = () => {
     input.addEventListener("change", (e) => {
       subjecth.textContent = `Filter by Subject:  ${e.target.value}`;
       //calling function to update data
-      getStructuredData({ period: e.target.value, index: i });
+      getStructuredData({ period: e.target.value, type: "subject" });
     });
   });
 };
@@ -90,7 +90,7 @@ const handleInputs = () => {
 window.onload = () => {
   editYearFilter("2011-12");
   editSubjectFilter("BIO");
-  getStructuredData({ period: "2011-12" });
+  getStructuredData({ period: "2011-12",type: "year" });
   setTimeout(() => {
     handleInputs();
   }, 3000);
