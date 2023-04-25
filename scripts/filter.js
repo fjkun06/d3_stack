@@ -6,7 +6,14 @@ const yearFilter = document.querySelector("#year");
 const subjectFilter = document.querySelector("#subject");
 const mainHeading = document.querySelector("#body main section h3");
 
-const feedList = (data, period) => {
+const feedYearList = (data, period) => {
+  //making heading dynamic
+  mainHeading.textContent = `Current Period: ${period}`;
+  const list = data.map((item) => `<li>Subject: ${item.subject}, NumberOfStudents: ${item.numberOfStudents} </li>`);
+  main.innerHTML = list.join("");
+};
+
+const feedSubjectList = (data, period) => {
   //making heading dynamic
   mainHeading.textContent = `Current Period: ${period}`;
   const list = data.map((item) => `<li>Subject: ${item.subject}, NumberOfStudents: ${item.numberOfStudents} </li>`);
@@ -31,12 +38,12 @@ const feedSubjects = (data = []) => {
   const jahr = data.map((item, index) =>
     index === 0
       ? `<span class="">
-        <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item} checked />
-        <label for="choice${index}n">${item}</label>
+        <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} checked />
+        <label for="choice${index}n">${item.name}</label>
         </span>`
       : `<span class="">
-        <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item} />
-        <label for="choice${index}n">${item}</label>
+        <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} />
+        <label for="choice${index}n">${item.name}</label>
         </span>`
   );
 
@@ -82,7 +89,7 @@ const handleInputs = () => {
 //loading default data
 window.onload = () => {
   editYearFilter("2011-12");
-  editSubjectFilter("Biology");
+  editSubjectFilter("BIO");
   getStructuredData({ period: "2011-12" });
   setTimeout(() => {
     handleInputs();
