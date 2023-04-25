@@ -1,5 +1,3 @@
-
-
 /*************************Structuring Data********************* */
 const bigSet = {};
 //function to group data by category
@@ -18,6 +16,8 @@ const classifier = (source, destination) => {
 const getStructuredData = (criteria) => {
   const finalYearData = {};
   const finalSubjectData = {};
+  const SubjectData = [];
+  const YearlyData = [];
 
   d3.csv("StanfordTopTenMajors2010s.csv").then(async (data) => {
     // filter data to get just the years
@@ -29,8 +29,7 @@ const getStructuredData = (criteria) => {
     const filteredSubjects = [];
     classifier(years, filteredYears);
     classifier(courses, filteredSubjects);
-    console.log(filteredSubjects);
-    console.log(filteredYears);
+
 
     /*************************Grouping Data********************* */
     //grouping data based on year ranges (sets) and creating skeleton for final data
@@ -41,51 +40,32 @@ const getStructuredData = (criteria) => {
       };
     });
 
-    //grouping data based on subject
-    filteredSubjects.forEach((val, index) => {
-      finalSubjectData[`${val}`] = {
-        numberOfStudents: [],
-        years: filteredYears,
-      };
-    });
+      finalSubjectData.numberOfStudents = []
+      finalSubjectData.years = filteredYears;
+
 
     /*************************Feeding Data********************* */
-    [...new Array(8).keys()].forEach(async (val, index) => {
-      //returning data by year (period)
-      await data.forEach(async (item, dataIndex) => {
-        if (item.Year === criteria.period && dataIndex !== 80 && finalYearData[`set${index}`].range === criteria.period) {
-          await finalYearData[`set${index}`].data.push(
-            Object.assign(
-              {},
-              {
-                subject: item.Subject,
-                numberOfStudents: item["Number of Students"],
-              }
-            )
-          );
-        }
-      });
+    data.forEach(async (item, dataIndex) => {
+      if (item.Year === criteria.period && dataIndex !== 80) {
+        await YearlyData.push(
+          Object.assign(
+            {},
+            {
+              subject: item.Subject,
+              numberOfStudents: item["Number of Students"],
+            }
+          )
+        );
+      }
     });
 
-    [...new Array(10).keys()].forEach(async (val, index) => {
-      //returning data by subject
-      await data.forEach(async (item, dataIndex) => {
-        if (item.Subject === filteredSubjects[index] && dataIndex !== 80) {
-          // data.f
-          await finalSubjectData[`${filteredSubjects[index]}`].numberOfStudents.push(item["Number of Students"]);
-        }
-      });
+    data.forEach(async (item, dataIndex) => {
+      if (item.Subject === "Biology" && dataIndex !== 80) {
+        await finalSubjectData.numberOfStudents.push(item["Number of Students"]);
+      }
     });
-
-    /*************************Passing Data to UI********************* */
-    console.log(finalSubjectData);
-
-    console.log(criteria.period, ":", finalYearData[`set${criteria.index}`].data);
-   
     //injecting data into page
-    feedList(finalYearData,criteria.index,criteria.period);
-    feedYears(filteredYears)
+    feedList(YearlyData, criteria.period);
+    feedYears(filteredYears);
   });
 };
-
-

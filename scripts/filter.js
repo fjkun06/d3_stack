@@ -1,10 +1,10 @@
 const test = (val) => console.log(val);
 //  export default test
 
-const feedList = (data, index, period) => {
+const feedList = (data, period) => {
   //making heading dynamic
   mainHeading.textContent = `Current Period: ${period}`;
-  const list = data[`set${index}`].data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
+  const list = data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
   main.innerHTML = list.join("");
 };
 const feedYears = (data = []) => {
@@ -39,7 +39,7 @@ const mainHeading = document.querySelector("#body main section h3");
 
 window.onload = () => {
   editFilter("2011-12");
-  getStructuredData({ period: "2012-13", index: 0 });
+  getStructuredData({ period: "2011-12"});
 };
 
 inputs.forEach((input, i) => {
