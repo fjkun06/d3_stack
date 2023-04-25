@@ -23,7 +23,9 @@ const getStructuredData = ({ period, type }) => {
     // filter data to get just the years
     const years = await data.map((data) => data.Year);
     const courses = await data.map((data) => data.Subject);
-
+    const max = d3.max(data, (d) => Number(d["Number of Students"]))
+    const min = d3.min(data, (d) => Number(d["Number of Students"]))
+console.log(`[ ${min} - ${max}]`);
     //getting the year ranges (sets)
     const filteredYears = [];
     const filteredSubjects = [];
@@ -69,6 +71,12 @@ const getStructuredData = ({ period, type }) => {
         await finalSubjectData.numberOfStudents.push(item["Number of Students"]);
       }
     });
+
+    //adding min and max values to subject data
+    finalSubjectData.min = d3.min(finalSubjectData.numberOfStudents, (d) => Number(d))
+    finalSubjectData.max = d3.max(finalSubjectData.numberOfStudents, (d) => Number(d))
+    // console.log(finalSubjectData);
+
     //injecting data into page
     if (type === "year") feedYearList(YearlyData, period);
     if (type === "subject") feedSubjectList(finalSubjectData, period);
