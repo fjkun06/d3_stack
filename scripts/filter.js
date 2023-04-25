@@ -15,10 +15,13 @@ const feedYearList = (data, period) => {
 
 const feedSubjectList = (data, period) => {
   //making heading dynamic
-  mainHeading.textContent = `Current Period: ${period}`;
-  const list = data.map((item) => `<li>Subject: ${item.subject}, NumberOfStudents: ${item.numberOfStudents} </li>`);
+  mainHeading.textContent = `Current Subject: ${period}`;
+  const list = [...new Array(data.years.length).fill()].map((_, i) => `<li>Period: ${data.years[i]}, NumberOfStudents: ${data.numberOfStudents[i]} </li>`);
+  // data.map((item,i) => `<li>Period: ${item.year[i]}, NumberOfStudents: ${data.numberOfStudents[i]} </li>`);
+  // const list = data.map((item,i) => `<li>Period: ${item.year[i]}, NumberOfStudents: ${item.numberOfStudents[i]} </li>`);
   main.innerHTML = list.join("");
 };
+
 const feedYears = (data = []) => {
   const jahr = data.map((item, index) =>
     index === 0
@@ -79,9 +82,11 @@ const handleInputs = () => {
   //handling changes for the subjects
   inputsSubject.forEach((input, i) => {
     input.addEventListener("change", (e) => {
+      console.log(e.target.nextElementSibling.textContent.slice(0, -6).trim());
       subjecth.textContent = `Filter by Subject:  ${e.target.value}`;
       //calling function to update data
-      getStructuredData({ period: e.target.value, type: "subject" });
+      getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      // getStructuredData({ period: e.target.value, type: "subject" });
     });
   });
 };
@@ -90,7 +95,7 @@ const handleInputs = () => {
 window.onload = () => {
   editYearFilter("2011-12");
   editSubjectFilter("BIO");
-  getStructuredData({ period: "2011-12",type: "year" });
+  getStructuredData({ period: "2011-12", type: "year" });
   setTimeout(() => {
     handleInputs();
   }, 3000);

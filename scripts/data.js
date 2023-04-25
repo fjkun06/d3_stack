@@ -33,7 +33,7 @@ const getStructuredData = ({period,type}) => {
     //creating abbreviations and adding to subject name
     const subjectAbbreviations = filteredSubjects.map((data) => `${data.slice(0, 3).toUpperCase()}`);
     const subjectWithAbbreviation = filteredSubjects.map((data) => `${data} (${data.slice(0, 3).toUpperCase()})`);
-    [...new Array(10).fill().map((_, index) => SubjectData.push(Object.assign({}, { name: subjectWithAbbreviation[index], abbrev: subjectAbbreviations[index] })))];
+    [...new Array(10).fill()].map((_, index) => SubjectData.push(Object.assign({}, { name: subjectWithAbbreviation[index], abbrev: subjectAbbreviations[index] })));
     
     // console.log(subjectAbbreviations, subjectWithAbbreviation,SubjectData);
     
@@ -65,13 +65,14 @@ const getStructuredData = ({period,type}) => {
     });
 
     data.forEach(async (item, dataIndex) => {
-      if (item.Subject === "Biology" && dataIndex !== 80) {
+      if (item.Subject === (period ?? "Biology") && dataIndex !== 80) {
         await finalSubjectData.numberOfStudents.push(item["Number of Students"]);
       }
     });
+    console.log(finalSubjectData);
     //injecting data into page
     if (type === "year") feedYearList(YearlyData, period);
-    if (type === "subject") feedSubjectList(YearlyData, period);
+    if (type === "subject") feedSubjectList(finalSubjectData, period);
     if (!yearFilter.textContent.includes("2012-13")) feedYears(filteredYears);
     if (!subjectFilter.textContent.includes("Computer Science")) feedSubjects(SubjectData);
   });
