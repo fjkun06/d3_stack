@@ -13,7 +13,7 @@ const classifier = (source, destination) => {
 };
 
 // creating sets automatically
-const getStructuredData = ({period,type}) => {
+const getStructuredData = ({ period, type }) => {
   const finalYearData = {};
   const finalSubjectData = {};
   const SubjectData = [];
@@ -34,9 +34,8 @@ const getStructuredData = ({period,type}) => {
     const subjectAbbreviations = filteredSubjects.map((data) => `${data.slice(0, 3).toUpperCase()}`);
     const subjectWithAbbreviation = filteredSubjects.map((data) => `${data} (${data.slice(0, 3).toUpperCase()})`);
     [...new Array(10).fill()].map((_, index) => SubjectData.push(Object.assign({}, { name: subjectWithAbbreviation[index], abbrev: subjectAbbreviations[index] })));
-    
-    // console.log(subjectAbbreviations, subjectWithAbbreviation,SubjectData);
-    
+
+
     /*************************Grouping Data********************* */
     //grouping data based on year ranges (sets) and creating skeleton for final data
     filteredYears.forEach((val, index) => {
@@ -64,6 +63,7 @@ const getStructuredData = ({period,type}) => {
       }
     });
 
+    //returning data based on aubject (period)
     data.forEach(async (item, dataIndex) => {
       if (item.Subject === (period ?? "Biology") && dataIndex !== 80) {
         await finalSubjectData.numberOfStudents.push(item["Number of Students"]);
