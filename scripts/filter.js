@@ -2,24 +2,32 @@
 const yearHeading = document.querySelector("#yearh");
 const subjectHeading = document.querySelector("#subjecth");
 const main = document.querySelector("#body main section ul");
+const mainYearContainer = document.querySelector(".year ul");
+const mainSubjectContainer = document.querySelector(".subject ul");
 const yearFilter = document.querySelector("#year");
 const subjectFilter = document.querySelector("#subject");
 const mainHeading = document.querySelector("#body main section h3");
+const mainYearContainerHeading = document.querySelector(".year h3");
+const mainSubjectContainerHeading = document.querySelector(".subject h3");
 
 //Display subjects and registration as per year filter
 const feedYearList = (data, period) => {
   //making heading dynamic
-  mainHeading.textContent = `Current Period: ${period}`;
+  mainYearContainerHeading.textContent = `Current Period: ${period}`;
+  // mainHeading.textContent = `Current Period: ${period}`;
   const list = data.map((item) => `<li>Subject: ${item.subject}, NumberOfStudents: ${item.numberOfStudents} </li>`);
-  main.innerHTML = list.join("");
+  mainYearContainer.innerHTML = list.join("");
+  // main.innerHTML = list.join("");
 };
 
 //Display years and registration as per subject filter
 const feedSubjectList = (data, period) => {
   //making heading dynamic
-  mainHeading.textContent = `Current Subject: ${period}`;
+  mainSubjectContainerHeading.textContent = `Current Subject: ${period}`;
+  // mainHeading.textContent = `Current Subject: ${period}`;
   const list = [...new Array(data.years.length).fill()].map((_, i) => `<li>Period: ${data.years[i]}, NumberOfStudents: ${data.numberOfStudents[i]} </li>`);
-  main.innerHTML = list.join("");
+  // main.innerHTML = list.join("");
+  mainSubjectContainer.innerHTML = list.join("");
 };
 
 //display a list of years to use as filter

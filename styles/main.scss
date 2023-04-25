@@ -37,7 +37,7 @@ main {
   background-size: cover;
   @include mixins.size(min(100vw, 100vw), 100vh);
   @include mixins.grid;
-  overflow-x: hidden;
+  overflow: hidden;
 
   /***************************************Abstract Section******************************/
   p {
