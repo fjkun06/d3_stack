@@ -287,8 +287,12 @@ main #body main aside span label {
   color: whitesmoke;
 }
 main #body main section {
+  box-shadow: 0 0 20px #2d3436;
   width: 600px;
   height: 300px;
+  width: 600px;
+  height: auto;
+  padding: 10px 0px 10px 30px;
   display: flex;
   flex-direction: column;
   place-items: center;

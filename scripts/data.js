@@ -67,6 +67,6 @@ const getStructuredData = (criteria) => {
     //injecting data into page
      feedList(YearlyData, criteria.period);
      if (!yearFilter.textContent.includes("2012-13")) feedYears(filteredYears);
-     if (!subjectFilter.textContent.includes("2012-13")) feedSubjects(filteredYears);
+     if (!subjectFilter.textContent.includes("Computer Science")) feedSubjects(filteredSubjects);
   });
 };

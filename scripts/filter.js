@@ -46,16 +46,11 @@ const feedSubjects = (data = []) => {
 
 /*************************Handling inputs********************* */
 
-// console.log(inputs);
-
 //setting filter aside heading dynamically
 const editYearFilter = (val) => {
-  // console.log(`Year Filter value: ${val}`);
   yearHeading.textContent = `Filter by Year:  ${val}`;
 };
 const editSubjectFilter = (val) => {
-  // console.log(`Subject Filter value: ${val}`);
-  // console.log(subjectHeading);
   subjectHeading.textContent = `Filter by Subject:  ${val}`;
 };
 
@@ -65,23 +60,19 @@ const handleInputs = () => {
   const yearh = document.querySelector("#yearh");
   const subjecth = document.querySelector("#subjecth");
 
+  //handling changes for the years
   inputsYear.forEach((input, i) => {
     input.addEventListener("change", (e) => {
-      // console.log(e);
-
       //calling function to update data
-      // getStructuredData({ period: e.target.value, index: i });
+      getStructuredData({ period: e.target.value, index: i });
       yearh.textContent = `Filter by Year:  ${e.target.value}`;
-
-      // editYearFilter(e.target.value);
     });
   });
+
+  //handling changes for the subjects
   inputsSubject.forEach((input, i) => {
     input.addEventListener("change", (e) => {
-      // editSubjectFilter(e.target.value);
-      // console.log(e.target.value);
       subjecth.textContent = `Filter by Subject:  ${e.target.value}`;
-
       //calling function to update data
       getStructuredData({ period: e.target.value, index: i });
     });

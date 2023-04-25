@@ -90,7 +90,10 @@
       }
       /*****************List Section******************************/
       section {
+        box-shadow: 0 0 20px #2d3436;
         @include mixins.size(600px, 300px);
+        @include mixins.size(600px, auto);
+        padding: 10px 0px 10px 30px;
         @include mixins.flex(column);
         align-items: flex-start;
         gap: 10px;
