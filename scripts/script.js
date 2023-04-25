@@ -23,8 +23,3 @@ const cancel = (timestamp) => {
 };
 
 requestAnimationFrame(cancel);
-
-
-const x = 10
-const y = 5
-test(555)

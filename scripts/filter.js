@@ -1,60 +1,99 @@
-const test = (val) => console.log(val);
-//  export default test
+/*************************Handling inputs********************* */
+const yearHeading = document.querySelector("#yearh");
+const subjectHeading = document.querySelector("#subjecth");
+const main = document.querySelector("#body main section ul");
+const yearFilter = document.querySelector("#year");
+const subjectFilter = document.querySelector("#subject");
+const mainHeading = document.querySelector("#body main section h3");
 
 const feedList = (data, period) => {
   //making heading dynamic
   mainHeading.textContent = `Current Period: ${period}`;
-  const list = data.map((item) => `<li>Subject: ${item.subject} , NumberOfStudents: ${item.numberOfStudents} </li>`);
+  const list = data.map((item) => `<li>Subject: ${item.subject}, NumberOfStudents: ${item.numberOfStudents} </li>`);
   main.innerHTML = list.join("");
 };
 const feedYears = (data = []) => {
   const jahr = data.map((item, index) =>
     index === 0
       ? `<span class="">
-        <input type="radio" id="choice${index}" name="contact" value=${item} checked />
+        <input type="radio"  class="yearfilter" id="choice${index}" name="year" value=${item} checked />
         <label for="choice${index}">${item}</label>
         </span>`
       : `<span class="">
-        <input type="radio" id="choice${index}" name="contact" value=${item} />
+        <input type="radio" class="yearfilter"  id="choice${index}" name="year" value=${item} />
         <label for="choice${index}">${item}</label>
         </span>`
   );
 
   yearFilter.innerHTML += jahr.join("");
-  console.log(Array.from(document.querySelectorAll("input")));
-  // window.onload = () => {
-  // editFilter("2011-14");+
-  // getStructuredData({ period: "2011-13", index: 0 });
-  // };
+};
+const feedSubjects = (data = []) => {
+  const jahr = data.map((item, index) =>
+    index === 0
+      ? `<span class="">
+        <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item} checked />
+        <label for="choice${index}n">${item}</label>
+        </span>`
+      : `<span class="">
+        <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item} />
+        <label for="choice${index}n">${item}</label>
+        </span>`
+  );
+
+  subjectFilter.innerHTML += jahr.join("");
+  // handleInputs()
 };
 
 /*************************Handling inputs********************* */
-let filter;
-const heading = document.querySelector("h4");
-const inputs = Array.from(document.querySelectorAll("input"));
-const main = document.querySelector("#body main section ul");
-const yearFilter = document.querySelector("#body main aside");
-const mainHeading = document.querySelector("#body main section h3");
+
 // console.log(inputs);
 
-window.onload = () => {
-  editFilter("2011-12");
-  getStructuredData({ period: "2011-12"});
-};
-
-inputs.forEach((input, i) => {
-  input.addEventListener("change", (e) => {
-    console.log(e);
-    editFilter(e.target.value);
-    //calling function to update data
-    getStructuredData({ period: e.target.value, index: i });
-  });
-});
-
 //setting filter aside heading dynamically
-const editFilter = (val) => {
-  console.log(`Filter value: ${val}`);
-  heading.textContent = `Filter by Year:  ${val}`;
+const editYearFilter = (val) => {
+  // console.log(`Year Filter value: ${val}`);
+  yearHeading.textContent = `Filter by Year:  ${val}`;
+};
+const editSubjectFilter = (val) => {
+  // console.log(`Subject Filter value: ${val}`);
+  // console.log(subjectHeading);
+  subjectHeading.textContent = `Filter by Subject:  ${val}`;
 };
 
-const handleInputs = () => {};
+const handleInputs = () => {
+  const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
+  const inputsSubject = Array.from(document.querySelectorAll(".subjectfilter"));
+  const yearh = document.querySelector("#yearh");
+  const subjecth = document.querySelector("#subjecth");
+
+  inputsYear.forEach((input, i) => {
+    input.addEventListener("change", (e) => {
+      // console.log(e);
+
+      //calling function to update data
+      // getStructuredData({ period: e.target.value, index: i });
+      yearh.textContent = `Filter by Year:  ${e.target.value}`;
+
+      // editYearFilter(e.target.value);
+    });
+  });
+  inputsSubject.forEach((input, i) => {
+    input.addEventListener("change", (e) => {
+      // editSubjectFilter(e.target.value);
+      // console.log(e.target.value);
+      subjecth.textContent = `Filter by Subject:  ${e.target.value}`;
+
+      //calling function to update data
+      getStructuredData({ period: e.target.value, index: i });
+    });
+  });
+};
+
+//loading default data
+window.onload = () => {
+  editYearFilter("2011-12");
+  editSubjectFilter("Biology");
+  getStructuredData({ period: "2011-12" });
+  setTimeout(() => {
+    handleInputs();
+  }, 3000);
+};
