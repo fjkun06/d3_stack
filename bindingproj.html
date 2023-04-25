@@ -36,6 +36,41 @@
     const app = {
       planets: []
     }
+
+    const current = {
+      moons: [],
+      id: undefined,
+      planet: {},
+      color: "black"
+    }
+
+    current.id = 'p5'
+
+    const scale = d3.scaleLinear()
+
+    const width = 500
+    const height = 300
+    const mw = 20
+    const mh = 50
+    const mm = 10 // space between moons
+    const mp = 100 // space be reserved for the planet
+
+    const svg = d3.select('#moons').attr('viewBox', `0 0 ${width} ${height}`)
+
+    const plane = svg.append('g').attr('transform', `translate(${mp, height / 2})`)
+
+    //loading data
+    d3.json('sol_2016.json').then(data => {
+      app.planets = data.planets.filter(p => p.id.substring(1) >= 3 && p.id.substring(1) <= 8)
+      configureView();
+      draw();
+
+    })
+
+    const configureView = () => {
+      console.dir(app)
+    }
+    const draw = () => { }
   </script>
 </body>
 
