@@ -73,11 +73,14 @@ export default function Home() {
 
       setupView();
 
-      svg
+      const selection = svg
         .selectAll("g")
-        .data(planets)
+        .data(planets);
+
+        selection
         .enter()
         .append("g")
+        // .merge(selection)
         .attr("class", "entry")
         .attr("transform", (d, i) => `translate(0,${i * 21})`)
         .each(function (d: any) {
