@@ -6,6 +6,7 @@ const yearFilter = document.querySelector("#year");
 const subjectFilter = document.querySelector("#subject");
 const mainHeading = document.querySelector("#body main section h3");
 
+//Display subjects and registration as per year filter
 const feedYearList = (data, period) => {
   //making heading dynamic
   mainHeading.textContent = `Current Period: ${period}`;
@@ -13,15 +14,15 @@ const feedYearList = (data, period) => {
   main.innerHTML = list.join("");
 };
 
+//Display years and registration as per subject filter
 const feedSubjectList = (data, period) => {
   //making heading dynamic
   mainHeading.textContent = `Current Subject: ${period}`;
   const list = [...new Array(data.years.length).fill()].map((_, i) => `<li>Period: ${data.years[i]}, NumberOfStudents: ${data.numberOfStudents[i]} </li>`);
-  // data.map((item,i) => `<li>Period: ${item.year[i]}, NumberOfStudents: ${data.numberOfStudents[i]} </li>`);
-  // const list = data.map((item,i) => `<li>Period: ${item.year[i]}, NumberOfStudents: ${item.numberOfStudents[i]} </li>`);
   main.innerHTML = list.join("");
 };
 
+//display a list of years to use as filter
 const feedYears = (data = []) => {
   const jahr = data.map((item, index) =>
     index === 0
@@ -37,6 +38,8 @@ const feedYears = (data = []) => {
 
   yearFilter.innerHTML += jahr.join("");
 };
+
+//display a list of years to use as filter
 const feedSubjects = (data = []) => {
   const jahr = data.map((item, index) =>
     index === 0

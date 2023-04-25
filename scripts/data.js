@@ -69,7 +69,6 @@ const getStructuredData = ({period,type}) => {
         await finalSubjectData.numberOfStudents.push(item["Number of Students"]);
       }
     });
-    console.log(finalSubjectData);
     //injecting data into page
     if (type === "year") feedYearList(YearlyData, period);
     if (type === "subject") feedSubjectList(finalSubjectData, period);
