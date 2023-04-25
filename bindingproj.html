@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Moons</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="scripts/d3.v7.min.js"></script>
+  <!-- Using free Yanone Kaffeesatz fonts:
+ https://www.yanone.de/fonts/kaffeesatz/ -->
+  <style>
+    svg {
+      border: solid 1px gray;
+    }
+
+    * {
+      font-family: 'Yanone Kaffeesatz', sans-serif;
+    }
+
+    text {
+      font-size: 11px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>The largest moons</h1>
+  <div id="container" width="500" height="300">
+    <svg height="100%" width="100%" id="moons"></svg>
+  </div>
+  <form></form>
+
+
+  <script>
+    const app = {
+      planets: []
+    }
+  </script>
+</body>
+
+</html>

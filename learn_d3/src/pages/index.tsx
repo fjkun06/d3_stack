@@ -50,6 +50,8 @@ export default function Home() {
     const svg = d3.select(".svg_bar-chart");
     //setup view fxn
     function setupView() {
+      chart.height = planets.length * 21;
+      svg.attr("height", chart.height).attr("width", chart.width);
       //disable all buttons
       d3.selectAll("button").property("disabled", false);
       //enable unselected buttons
@@ -68,17 +70,15 @@ export default function Home() {
     }
 
     function init() {
-      chart.height = planets.length * 21;
-      svg.attr("height", chart.height).attr("width", chart.width);
+      // chart.height = planets.length * 21;
+      // svg.attr("height", chart.height).attr("width", chart.width);
 
       setupView();
 
-      const selection = svg
+      svg
         .selectAll("g")
-        .data(planets);
-
-        selection
-        .enter()
+        .data(planets).
+        enter()
         .append("g")
         // .merge(selection)
         .attr("class", "entry")
