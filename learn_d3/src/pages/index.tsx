@@ -105,8 +105,6 @@ export default function Home() {
 
     function draw() {
       setupView();
-      console.log("current key: ", chart.current.key);
-
       svg
         .selectAll("g.entry")
         .data(planets)
@@ -131,7 +129,6 @@ export default function Home() {
 
     d3.selectAll("button").on("click", (e) => {
       chart.current = charts.filter((c) => c.key === e.target.id)[0];
-      console.dir(chart.current);
       if (document.getElementsByClassName("svg_bar-chart").length === 1) {
         draw();
       }
