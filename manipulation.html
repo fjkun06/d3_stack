@@ -7,17 +7,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="scripts/d3.v7.min.js"></script>
   <title>Manipulation</title>
+  <style>
+    svg {
+      border: solid 1px gray;
+    }
+
+    * {
+      font-family: 'Yanone Kaffeesatz', sans-serif;
+    }
+
+    text {
+      font-size: 11px;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 25vh;
+    }
+  </style>
 </head>
 
-<body>
 
+<body>
+  <div id="container" width="500px" height="700px">
+    <svg height="350" width="500" id="moons"></svg>
+  </div>
   <script>
     const values = []
     for (let i = 0; i < 1000000; i++) {
       values.push(Math.random() * 160);
     }
-    const histogram = d3.histogram().thresholds(100);
+    const histogram = d3.histogram().thresholds(10);
     const bins = histogram(values); // 100-element array
+
+    const width = 500 / bins.length;
+
+    const scaleX = d3.scaleLinear()
+      .range([50, 450])
+      .domain(d3.extent(values));;
+    const scaleY = d3.scaleLinear()
+      .range([300, 0])
+      .domain(d3.extent(bins, d => d.length));
+    const color = d3.scaleSqrt()
+      .range(["darkgreen", "brown"])
+      .domain(scaleY.domain());
+    d3.select("svg").selectAll("rect.bar")
+      .data(bins).enter().append("rect").attr("class", "bar")
+      .attr("x", d => scaleX(d.x0))
+      .attr("width", width)
+      .attr("y", d => scaleY(d.length))
+      .attr("height", d => 300 - scaleY(d.length))
+      .style("fill", d => color(d.length))
   </script>
 </body>
 
