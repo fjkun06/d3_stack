@@ -90,22 +90,66 @@
       const horizSpace = width - (mp + mw * 2 + current.moons.length * mm)
       const vertSpace = height - mh * 2;
 
+      // e) configure the scale
+      scale.range([0, d3.min([vertSpace, horizSpace])])
+        .domain([0, sumDiameters]);
+
       // Inspect results
       console.log("Planet", current.planet);
       console.log("Largest moon diameter", maxDiameter);
       console.log("Selected moons", current.moons);
       console.log(horizSpace, vertSpace);
 
+      // 4) Sort the moons by their diameter
+      // current.moons.sort((a, b) => d3.descending(a.diameterKm, b.diameterKm));
+      current.moons = d3.sort(current.moons, m => m.diameterKm).reverse()
+      // 4) Compute cx center coordinates to position each moon
+      current.moons.forEach(function (moon, i) {
+        let space = 0;
+        if (i > 0) {
+          let previous = current.moons[i - 1]
+          space = previous.cx
+            + scale(previous.diameterKm) / 2
+            + mm;
+        }
+        moon.cx = space + scale(moon.diameterKm) / 2;
+        console.log(moon.name, moon.cx); // inspect results
+      });
+
+
     }
     const draw = () => {
       //draw line showing orbital plane
-      plane.append('line').attr('x1', 0).attr('x2', width).style('stroke', 'red');
+      // plane.append('line').attr('x1', 0).attr('x2', width).style('stroke', 'red');
       plane.append("circle").attr('class', 'planet').datum(current.planet)
-        .attr('r', d => scale(d.diameterKm) / 200)
-        .attr('cx', d => -(mw + scale(d.diameterKm) / 200))
+        .attr('r', d => scale(d.diameterKm) / 2)
+        .attr('cx', d => -(mw + scale(d.diameterKm) / 2))
 
       // 2) Change page title
       d3.select('span').text(() => current.planet.name)
+
+      // 3) draw the moons
+      plane.selectAll("circle.moon")
+        .data(current.moons)
+        .enter()
+        .each(function (d, i, nodes) {
+          d3.select(this)
+            .append('text')
+            // .style('fill', 'red')
+            // .attr('transform', d => `rotate(90deg,${d.cx},0)`)
+            .style('transform', d => `rotate(90deg)`)
+            .attr('x', d => scale(d.diameterKm/2) + 10)
+            .attr('y', d => -d.cx + 2.5)
+
+            .text(d => d.name);
+        })
+        .append("circle").attr("class", "moon")
+
+        .attr("cx", d => d.cx)
+        .attr("r", d => scale(d.diameterKm) / 2)
+      .style("fill-opacity", 1)
+
+
     }
   </script>
 </body>
