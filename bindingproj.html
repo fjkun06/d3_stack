@@ -62,10 +62,29 @@
     //loading data
     d3.json('sol_2016.json').then(data => {
       app.planets = data.planets.filter(p => p.id.substring(1) >= 3 && p.id.substring(1) <= 8)
+      init();
       configureView();
       draw();
 
     })
+
+    function init() {
+      d3.select('form')
+      .selectAll('button')
+      .data(app.planets)
+      .enter()
+      .append('button')
+      .attr('type','button')
+      .attr('id',({id}) => id)
+      .text(({name}) => name)
+      .on('click',d => {
+        current.id = d.target.id
+        console.log('currentd: ',d);
+        console.log('current: ',current);
+        configureView()
+        draw()
+      } )
+    }
 
     const configureView = () => {
       console.dir(app.planets)
@@ -94,11 +113,6 @@
       scale.range([0, d3.min([vertSpace, horizSpace])])
         .domain([0, sumDiameters]);
 
-      // Inspect results
-      console.log("Planet", current.planet);
-      console.log("Largest moon diameter", maxDiameter);
-      console.log("Selected moons", current.moons);
-      console.log(horizSpace, vertSpace);
 
       // 4) Sort the moons by their diameter
       // current.moons.sort((a, b) => d3.descending(a.diameterKm, b.diameterKm));
@@ -113,7 +127,7 @@
             + mm;
         }
         moon.cx = space + scale(moon.diameterKm) / 2;
-        console.log(moon.name, moon.cx); // inspect results
+        // console.log(moon.name, moon.cx); // inspect results
       });
 
 
