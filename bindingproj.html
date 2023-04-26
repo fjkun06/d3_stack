@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <h1>The largest moons</h1>
+  <h1>The largest moons of <span></span></h1>
   <div id="container" width="500" height="300">
     <svg height="100%" width="100%" id="moons"></svg>
   </div>
@@ -57,7 +57,7 @@
 
     const svg = d3.select('#moons').attr('viewBox', `0 0 ${width} ${height}`)
 
-    const plane = svg.append('g').attr('transform', `translate(${mp, height / 2})`)
+    const plane = svg.append('g').attr('transform', `translate(${mp}, ${height / 2})`)
 
     //loading data
     d3.json('sol_2016.json').then(data => {
@@ -68,9 +68,45 @@
     })
 
     const configureView = () => {
-      console.dir(app)
+      console.dir(app.planets)
+
+      // 1. set the current data object
+      current.planet = app.planets.filter(p => p.id == current.id)[0];
+      console.dir(current.planet)
+
+      //2. Configure scales for this view
+      //obtain diameter of largest moon
+      const maxDiameter = d3.max(current.planet.satellites, d => d.diameterKm)
+
+      // b) include moons with 1/50 of the largest moon or larger
+      current.moons = current.planet.satellites
+        .filter(s => s.diameterKm > maxDiameter / 50);
+
+      // c) add diameters (they will be drawn side by side)
+      const sumDiameters =
+        d3.sum(current.moons, d => d.diameterKm);
+
+      // d) calculate space occupied by circles
+      const horizSpace = width - (mp + mw * 2 + current.moons.length * mm)
+      const vertSpace = height - mh * 2;
+
+      // Inspect results
+      console.log("Planet", current.planet);
+      console.log("Largest moon diameter", maxDiameter);
+      console.log("Selected moons", current.moons);
+      console.log(horizSpace, vertSpace);
+
     }
-    const draw = () => { }
+    const draw = () => {
+      //draw line showing orbital plane
+      plane.append('line').attr('x1', 0).attr('x2', width).style('stroke', 'red');
+      plane.append("circle").attr('class', 'planet').datum(current.planet)
+        .attr('r', d => scale(d.diameterKm) / 200)
+        .attr('cx', d => -(mw + scale(d.diameterKm) / 200))
+
+      // 2) Change page title
+      d3.select('span').text(() => current.planet.name)
+    }
   </script>
 </body>
 
