@@ -142,7 +142,10 @@
     const draw = () => {
       //draw line showing orbital plane
       // select circle n update planet
-      plane.select('.planet').style('fill', d => current.color).datum(current.planet)
+      plane.select('.planet')
+        .style('fill', d => current.color).datum(current.planet)
+        .transition()
+        .duration(1000)
         .attr('r', d => scale(d.diameterKm) / 2)
         .attr('cx', d => -(mw + scale(d.diameterKm) / 2))
 
@@ -161,14 +164,20 @@
             )
         )
         .attr("class", "moon")
-        .each(function () {
+        .each(function (_, i) {
           const moon = d3.select(this)
           moon.select('circle')
+            .transition()
+            .duration(1000)
+            .delay(50 * i)
             .attr("cx", d => d.cx)
             .attr("r", d => scale(d.diameterKm) / 2)
             .style("fill-opacity", 10.1)
 
           moon.select('text')
+            .transition()
+            .duration(1000)
+            .delay(50 * i)
             .style('transform', d => `rotate(90deg)`)
             .attr('x', d => scale(d.diameterKm / 2) + 10)
             .attr('y', d => -d.cx + 2.5)
