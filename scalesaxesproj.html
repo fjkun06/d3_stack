@@ -17,7 +17,17 @@
     }
 
     text {
-      font-size: 11px;
+      font-size: 6px;
+    }
+
+    .domain {
+      opacity: 0;
+    }
+
+    .y-axis line,
+    .x-axis line {
+      stroke-width: .25;
+      stroke: rgba(114, 138, 74, 0.5);
     }
   </style>
 </head>
@@ -34,9 +44,14 @@
     const scaleY = d3.scaleLinear().range([h - marginH, marginH]);
     const data = {}
 
-    //adding axes
-    const axisX = d3.axisBottom(scaleX);
-    const axisY = d3.axisLeft(scaleY);
+    //adding axes //creating grids
+    const axisX = d3.axisBottom(scaleX).tickSize(h - marginH * 2 + 10)
+      .tickPadding(2);;
+    const axisY = d3.axisLeft(scaleY).tickSize(w - marginW * 2 + 10)
+      .tickPadding(2);
+
+
+
 
 
     //filter data and pass on
@@ -59,6 +74,7 @@
         scaleY.domain(d3.extent(dataset, d => d.gdp));
         scaleX.domain(d3.extent(dataset, d => d.hdi));
         draw();
+        drawAxes()
       });
 
     function draw() {
@@ -69,7 +85,27 @@
         .attr("cx", d => scaleX(d.hdi))
         .attr("cy", d => scaleY(d.gdp))
     }
-   // more code here
+    // drawing axes
+    function drawAxes() {
+      // axes
+      const xG = d3.select("svg").append("g").attr("class", "x-axis")
+        .attr("transform", `translate(${[0, h - marginH]})`)
+        .call(axisX);
+      const yG = d3.select("svg").append("g").attr("class", "y-axis")
+        .attr("transform", `translate(${[marginW, 0]})`)
+        .call(axisY);
+      // labels
+      d3.select("svg").append("text").attr("class", "label")
+        .text("Human Development Index (HDI)")
+        .attr("transform", `translate(${[w / 2, h - 3]})`)
+      d3.select("svg").append("text").attr("class", "label")
+        .text("Annual GDP per capita (USD)")
+        .attr("transform", `translate(${[3, h / 2]}) rotate(90)`)
+
+      //grid work
+      xG.attr("transform", `translate(${[0, marginH]})`)
+      yG.attr("transform", `translate(${[w - marginW, 0]})`);
+    }
   </script>
 </body>
 
