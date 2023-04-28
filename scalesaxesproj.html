@@ -41,7 +41,9 @@
     //[50,450]
     const scaleX = d3.scaleLinear().range([marginW, w - marginW]);
     //[260,40]
-    const scaleY = d3.scaleLinear().range([h - marginH, marginH]);
+    //use log for scatterplots if non-0 values exist
+    const scaleY = d3.scaleLog().range([h - marginH, marginH]);
+    // const scaleY = d3.scaleLinear().range([h - marginH, marginH]);
     const data = {}
 
     //adding axes //creating grids
