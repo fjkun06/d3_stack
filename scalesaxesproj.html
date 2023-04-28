@@ -130,8 +130,8 @@
         .data(data.countries)
         .join("circle").attr("class", "dot")
         //converting to bubble chart
-        .attr("r", d => 1.5
-          // scaleR(d.population)
+        .attr("r", d => 
+          scaleR(d.population)
         )
         // .attr("r", 1.5)
         .attr("cx", d => scaleX(d.hdi))
@@ -241,7 +241,7 @@
       //sets the  r of the element calling this fxn to 4
       //converting to bubble chart
 
-      d3.select(this).attr("r", 4);
+      // d3.select(this).attr("r", 4);
       d3.select(".tooltip").transition().duration(250).attr("opacity", 1)
         .attr("transform",
           `translate(${[10 + scaleX(d.hdi), scaleY(d.gdp) - 12]})`)
@@ -271,7 +271,7 @@
       //resetting previous mods
       //converting to bubble chart
 
-      d3.select(this).transition().duration(250).attr("r", 1.5);
+      // d3.select(this).transition().duration(250).attr("r", 1.5);
       d3.select(".tooltip").attr("opacity", 0)
     }
 
