@@ -44,7 +44,9 @@
     //use log for scatterplots if non-0 values exist
     const scaleY = d3.scaleLog().range([h - marginH, marginH]);
     // const scaleY = d3.scaleLinear().range([h - marginH, marginH]);
-    const data = {}
+    const data = {
+      continents: new Set()
+    }
 
     //adding axes //creating grids
     const axisX = d3.axisBottom(scaleX).tickSize(h - marginH * 2 + 10)
@@ -59,6 +61,8 @@
     //filter data and pass on
     d3.csv("./un_regions_gdp.csv", function (row) {
       if (row.HDI_2017 > 0 && row.GDP_2017 > 0) {
+        //store unique continent names in set
+        data.continents.add(row.Continent);
         return {
           name: row.Country,
           code: row.Code,
@@ -72,6 +76,9 @@
       .then(function (dataset) {
         //save data to object that can be accessed by any fxn in code
         data.countries = dataset;
+        //convert continent set to array and sort
+        data.continents =
+          [...data.continents].sort((a, b) => d3.ascending(a, b));
         //set domain of both scales to be [min,max] value as per criteria (axis)
         scaleY.domain(d3.extent(dataset, d => d.gdp));
         scaleX.domain(d3.extent(dataset, d => d.hdi));
@@ -80,12 +87,19 @@
       });
 
     function draw() {
+      console.log(data);
       d3.select("svg").selectAll("circle.dot")
         .data(data.countries)
         .join("circle").attr("class", "dot")
         .attr("r", 1.5)
         .attr("cx", d => scaleX(d.hdi))
         .attr("cy", d => scaleY(d.gdp))
+
+      //colors dot per continent
+      const color = d3.scaleOrdinal(d3.schemeDark2);
+      console.log(color);
+      d3.selectAll(".dot")
+        .style("fill", d => color(d.continent)) // uses the continent's name
     }
     // drawing axes
     function drawAxes() {
