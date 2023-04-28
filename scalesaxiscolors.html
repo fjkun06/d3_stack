@@ -130,7 +130,38 @@
     svg.append('g').attr('class', 'x-axis').attr('transform', `translate(0,${height - marginY})`).call(axisX)
       .append('text').attr('class', 'label').text('x values').attr('transform', `translate(${[(width / 2), marginY / 1.25]})`)
     svg.append('g').attr('class', 'y-axis').attr('transform', `translate(${marginX},0)`).call(axisY)
-      .append('text').attr('class', 'label').text('y values').attr('transform', `translate(${[-marginX/1.15, height/2 ]}) rotate(90)`)
+      .append('text').attr('class', 'label').text('y values').attr('transform', `translate(${[-marginX / 1.15, height / 2]}) rotate(90)`)
+
+
+    const data = d3.range(0, 33);
+    const scale = d3.scaleLinear().domain([0, 32]).range([0, 1000]);
+    const color = d3.color('red');
+    console.log(color.darker(0.1).hex());
+    console.log(scaleX(1));
+
+    const scale2 = d3.scaleSequential(d3.interpolateRainbow)
+      .domain([0, 600]);
+    const scale3 = d3.scaleSequential(d3.interpolateRgb('red','navy'))
+      .domain([0, 6]);
+
+      console.log(scale2(300));
+      console.log(scale2(600));
+      console.log(scale3(300));
+      console.log(scale3(600));
+    // svg.selectAll("rect")
+    //   .data(d3.range(0, 601, 5))
+    //   .enter().append("rect")
+    //   .attr("height", 20).attr("width", 4)
+    //   .attr("y", 0).attr("x", d => d)
+    //   .style("fill", d => scale2(d));
+
+    svg.selectAll("rect")
+      .data(d3.range(0, 7, 1))
+      .enter().append("rect")
+      .attr("height", 20).attr("width", 4)
+      .attr("y", 30).attr("x", d => d*10)
+      .style("fill", d => scale3(d));
+
   </script>
 </body>
 
