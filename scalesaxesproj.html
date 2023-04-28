@@ -69,6 +69,9 @@
       continents: new Set()
     }
 
+    //converting to bubble chart
+    const scaleR = d3.scaleSqrt().range([1, 15]);
+
     //adding axes //creating grids
     const axisX = d3.axisBottom(scaleX).tickSize(h - marginH * 2 + 10)
       .tickPadding(2);;
@@ -177,8 +180,8 @@
 
     }
 
-      //adding legend interactivity e: event, d: datum passed during appending
-    function showContinents(e,d) {
+    //adding legend interactivity e: event, d: datum passed during appending
+    function showContinents(e, d) {
       d3.selectAll(".item").classed("fade", k => k != d)
       d3.selectAll(".dot").classed("show", k => k.continent == d);
     }
@@ -212,17 +215,17 @@
 
     //e: event, d: datum passed during appending
     function showDetails(e, d) {
-     //sets the  r of the element calling this fxn to 4
+      //sets the  r of the element calling this fxn to 4
       d3.select(this).attr("r", 4);
       d3.select(".tooltip").transition().duration(250).attr("opacity", 1)
         .attr("transform",
           `translate(${[10 + scaleX(d.hdi), scaleY(d.gdp) - 12]})`)
-      
+
       //giving all 3 text elts their text nad storing their reference to values
       const text1 = d3.select(".tooltip .name").transition().duration(250).text(d.name);
       const text2 = d3.select(".tooltip .gdp").transition().duration(250).text("GDP: " + format(d.gdp));
       const text3 = d3.select(".tooltip .hdi").transition().duration(250).text("HDI: " + d.hdi);
-      
+
       //setting the rectangle width to that of the longest text string and more + 6
       const boxWidth = 6 + d3.max([text1.node().getComputedTextLength(),
       text2.node().getComputedTextLength(),
