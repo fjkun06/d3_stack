@@ -14,7 +14,7 @@
 
     * {
       font-family: 'Yanone Kaffeesatz', sans-serif;
-      transition: all 0.25s ease-in-out;
+      transition: all 0.25s ease-in;
     }
 
     text {
@@ -71,6 +71,8 @@
 
     //converting to bubble chart
     const scaleR = d3.scaleSqrt().range([1, 15]);
+    // const scaleR = d3.scaleSqrt().range([1, 15]);
+    const formatSI = d3.format(",.3s");
 
     //adding axes //creating grids
     const axisX = d3.axisBottom(scaleX).tickSize(h - marginH * 2 + 10)
@@ -111,22 +113,37 @@
         drawAxes()
         //adding interactivity
         drawTooltips()
-      });
 
+
+
+      });
+    // console.log(scaleR(d3.extent(data.countries, d => d.population)[1]));
+    console.log(data.countries);
+    // console.log(d3.extent(data.countries, d => d.population));
     function draw() {
-      console.log(data);
+      //converting to bubble chart
+      scaleR.domain(d3.extent(data.countries, d => d.population));
+      console.log(scaleR(d3.extent(data.countries, d => d.population)[1]));
+      console.log(data.countries);
+
       d3.select("svg").selectAll("circle.dot")
         .data(data.countries)
         .join("circle").attr("class", "dot")
-        .attr("r", 1.5)
+        //converting to bubble chart
+        .attr("r", d => 1.5
+          // scaleR(d.population)
+        )
+        // .attr("r", 1.5)
         .attr("cx", d => scaleX(d.hdi))
         .attr("cy", d => scaleY(d.gdp))
 
+
       //colors dot per continent
       const color = d3.scaleOrdinal(d3.schemeDark2);
-      console.log(color);
       d3.selectAll(".dot")
-        .style("fill", d => color(d.continent)) // uses the continent's name
+        .style("fill", d => {
+          return color(d.continent)
+        }) // uses the continent's name
 
       // adding legend
       const legend = d3.select("svg")
@@ -198,12 +215,18 @@
         .attr("opacity", 0);
       tooltip.append("rect")
         .attr("width", 80)
-        .attr("height", 45)
+        //converting to bubble chart
+        .attr("height", 60)
+        // .attr("height", 45)
         .attr("rx", 3).attr("ry", 3)
         .attr("x", -3).attr("y", -10);
       tooltip.append("text").attr("class", "name");
       tooltip.append("text").attr("class", "hdi").attr("y", 15);
       tooltip.append("text").attr("class", "gdp").attr("y", 30);
+
+      //converting to bubble chart
+      d3.select(".tooltip ")
+        .append("text").attr("class", "pop").attr("y", 45);
 
       //handling mouse events
       d3.select("svg")
@@ -216,6 +239,8 @@
     //e: event, d: datum passed during appending
     function showDetails(e, d) {
       //sets the  r of the element calling this fxn to 4
+      //converting to bubble chart
+
       d3.select(this).attr("r", 4);
       d3.select(".tooltip").transition().duration(250).attr("opacity", 1)
         .attr("transform",
@@ -226,15 +251,26 @@
       const text2 = d3.select(".tooltip .gdp").transition().duration(250).text("GDP: " + format(d.gdp));
       const text3 = d3.select(".tooltip .hdi").transition().duration(250).text("HDI: " + d.hdi);
 
+      //converting to bubble chart
+      const text4 = d3.select(".tooltip .pop")
+        .text("Population: " + formatSI(d.population)); // add
+
       //setting the rectangle width to that of the longest text string and more + 6
+
+      //converting to bubble chart
       const boxWidth = 6 + d3.max([text1.node().getComputedTextLength(),
       text2.node().getComputedTextLength(),
-      text3.node().getComputedTextLength()]);
+      text3.node().getComputedTextLength(), text4.node().getComputedTextLength()]);
+      // const boxWidth = 6 + d3.max([text1.node().getComputedTextLength(),
+      // text2.node().getComputedTextLength(),
+      // text3.node().getComputedTextLength()]);
       d3.select(".tooltip rect").attr("width", boxWidth);
     }
 
     function clearDetails(d) {
       //resetting previous mods
+      //converting to bubble chart
+
       d3.select(this).transition().duration(250).attr("r", 1.5);
       d3.select(".tooltip").attr("opacity", 0)
     }
