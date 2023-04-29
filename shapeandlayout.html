@@ -11,20 +11,30 @@
     div {
       transform: scale(0.5);
     }
+
+    path {
+      fill: none;
+    }
+
+    text {
+      font-size: 11px;
+    }
   </style>
 </head>
 
 <body>
 
-
+  <button type="button" id="b1">ChangeData1</button>
+  <button type="button" id="b2">ChangeData2</button>
+  <button type="button" id="b3">ChangeData3</button>
   <script>
 
 
 
-    const line = d3.line()
-    const data = [[0, 0], [100, 200], [200, 400], [300, 150], [400, 50],
-    [500, 350], [600, 500], [700, 100], [800, 250]];
-    const pathData = line(data);
+    // const line = d3.line()
+    // const data = [[0, 0], [100, 200], [200, 400], [300, 150], [400, 50],
+    // [500, 350], [600, 500], [700, 100], [800, 250]];
+    // const pathData = line(data);
 
     // const svg = d3.select("body").append('div')
     //   .append("svg").attr('viewBox', '0 0 800 600').append("path")
@@ -33,29 +43,116 @@
     //   .style("stroke", "red")
     //   .style("fill", "none");
 
-    const svg = d3.select("body").append('div')
-      .append("svg").attr('viewBox', '0 0 800 600')
-    // binds entire array to <g>
+    // const svg = d3.select("body").append('div')
+    //   .append("svg").attr('viewBox', '0 0 800 600')
+    // // binds entire array to <g>
 
-    const g = svg.append("g").datum(data);
-    const x = svg.append("g").datum([1, 2, 3]);
-    console.log(x);
-    g.append("path")
-      .attr("d", line) // calls line(data) from path
-      .style("stroke", "red")
-      .style("fill", "none");
-    g.selectAll("text")
-      .data(d => d) // binds each [x,y] to a <text> element
-      .join("text") // same as enter().append("text")
-      .text(d => d)
-      .attr("x", d => d[0] + 10) // positions the text near (x,y)
-      .attr("y", d => d[1] + 10)
+    // const g = svg.append("g").datum(data);
+    // const x = svg.append("g").datum([1, 2, 3]);
+    // console.log(x);
+    // g.append("path")
+    //   .attr("d", line) // calls line(data) from path
+    //   .style("stroke", "red")
+    //   .style("fill", "none");
+    // g.selectAll("text")
+    //   .data(d => d) // binds each [x,y] to a <text> element
+    //   .join("text") // same as enter().append("text")
+    //   .text(d => d)
+    //   .attr("x", d => d[0] + 10) // positions the text near (x,y)
+    //   .attr("y", d => d[1] + 10)
 
     // x
     //   .join("text") // same as enter().append("text")
     //   .text(d => d)
     //   .attr("x", d => d[0] + 10) // positions the text near (x,y)
     //   .attr("y", d => d[1] + 10)
+
+    const btn1 = document.getElementById('b1')
+    const btn2 = document.getElementById('b2')
+    const btn3 = document.getElementById('b3')
+
+    //3lines
+    const width = 800;
+    const height = 400;
+    const margin = 50;
+    let data = [
+      [[0, 0], [1, .2], [2, .4], [3, .15], [4, .05], [5, .35], [6, .5], [7, .1], [8, .25]],
+      [[0, 0], [1, .077], [2, .13], [3, .27], [4, .33], [5, .29], [6, .09], [7, .03], [8, .11]],
+      [[0, 0], [1, .3], [2, .5], [3, .56], [4, .43], [5, .33], [6, .21], [7, .11], [8, .02]],
+    ];
+
+
+    const scaleX = d3.scaleLinear()
+      .domain(d3.extent(d3.merge(data), d => d[0]))
+      .range([margin, width - margin]);
+    const scaleY = d3.scaleLinear()
+      .domain(d3.extent(d3.merge(data), d => d[1]))
+      .range([height - margin, margin])
+      .nice();
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+      .domain([0, data.length]);
+    const line = d3.line()
+      .x(d => scaleX(d[0]))
+      .y(d => scaleY(d[1]));
+    // console.log(line([[0, 0], [1, .2], [2, .4], [3, .15], [4, .05], [5, .35], [6, .5], [7, .1], [8, .25]]));
+
+
+    const xAxis = d3.axisBottom(scaleX);
+    const yAxis = d3.axisLeft(scaleY);
+    const svg = d3.select("body").append("svg")
+      .attr("height", height)
+      .attr("width", width);
+    const axes = svg.append("g").attr("class", "axes");
+    axes.append("g").call(xAxis)
+      .attr("transform", `translate(${[0, height - margin]})`);
+    axes.append("g").call(yAxis)
+      .attr("transform", `translate(${[margin, 0]})`);
+    svg.append('g').attr("class", "draw");
+
+    //drawing
+    changeData([[0, 0], [1, .2], [2, .4], [3, .15], [4, .05], [5, .35], [6, .5], [7, .1], [8, .25]])
+
+    b1.addEventListener('click', () => {
+      changeData([[0, 0], [1, .077], [2, .13], [3, .27], [4, .33], [5, .29], [6, .09], [7, .03], [8, .11]])
+    }
+    )
+    b2.addEventListener('click', () => {
+      changeData([[0, 0], [1, .2], [2, .4], [3, .15], [4, .05], [5, .35], [6, .5], [7, .1], [8, .25]])
+    }
+    )
+    b3.addEventListener('click', () => {
+      changeData([[0, 0], [1, .3], [2, .5], [3, .56], [4, .43], [5, .33], [6, .21], [7, .11], [8, .02]])
+    }
+    )
+
+    function changeData(datum) {
+      data = [datum]
+      const g = d3.select('g.draw').datum(data)
+      g.selectAll("path.dataset")
+        .data(d => d).join("path").transition().duration(1000) // same as
+        // .data(data).enter().append("path")
+        .attr("class", "dataset")
+        .attr("d", line)
+        // .attr("d", line)
+        .style("stroke", colorScale);
+
+      g.selectAll("text")
+        .data(d => d[0]) // binds each [x,y] to a <text> element
+        .join("text") // same as 
+        // .enter().append("text")
+        .text(d => `(${d})`).transition().duration(1000)
+        .attr("x", d => scaleX(d[0])) // positions the text near (x,y)
+        .attr("y", d => scaleY(d[1]))
+
+      //adding interactivity
+      svg.selectAll("path.dataset").on('mouseenter', function (_, d) {
+
+      })
+      svg.selectAll("path.dataset").on('mouseleave', function (_, d) {
+
+      })
+    }
+
   </script>
 </body>
 
