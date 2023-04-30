@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="scripts/d3.v7.min.js"></script>
+  <title>Stack</title>
+  <style>
+    .arc {
+      stroke: white;
+      stroke-width: 5;
+      fill-opacity: .5;
+    }
+
+    circle {
+      fill: gold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    const svg = d3.select('body').append('svg')
+      .attr('width', 800)
+      .attr('height', 400)
+      .style('border', '1px solid red')
+
+    /***************************************Full Circle Sharx********************************/
+
+
+    /***********************************************Arc with space in center ********************************/
+    const arc = d3.arc().innerRadius(5).outerRadius(100).cornerRadius(10).padAngle(1).padRadius(1)
+    const arc2 = d3.arc().innerRadius(0).outerRadius(100).padAngle(1).padRadius(1)
+    const data = [12, 45, 99, 22, 10, 76];
+    const pie = d3.pie(); // creates the generator function
+    const arcData = pie(data); // generates layout array
+    console.log(arcData);
+    // const colorScale = d3.scaleSequential(d3.interpolateRgb('pink', 'grey', 'purple')).domain([0, 2])
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    /**************************Modern Pie Chart************************/
+
+    svg.append('g').selectAll("path.slice2")
+      .data(arcData).enter()
+      .append("path").attr("class", "slice")
+      .attr("d", arc)
+      .style("fill", (d, i) => colorScale(i))
+      .attr("transform", "translate(400,120)");
+
+    /**************************standard Pie Chart************************/
+    // svg.append('g').selectAll("path.slice")
+    //   .data(arcData).enter()
+    //   .append("path").attr("class", "slice")
+    //   .attr("d", arc2)
+    //   .style("fill", (d, i) => colorScale(i))
+    //   .attr("transform", "translate(120,120)");
+
+    const g = svg.selectAll("g.holder").data(arcData).enter().append("g")
+      .attr("class", "holder")
+      .attr("transform", "translate(120,120)");
+
+    g.append("path").attr("class", "slice")
+      .attr("d", arc).style("fill", (d, i) => colorScale(i))
+      .attr("transform", "translate(520,120)");
+    g.append('circle')
+      .attr("cx", (d, i) => arc.centroid(arcData[i])[0])
+      .attr("cy", (d, i) => arc.centroid(arcData[i])[1])
+      .attr("r", 3)
+      .attr("transform", "translate(520,120)");
+
+
+    /***********************************************Advanced Pie Chart********************************/
+    const data2 = [
+      { "country": "Mexico", "population": 101720 },
+      { "country": "Canada", "population": 30736 },
+      { "country": "United States", "population": 281983 },
+    ];
+    const pii = d3.pie()
+      .value(d => d.population)
+      .sort((a, b) => d3.ascending(a.population, b.population))
+      .startAngle(Math.PI / 2).endAngle(2.5 * Math.PI);
+
+    const arrc = d3.arc().innerRadius(25).outerRadius(100)
+      .padAngle(4).padRadius(4);
+    // const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    const gg = svg
+      .selectAll("g.final")
+      .data(pii(data2)).enter()
+      .append("g")
+      .attr("class", "final")
+      .attr("transform", "translate(150,120)");
+    gg.append("path").attr("class", "final slice")
+      .attr("d", arrc)
+      .attr("fill", (d, i) => colorScale(i));
+    gg.append('text')
+      .attr("x", (d, i) => arrc.centroid(d)[0] + 5)
+      .attr("y", (d, i) => arrc.centroid(d)[1] + 5)
+      .attr("text-anchor", "middle")
+      .text(d => d.data.country);
+
+  </script>
+</body>
+
+</html>
