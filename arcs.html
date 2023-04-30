@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="scripts/d3.v7.min.js"></script>
+  <title>Stack</title>
+  <style>
+    div {
+      transform: scale(0.5);
+    }
+
+    path {
+      fill: none;
+    }
+
+    text {
+      font-size: 11px;
+      border: 1px solid red
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    const arc = d3.arc().innerRadius(0).outerRadius(100).startAngle(Math.PI * 0 / 270).endAngle(Math.PI*360/180)
+    const arc2 = d3.arc().innerRadius(0).outerRadius(100).startAngle(Math.PI * 45 / -180).endAngle(Math.PI * 135 / -180)
+    const arc3 = d3.arc().innerRadius(0).outerRadius(100).startAngle(Math.PI * 45 / -180).endAngle(Math.PI * 45 / 270)
+    const slice = arc()
+    const slice2 = arc2()
+    const slice3 = arc3()
+    console.log(slice);
+    const svg = d3.select('body').append('svg')
+    .attr('width', 400)
+    .attr('height', 400)
+    .style('border', '1px solid red')
+
+    svg
+    .append('path').datum(slice)
+    .attr('d', d => d)
+    .attr('stroke', 'red')
+    .attr('fill', '#888')
+    .attr('transform', 'translate(120,120)')
+    svg
+    .append('path').datum(slice2)
+    .attr('d', d => d)
+    .attr('stroke', 'gold')
+    .attr('fill', 'grey')
+    .attr('transform', 'translate(120,120)')
+    svg
+    // .append('path').datum(slice3)
+    // .attr('d', d => d)
+    // .attr('stroke', 'purple')
+    // .attr('fill', 'grey')
+    // .attr('transform', 'translate(120,120)')
+  </script>
+</body>
+
+</html>

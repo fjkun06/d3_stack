@@ -26,8 +26,118 @@
 <body>
 
   <script>
+    /****************************Simple Stack****************************/
+    // const svg = d3.select("body").append("svg")
+    //   .attr("height", 400)
+    //   .attr("width", 800);
+    // const data = [
+    //   {
+    //     name: "Dataset 1",
+    //     series: [{ key: 'a', value: 190 },
+    //     { key: 'b', value: 90 },
+    //     { key: 'c', value: 150 }]
+    //   },
+    //   {
+    //     name: "Dataset 2",
+    //     series: [{ key: 'a', value: 330 },
+    //     { key: 'b', value: 160 },
+    //     { key: 'c', value: 275 }]
+    //   },
+    //   {
+    //     name: "Dataset 3",
+    //     series: [{ key: 'a', value: 390 },
+    //     { key: 'b', value: 207 }, { key: 'c', value: 310 }]
+    //   }
+    // ];
+
+    // const keys = data[0].series.map(k => k.key);
+    // const flatData = data.map(function (d) {
+    //   const obj = {};
+    //   obj.dataset = d.name;
+    //   keys.forEach(function (k) {
+    //     obj[k] = d.series
+    //       .filter(f => f.key == k)
+    //       .map(m => m.value)[0]
+    //   });
+    //   return obj;
+    // });
+    // const stack = d3.stack().keys(keys);
+    // const stackedData = stack(flatData);
+
+    // //drawing stack
+    // const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+    //   .domain([0, data.length]);
+    // svg.selectAll("g")
+    //   .data(stackedData).join("g") // binds stackedData to g
+    //   .each(function (d, x) {
+    //     d3.select(this)
+    //       .selectAll("rect")
+    //       .data(d).join("rect") // binds stackedData[d] to rect
+    //       .attr('width', d => d[1] - d[0]) // use stacked data
+    //       .attr('height', 18)
+    //       .attr('x', d => d[0] + 65) // use stacked data
+    //       .attr('y', (d, i) => i * 20)
+    //       .attr('fill', (d, i) => colorScale(x))
+    //   }).append("text").text((d, i) => flatData[i].dataset)
+    //   .attr("y", (d, i) => i * 20 + 14).attr("x", 10);
+
+    /****************************Complex Stack****************************/
+    const width = 800;
+    const height = 600;
+    const margin = 50;
+
+    const populations = [
+      { "year": 1950, "Mexico": 28013, "Canada": 13733, "United States": 158804, "Belize": 69, "Costa Rica": 959, "El Salvador": 2200, "Guatemala": 3115, "Honduras": 1547, "Nicaragua": 1295, "Panama": 860, "Argentina": 17150, "Bolivia": 3090, "Brazil": 53975, "Chile": 6188, "Colombia": 12341, "Ecuador": 3470, "French Guiana": 25, "Guyana": 407, "Paraguay": 1473, "Peru": 7728, "Suriname": 215, "Uruguay": 2239, "Venezuela": 5482 },
+      { "year": 1960, "Mexico": 38174, "Canada": 17917, "United States": 186808, "Belize": 92, "Costa Rica": 1333, "El Salvador": 2763, "Guatemala": 4211, "Honduras": 2039, "Nicaragua": 1775, "Panama": 1133, "Argentina": 20619, "Bolivia": 3693, "Brazil": 72208, "Chile": 7717, "Colombia": 16480, "Ecuador": 4546, "French Guiana": 32, "Guyana": 572, "Paraguay": 1903, "Peru": 10062, "Suriname": 290, "Uruguay": 2539, "Venezuela": 8147 },
+      { "year": 1970, "Mexico": 52030, "Canada": 21453, "United States": 209588, "Belize": 122, "Costa Rica": 1849, "El Salvador": 3669, "Guatemala": 5622, "Honduras": 2717, "Nicaragua": 2398, "Panama": 1519, "Argentina": 23973, "Bolivia": 4506, "Brazil": 95327, "Chile": 9564, "Colombia": 22061, "Ecuador": 6073, "French Guiana": 48, "Guyana": 705, "Paraguay": 2474, "Peru": 13341, "Suriname": 371, "Uruguay": 2810, "Venezuela": 11588 },
+      { "year": 1980, "Mexico": 69361, "Canada": 24537, "United States": 229763, "Belize": 144, "Costa Rica": 2389, "El Salvador": 4581, "Guatemala": 7283, "Honduras": 3678, "Nicaragua": 3250, "Panama": 1979, "Argentina": 28106, "Bolivia": 5590, "Brazil": 121160, "Chile": 11266, "Colombia": 27738, "Ecuador": 7976, "French Guiana": 67, "Guyana": 780, "Paraguay": 3181, "Peru": 17359, "Suriname": 363, "Uruguay": 2916, "Venezuela": 15344 },
+      { "year": 1990, "Mexico": 85358, "Canada": 27693, "United States": 252530, "Belize": 188, "Costa Rica": 3096, "El Salvador": 5255, "Guatemala": 9264, "Honduras": 4955, "Nicaragua": 4145, "Panama": 2471, "Argentina": 32730, "Bolivia": 6856, "Brazil": 149352, "Chile": 13242, "Colombia": 34272, "Ecuador": 10218, "French Guiana": 116, "Guyana": 743, "Paraguay": 4214, "Peru": 21827, "Suriname": 407, "Uruguay": 3110, "Venezuela": 19862 },
+      { "year": 2000, "Mexico": 101720, "Canada": 30736, "United States": 281983, "Belize": 247, "Costa Rica": 3925, "El Salvador": 5868, "Guatemala": 11651, "Honduras": 6524, "Nicaragua": 5027, "Panama": 3030, "Argentina": 37057, "Bolivia": 8340, "Brazil": 175288, "Chile": 15263, "Colombia": 40404, "Ecuador": 12629, "French Guiana": 163, "Guyana": 753, "Paraguay": 5303, "Peru": 25915, "Suriname": 472, "Uruguay": 3321, "Venezuela": 24488 }
+    ]
+
+    // Selecting the keys pairs (from the first element)
+    const keys = Object.entries(populations[0])
+      .sort((a, b) => d3.descending(a[1], b[1]))
+      .filter(d => d[0] != 'year')
+      .map(d => d[0]);
+    // Selecting data for the horizontal axis
+    const years = populations.map(d => new Date(d.year, 1, 1));
+    const svg = d3.select("body").append("svg")
+      .attr("height", height).attr("width", width);
+    const stack = d3.stack()
+      .keys(keys)
+      .order(d3.stackOrderDescending);
+    const stackedData = stack(populations); // stacks the data
+
+    const scaleTime = d3.scaleTime()
+      .domain([new Date(1949, 12, 1), new Date(2000, 1, 1)])
+      .range([margin, width - margin])
+    const colorScale = d3.scaleOrdinal(d3.schemeSpectral[11])
+      .domain([0, stack.keys().length]);
+    const scaleY = d3.scaleLinear()
+      .domain([0, d3.max(d3.merge(d3.merge(stackedData)))])
+      .range([height - margin, 10])
+      .nice();
+    const timeAxis = d3.axisBottom(scaleTime).ticks(6);
+    const yAxis = d3.axisLeft(scaleY);
+    //draw axes
+    const axes = svg.append("g").attr("class", "axes");
+    axes.append("g").call(timeAxis)
+      .attr("transform", `translate(${[0, height - margin]})`);
+    axes.append("g").call(yAxis)
+      .attr("transform", `translate(${[margin, 0]})`);
+    const area = d3.area()
+      .x((d, i) => scaleTime(years[i]))
+      .y0(d => scaleY(d[0]))
+      .y1(d => scaleY(d[1]))
+      // .curve(d3.curveMonotoneX);
 
 
+    svg.selectAll("path")
+      .data(stackedData).enter()
+      .append("path")
+      .attr("d", area)
+      .style("fill", (d, i) => colorScale(stack.keys().length - i - 1));
   </script>
 </body>
 
