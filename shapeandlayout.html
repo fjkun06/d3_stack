@@ -82,7 +82,7 @@
       [[0, 0], [1, .3], [2, .5], [3, .56], [4, .43], [5, .33], [6, .21], [7, .11], [8, .02]],
     ];
 
-
+    console.log(d3.merge(data));
     const scaleX = d3.scaleLinear()
       .domain(d3.extent(d3.merge(data), d => d[0]))
       .range([margin, width - margin]);
@@ -92,10 +92,17 @@
       .nice();
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
       .domain([0, data.length]);
-    const line = d3.line()
-      .x(d => scaleX(d[0]))
-      .y(d => scaleY(d[1]))
-      .curve(d3.curveNatural );
+    const line =
+      //area
+      // d3.area().x(d => scaleX(d[0]))
+      //   .y(d => scaleY(d[1]))
+      //   .y1(scaleY(0)) // scale is necessary because chart is inverted
+      //   .curve(d3.curveMonotoneX);
+      //line
+      d3.line()
+        .x(d => scaleX(d[0]))
+        .y(d => scaleY(d[1]))
+        .curve(d3.curveNatural);
     // console.log(line([[0, 0], [1, .2], [2, .4], [3, .15], [4, .05], [5, .35], [6, .5], [7, .1], [8, .25]]));
 
 
