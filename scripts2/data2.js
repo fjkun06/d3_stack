@@ -50,12 +50,17 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   });
 
   //convert set of uniques years to array
+  // const subjectAbbreviations = ["", ...datum.map((x) => x.subject).map((data) => `${data.slice(0, 3).toUpperCase()}`)];
+
   bigSet.years = [...bigSet.years];
   bigSet.subjects = [...bigSet.subjects];
+  bigSet.detailedSubjects = [...bigSet.subjects].map(subj => Object.assign({},{name: subj,abbrev:subj.slice(0, 3).toUpperCase() }));
   bigSet.scores = [...bigSet.scores];
 
-  //displaying year options
+  //displaying year and subject options
   feedYears(bigSet.years);
+  feedSubjects(bigSet.detailedSubjects);
+  console.log(bigSet.detailedSubjects);
   init();
   test({ id: "Biology", type: "curve" });
   // test({id:"2011-12",type:"curve"});

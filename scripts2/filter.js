@@ -70,6 +70,9 @@ const feedSubjects = (data = []) => {
 const handleInputs = () => {
   const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
   const yearh = document.querySelector("#yearh");
+  const inputsSubject = Array.from(document.querySelectorAll(".subjectfilter"));
+  const subjecth = document.querySelector("#subjecth");
+
   //handling changes for the years
   inputsYear.forEach((input, i) => {
     if (input.checked) {
@@ -80,6 +83,21 @@ const handleInputs = () => {
       //calling function to update data
       yearh.textContent = `Filter by Year:  ${e.target.value}`;
       test(e.target.value);
+    });
+  });
+
+  //handling changes for the subjects
+  inputsSubject.forEach((input, i) => {
+    if (input.checked) {
+      // getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      subjecth.textContent = `Filter by Subject:  ${input.nextElementSibling.textContent ?? 'Biology'}`;
+    }
+    input.addEventListener("change", (e) => {
+      subjecth.textContent = `Filter by Subject:  ${e.target.nextElementSibling.textContent}`;
+      console.log(e.target.nextElementSibling.textContent);
+      //calling function to update data
+      // getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      // getStructuredData({ period: e.target.value, type: "subject" });
     });
   });
 };
