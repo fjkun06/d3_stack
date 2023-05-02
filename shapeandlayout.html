@@ -147,6 +147,7 @@
       const wye = d3.symbol().type(d3.symbolWye).size(80)
 
       data = [datum]
+      console.log(data);
       const g = d3.select('g.draw').datum(data)
       g.selectAll("path.dataset")
         .data(d => d).join("path").transition().duration(1000) // same as
