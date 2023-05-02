@@ -10,9 +10,7 @@ const bigSet = {
 const width = 700;
 const height = 400;
 const margin = 50;
-const svg = d3.select("svg")
-.style("border", "1px solid red")
-.style("transform", "translate(0px, 40px)")
+const svg = d3.select("svg").style("border", "1px solid red").style("transform", "translate(0px, 40px)");
 const scaleX = d3
   .scaleLinear()
   .domain([0, 10])
@@ -36,7 +34,6 @@ d3.select("g.title").append("text").attr("class", "titletext").text(` for The 20
 
 /*************************Data Fetching********************* */
 
-
 d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   return {
     year: bunch.Year,
@@ -59,7 +56,7 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   //displaying year options
   feedYears(bigSet.years);
   init();
-  test('2011-12')
+  test("2011-12");
 });
 
 /*************************Drawing Axes********************* */
@@ -71,7 +68,6 @@ const init = () => {
     .tickPadding(5)
     .tickFormat((d, i) => subjectAbbreviations[i]);
   const yAxis = d3.axisLeft(scaleY).tickSize(5).tickSizeOuter(0);
-console.log(bigSet);
   //appending axis to svg
   axes
     .append("g")
@@ -136,12 +132,11 @@ console.log(bigSet);
 /*************************Drawing Functions********************* */
 const test = (year) => {
   const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
-  draw(datum, year);
+  // draw(datum, year);
 };
 
 /*************************Drawing Functions********************* */
-const draw = (datum, abbrev) => {
-  console.log(bigSet);
+draw = (datum, abbrev) => {
   const scores = datum.map((x) => x.numberOfStudents);
   const subjectAbbreviations = ["", ...datum.map((x) => x.subject).map((data) => `${data.slice(0, 3).toUpperCase()}`)];
 
@@ -177,3 +172,9 @@ const draw = (datum, abbrev) => {
   //adding title
   d3.select("text.titletext").text(` for The ${abbrev} Academic Year`);
 };
+
+drawGraph = () => {
+  console.log("graph");
+};
+
+drawGraph();

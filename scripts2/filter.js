@@ -70,13 +70,11 @@ const feedSubjects = (data = []) => {
 const handleInputs = () => {
   const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
   const yearh = document.querySelector("#yearh");
-  console.log(inputsYear);
   //handling changes for the years
   inputsYear.forEach((input, i) => {
     if (input.checked) {
       yearh.textContent = `Filter by Year:  ${input.value}`;
       test(input.value);
-      console.log(input.value);
     }
     input.addEventListener("change", (e) => {
       //calling function to update data
