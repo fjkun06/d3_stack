@@ -70,7 +70,7 @@ const feedSubjects = (data = []) => {
 const handleInputs = () => {
   const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
   const yearh = document.querySelector("#yearh");
-
+  console.log(inputsYear);
   //handling changes for the years
   inputsYear.forEach((input, i) => {
     if (input.checked) {
@@ -87,9 +87,9 @@ const handleInputs = () => {
 };
 
 //loading default data
-// window.onload = () => {
+window.onload = () => {
   // getStructuredData({ period: "2011-12", type: "year" });
   setTimeout(() => {
     handleInputs();
-  }, 10);
-// };
+  }, 1000);
+};

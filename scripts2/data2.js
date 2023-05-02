@@ -10,7 +10,9 @@ const bigSet = {
 const width = 700;
 const height = 400;
 const margin = 50;
-const svg = d3.select("svg").style("border", "1px solid red");
+const svg = d3.select("svg")
+.style("border", "1px solid red")
+.style("transform", "translate(0px, 40px)")
 const scaleX = d3
   .scaleLinear()
   .domain([0, 10])
@@ -29,8 +31,8 @@ svg.append("g").append("text").text("Subjects").attr("fill", "black").attr("tran
 svg.append("g").attr("class", "map");
 svg.append("g").attr("class", "title");
 //adding title
-d3.select("g.title").append("text").text(`The Distribution of Enrollment across The Top 10 Majors at Stanford University`).attr("fill", "black").attr("x", 200).attr("y", 10);
-d3.select("g.title").append("text").attr("class", "titletext").text(` for The 2011-12 Academic Year`).attr("fill", "black").attr("x", 350).attr("y", 30);
+d3.select("g.title").append("text").text(`The Distribution of Enrollment across The Top 10 Majors at Stanford University`).attr("fill", "black").attr("x", 120).attr("y", 10);
+d3.select("g.title").append("text").attr("class", "titletext").text(` for The 2011-12 Academic Year`).attr("fill", "black").attr("x", 280).attr("y", 25);
 
 /*************************Data Fetching********************* */
 
@@ -174,11 +176,4 @@ const draw = (datum, abbrev) => {
 
   //adding title
   d3.select("text.titletext").text(` for The ${abbrev} Academic Year`);
-};
-
-window.onload = () => {
-  // getStructuredData({ period: "2011-12", type: "year" });
-  setTimeout(() => {
-    // test("2011-12");
-  }, 100);
 };
