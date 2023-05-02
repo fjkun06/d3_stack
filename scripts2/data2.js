@@ -10,12 +10,10 @@ const bigSet = {
 const width = 700;
 const height = 400;
 const margin = 50;
-const svg = d3
-  .select("svg")
-  .style('border','1px solid red')
-  // .append("svg")
-  // .attr("height", height + 100)
-  // .attr("width", "100vw");
+const svg = d3.select("svg").style("border", "1px solid red");
+// .append("svg")
+// .attr("height", height + 100)
+// .attr("width", "100vw");
 // .attr("width", width + 100);
 const scaleX = d3
   .scaleLinear()
@@ -27,7 +25,7 @@ const scaleY = d3
   // .range([200, 0])
   .range([height, 0])
   .nice();
-  console.log(scaleY(height-380));
+console.log(scaleY(height - 380));
 const axes = svg.append("g").attr("class", "axes").attr("transform", `translate(${margin},${margin})`);
 
 const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -78,15 +76,9 @@ const init = () => {
   const subjectWithAbbreviation = bigSet.subjects.map((data) => `${data} (${data.slice(0, 3).toUpperCase()})`);
 
   console.log(subjectWithAbbreviation);
-  const xAxis = d3
-    .axisBottom(scaleX)
-    .tickPadding(10)
-    .tickFormat(function (d, i) {
-      return subjectAbbreviations[i]; //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
-    });
-  const yAxis = d3.axisLeft(scaleY)
-  .tickSize(5)
-  .tickSizeOuter(0)
+  const xAxis = d3.axisBottom(scaleX).tickPadding(10);
+
+  const yAxis = d3.axisLeft(scaleY).tickSize(5).tickSizeOuter(0);
   // .ticks(14);
 
   // .tickSize(width);
@@ -100,60 +92,56 @@ const init = () => {
     .append("g")
     .attr("class", "y-axis")
 
-    .call(yAxis)
-    // .attr("transform", `translate(${[margin, 0]},0)`);
+    .call(yAxis);
+  // .attr("transform", `translate(${[margin, 0]},0)`);
   svg.append("g").attr("class", "draw");
 
   //Styling domains n ticks
-  // d3.selectAll(".domain").each(function () {
-  //   d3.select(this).attr("opacity", 0);
-  // });
-  // const yAxisTicks = d3.selectAll(".y-axis .tick").each(function (d, i) {
-  //   d3.select(this)
-  //     .select("line")
-  //     .attr("x1", `-10`)
-  //     .style("stroke-width", `.25`)
-  //     .attr("x2", width - 80);
-  //   d3.select(this).select("text").attr("x", `-20`);
-  // });
-  // const xAxisTicks = d3.selectAll(".x-axis .tick").each(function (d, i) {
-  //   d3.select(this)
-  //     .select("line")
-  //     .attr("opacity", 0);
-  //   d3.select(this).select("text")
-  //   .attr("y", `10`)
-  //   .attr("x", `-50`);
-  // });
-  // console.log(yAxisTicks);
+  d3.selectAll(".domain").each(function () {
+    d3.select(this).attr("opacity", 0);
+  });
+  const yAxisTicks = d3.selectAll(".y-axis .tick").each(function (d, i) {
+    d3.select(this)
+      .select("line")
+      .attr("x1", `-10`)
+      .style("stroke-width", `.25`)
+      .attr("x2", width - 80);
+    d3.select(this).select("text").attr("x", `-20`);
+  });
+  const xAxisTicks = d3.selectAll(".x-axis .tick").each(function (d, i) {
+    d3.select(this).select("line").attr("opacity", 0);
+    d3.select(this).select("text").attr("y", `10`).attr("x", `-50`);
+  });
+  console.log(yAxisTicks);
 
-  //drawing chart legend
-  // const map = d3
-  //   .select("g.map")
-  //   .attr("transform", () => `translate(880,60)`)
-  //   .selectAll("g")
-  //   .data(subjectWithAbbreviation)
-  //   .join("g")
-  //   .transition()
-  //   .each(function (d, i) {
-  //     d3.select(this)
-  //       .datum(d)
-  //       .append("rect")
-  //       .attr("width", 20)
-  //       .attr("height", 10)
-  //       .attr("fill", colorScale(i))
-  //       .attr("y", i * 20)
-  //       .attr("transform", " translate(0, -9)")
-  //       .attr("x", -30);
+  // drawing chart legend
+  const map = d3
+    .select("g.map")
+    .attr("transform", () => `translate(880,60)`)
+    .selectAll("g")
+    .data(subjectWithAbbreviation)
+    .join("g")
+    .transition()
+    .each(function (d, i) {
+      d3.select(this)
+        .datum(d)
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 10)
+        .attr("fill", colorScale(i))
+        .attr("y", i * 20)
+        .attr("transform", " translate(0, -9)")
+        .attr("x", -30);
 
-  //     d3.select(this)
-  //       .datum(d)
-  //       .append("text")
-  //       .attr("class", "maptext")
-  //       .attr("y", i * 20)
-  //       .text((d) => d);
-  //   })
-  //   .attr("width", "50")
-  //   .attr("height", "50");
+      d3.select(this)
+        .datum(d)
+        .append("text")
+        .attr("class", "maptext")
+        .attr("y", i * 20)
+        .text((d) => d);
+    })
+    .attr("width", "50")
+    .attr("height", "50");
 };
 
 // init()
@@ -161,20 +149,34 @@ const init = () => {
 /*************************Drawing Functions********************* */
 
 const test = (year) => {
-  const datum = bigSet.data.filter((el) => el.year === year).map((x) => x.numberOfStudents);
+  const datum = bigSet.data
+    .filter((el) => el.year === year)
+    .sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents))
+    // .map((x) => x.numberOfStudents);
   // .sort((a, b) => d3.ascending(a, b));
   const subjectAbbreviations = bigSet.subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`);
-  console.log(subjectAbbreviations);
-  // draw(datum, year);
+  console.log(datum);
+  draw(datum, year);
 };
 
 const draw = (datum, abbrev) => {
-  console.log(datum);
+  const scores = datum.map( x => x.numberOfStudents);
+  const subjects = datum.map( x => x.subject);
+  const subjectAbbreviations = ["", ...subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`)];
+
+  //sorting subjects axis
+  const xAxis = d3
+    .axisBottom(scaleX)
+    .tickPadding(10)
+    .tickFormat((d, i) => subjectAbbreviations[i]);
+  axes
+    .select("g.x-axis")
+    // .attr("class", "y-axis")
+    .call(xAxis);
   // drawing bars
   const g = d3.select("g.draw");
-  g
-    .selectAll("rect")
-    .data(datum)
+  g.selectAll("rect")
+    .data(scores)
     .join("rect")
     .transition()
     // .duration(1000)
@@ -190,7 +192,7 @@ const draw = (datum, abbrev) => {
 
   // addign text
   g.selectAll("text")
-    .data(datum)
+    .data(scores)
     .join("text")
     .text((d) => d)
     .transition()
