@@ -27,16 +27,16 @@ const scaleY = d3
   .nice();
 const axes = svg.append("g").attr("class", "axes").attr("transform", `translate(${margin},${margin})`);
 
-const colorScale = d3.scaleOrdinal(d3.schemeCategory10); 
+const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
 /*************************Adding legends********************* */
-svg.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(50,150) rotate(90)").attr("class", "legend");
+svg.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(30,150) rotate(90)").attr("class", "legend");
 svg.append("g").append("text").text("Subjects").attr("fill", "black").attr("transform", "translate(400,450)").attr("class", "legend");
 svg.append("g").attr("class", "map");
 svg.append("g").attr("class", "title");
 //adding title
-d3.select("g.title").append("text").text(`The Distribution of Enrollment across The Top 10 Majors at Stanford University`).attr("fill", "black").attr("x", 200).attr("y", 50);
-d3.select("g.title").append("text").attr("class", "titletext").text(` for The 2011-12 Academic Year`).attr("fill", "black").attr("x", 350).attr("y", 70);
+d3.select("g.title").append("text").text(`The Distribution of Enrollment across The Top 10 Majors at Stanford University`).attr("fill", "black").attr("x", 200).attr("y", 10);
+d3.select("g.title").append("text").attr("class", "titletext").text(` for The 2011-12 Academic Year`).attr("fill", "black").attr("x", 350).attr("y", 30);
 /*************************Data Fetching********************* */
 
 d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
@@ -81,23 +81,38 @@ const init = () => {
     .tickFormat(function (d, i) {
       return subjectAbbreviations[i]; //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
     });
-  const yAxis = d3.axisLeft(scaleY).tickSize(width);
-  
+  const yAxis = d3.axisLeft(scaleY).tickSize(50).tickSizeOuter(0);
+
+  // .tickSize(width);
 
   axes
     .append("g")
+    .attr("class", "x-axis")
     .call(xAxis)
     .attr("transform", `translate(${[0, height - margin]})`);
   axes
     .append("g")
+    .attr("class", "y-axis")
+
     .call(yAxis)
     .attr("transform", `translate(${[margin, 0]})`);
   svg.append("g").attr("class", "draw");
 
+  //translating ticks
+  d3.select(".y-axis .domain").attr("opacity", 0);
+  const yAxisTicks = d3.selectAll(".y-axis .tick").each(function (d, i) {
+    d3.select(this)
+      .select("line")
+      .attr("x1", `-10`)
+      .attr("x2", width - 80);
+    d3.select(this).select("text").attr("x", `-20`);
+  });
+  console.log(yAxisTicks);
+
   //drawing chart legend
   const map = d3
     .select("g.map")
-    .attr("transform", () => `translate(850,34)`)
+    .attr("transform", () => `translate(880,60)`)
     .selectAll("g")
     .data(subjectWithAbbreviation)
     .join("g")
