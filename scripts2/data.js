@@ -79,24 +79,26 @@ const init2 = () => {
 
 /*************************Drawing Functions********************* */
 const test2 = (year) => {
-  const datum = bigSet2.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
+  const datum = bigSet2.data.filter((el) => el.subject === "Computer Science").sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   draw2(datum, year);
   setTimeout(() => {
     drawTooltips();
   }, 1000);
 };
 
-draw2 = () => {
+draw2 = (datum22) => {
+  const years = [...datum22?.map((x) => x.year)];
+  console.log(years, datum22);
   const wye = d3.symbol().type(d3.symbolWye).size(80);
   const datum = [
-    [0, 62],
-    [1, 72],
-    [2, 79],
-    [3, 97],
-    [4, 98],
-    [5, 103],
-    [6, 107],
-    [7, 108],
+    [0, 144],
+    [1, 130],
+    [2, 211],
+    [3, 217],
+    [4, 263],
+    [5, 274],
+    [6, 320],
+    [7, 330],
   ];
   const scaleXC = d3
     .scaleLinear()
@@ -110,7 +112,12 @@ draw2 = () => {
     .range([height, margin])
     .nice();
 
-  const xAxis = d3.axisBottom(scaleXC).tickPadding(5).ticks(8);
+  const xAxis = d3
+    .axisBottom(scaleXC)
+    .tickPadding(5)
+    .ticks(8)
+    .tickFormat((d, i) => years[i]);
+
   // .tickFormat((d, i) => subjectAbbreviations[i]);
   const yAxis = d3.axisLeft(scaleYC).tickSize(5).tickSizeOuter(0);
   //appending axis to svg
@@ -129,15 +136,14 @@ draw2 = () => {
     .y((d) => scaleYC(d[1]));
   // .curve(d3.curveNatural);
   const datum2 = [
-    [0, 0],
-    [1, 0.2],
-    [2, 0.4],
-    [3, 0.15],
-    [4, 0.05],
-    [5, 0.35],
-    [6, 0.5],
-    [7, 0.1],
-    [8, 0.25],
+    [0, 130],
+    [1, 144],
+    [2, 211],
+    [3, 217],
+    [4, 263],
+    [5, 274],
+    [6, 320],
+    [7, 330],
   ];
 
   data = [datum];
@@ -173,13 +179,13 @@ draw2 = () => {
     .attr("class", "ttext")
 
     // .enter().append("text")
-    .text((d) => `(${d})`)
+    .text((d) => `(Year:${years[d[0]]},Students: ${d[1]})`)
     .transition()
     .duration(1000)
     .attr("x", (d) => scaleXC(d[0])) // positions the text near (x,y)
     .attr("y", (d) => scaleYC(d[1]))
-    .attr("fill", 'black')
-    .attr("opacity", 0)
+    .attr("fill", "black")
+    .attr("opacity", 0);
 
   //adding interactivity
 
@@ -188,9 +194,7 @@ draw2 = () => {
 
 function drawTooltips() {
   svg2.selectAll("path.point").on("mouseenter", function (_, d, i) {
-    console.log(d3.select(this),d);
     svg2.selectAll(".ttext").each(function (datu, i) {
-      console.log(datu);
       datu === d && d3.select(this).transition().duration(250).attr("opacity", 1);
     });
   });
