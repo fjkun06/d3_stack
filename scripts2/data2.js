@@ -98,14 +98,22 @@ const init = () => {
     .attr("transform", `translate(${[margin, 0]})`);
   svg.append("g").attr("class", "draw");
 
-  //translating ticks
-  d3.select(".y-axis .domain").attr("opacity", 0);
+  //Styling domains n ticks
+  d3.selectAll(".domain").each(function () {
+    d3.select(this).attr("opacity", 0);
+  });
   const yAxisTicks = d3.selectAll(".y-axis .tick").each(function (d, i) {
     d3.select(this)
       .select("line")
       .attr("x1", `-10`)
       .attr("x2", width - 80);
     d3.select(this).select("text").attr("x", `-20`);
+  });
+  const xAxisTicks = d3.selectAll(".x-axis .tick").each(function (d, i) {
+    d3.select(this)
+      .select("line")
+      .attr("opacity", 0);
+    d3.select(this).select("text").attr("y", `10`);
   });
   console.log(yAxisTicks);
 
