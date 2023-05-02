@@ -54,14 +54,15 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
 
   bigSet.years = [...bigSet.years];
   bigSet.subjects = [...bigSet.subjects];
-  bigSet.detailedSubjects = [...bigSet.subjects].map(subj => Object.assign({},{name: subj,abbrev:subj.slice(0, 3).toUpperCase() }));
+  bigSet.detailedSubjects = [...bigSet.subjects].map((subj) => Object.assign({}, { name: subj, abbrev: subj.slice(0, 3).toUpperCase() }));
   bigSet.scores = [...bigSet.scores];
 
   //displaying year and subject options
   feedYears(bigSet.years);
   feedSubjects(bigSet.detailedSubjects);
-  console.log(bigSet.detailedSubjects);
+  // console.log(bigSet.detailedSubjects);
   init();
+  test({ id: "Computer Science", type: "curve" });
   test({ id: "Biology", type: "curve" });
   // test({id:"2011-12",type:"curve"});
 });
@@ -184,19 +185,48 @@ draw = (datum, abbrev) => {
 };
 
 drawCurve = (datum, abbrev) => {
-  const scores = datum?.map((x) => x.numberOfStudents);
+  const maxScore = d3.max(
+    datum?.map((x) => x.numberOfStudents),
+    (d) => d
+  );
+  twoDArray = datum.map(el => [el.numberOfStudents,el.year])
   const years = [...datum?.map((x) => x.year)];
-  console.log(scores, years, datum);
+  console.log(maxScore, years, datum,twoDArray);
+  scaleYCurve = d3
+    .scaleLinear()
+    .domain([0, maxScore]) //range of values will be from 0 - 400
+    .range([height, 0])
+    .nice();
   scaleXCurve = d3
     .scaleBand()
     .domain(years)
     .range([margin, width - margin]);
-    console.log(scaleXCurve('2011-12'));
+  console.log(scaleXCurve("2011-12"));
   //sorting subjects axis
   const xAxis = d3
     .axisBottom(scaleXCurve)
     .tickPadding(10)
     .ticks(9)
+    .tickSizeOuter(0)
     .tickFormat((d, i) => years[i]);
   axes.select("g.x-axis").transition().call(xAxis);
+
+  const yAxis = d3.axisLeft(scaleYCurve).tickSize(5).tickSizeOuter(0);
+  //appending axis to svg
+  axes.select("g.y-axis").call(yAxis);
+
+  //Styling domains n ticks
+  d3.selectAll(".domain").each(function () {
+    d3.select(this).attr("opacity", 1);
+  });
+  const yAxisTicks = d3.selectAll(".y-axis .tick").each(function (d, i) {
+    d3.select(this).select("line").attr("x1", `-10`).style("stroke-width", `1.5`);
+    // .attr("x2", width - 80);
+    d3.select(this).select("text").attr("x", `-20`);
+  });
+  console.log(d3.select(".y-axis .tick"));
+  d3.select(".y-axis .tick line")
+    .attr("x1", `-10`)
+    .style("stroke-width", `1.5`)
+    .attr("x2", width - 80);
 };
