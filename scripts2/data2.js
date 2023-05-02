@@ -11,89 +11,77 @@ const width = 700;
 const height = 400;
 const margin = 50;
 const svg = d3.select("svg").style("border", "1px solid red");
-// .append("svg")
-// .attr("height", height + 100)
-// .attr("width", "100vw");
-// .attr("width", width + 100);
 const scaleX = d3
   .scaleLinear()
   .domain([0, 10])
   .range([margin, width - margin]);
 const scaleY = d3
   .scaleLinear()
-  .domain([0, height])
-  // .range([200, 0])
+  .domain([0, height]) //range of values will be from 0 - 400
   .range([height, 0])
   .nice();
-console.log(scaleY(height - 380));
 const axes = svg.append("g").attr("class", "axes").attr("transform", `translate(${margin},${margin})`);
 
 const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
 /*************************Adding legends********************* */
-svg.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(0,170) rotate(90)").attr("class", "legend");
+svg.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(10,170) rotate(90)").attr("class", "legend");
 svg.append("g").append("text").text("Subjects").attr("fill", "black").attr("transform", "translate(320,500)").attr("class", "legend");
 svg.append("g").attr("class", "map");
 svg.append("g").attr("class", "title");
 //adding title
 d3.select("g.title").append("text").text(`The Distribution of Enrollment across The Top 10 Majors at Stanford University`).attr("fill", "black").attr("x", 200).attr("y", 10);
 d3.select("g.title").append("text").attr("class", "titletext").text(` for The 2011-12 Academic Year`).attr("fill", "black").attr("x", 350).attr("y", 30);
+
 /*************************Data Fetching********************* */
 
+
 d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
-  // console.log(bunch)
   return {
     year: bunch.Year,
     subject: bunch.Subject,
     numberOfStudents: parseInt(bunch["Number of Students"], 10),
   };
-})
-  // .then((data) => data)
-  .then((d) => {
-    bigSet.data = d;
-    bigSet.data.forEach((element) => {
-      bigSet.years.add(element.year);
-      bigSet.subjects.add(element.subject);
-      bigSet.scores.add(element.numberOfStudents);
-    });
-
-    //convert set of uniques years to array
-    bigSet.years = [...bigSet.years];
-    bigSet.subjects = [...bigSet.subjects];
-    bigSet.scores = [...bigSet.scores];
-
-    console.log(d3.extent(bigSet.scores, (d) => d));
-
-    //displaying year options
-    feedYears(bigSet.years);
-    init();
+}).then((d) => {
+  bigSet.data = d;
+  bigSet.data.forEach((element) => {
+    bigSet.years.add(element.year);
+    bigSet.subjects.add(element.subject);
+    bigSet.scores.add(element.numberOfStudents);
   });
+
+  //convert set of uniques years to array
+  bigSet.years = [...bigSet.years];
+  bigSet.subjects = [...bigSet.subjects];
+  bigSet.scores = [...bigSet.scores];
+
+  //displaying year options
+  feedYears(bigSet.years);
+  init();
+  test('2011-12')
+});
 
 /*************************Drawing Axes********************* */
 const init = () => {
-  console.log(bigSet.subjects);
-  const subjectAbbreviations = ["", ...bigSet.subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`)];
   const subjectWithAbbreviation = bigSet.subjects.map((data) => `${data} (${data.slice(0, 3).toUpperCase()})`);
-
-  console.log(subjectWithAbbreviation);
-  const xAxis = d3.axisBottom(scaleX).tickPadding(10);
-
+  const subjectAbbreviations = ["", ...bigSet.subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`)];
+  const xAxis = d3
+    .axisBottom(scaleX)
+    .tickPadding(5)
+    .tickFormat((d, i) => subjectAbbreviations[i]);
   const yAxis = d3.axisLeft(scaleY).tickSize(5).tickSizeOuter(0);
-  // .ticks(14);
-
-  // .tickSize(width);
-
+console.log(bigSet);
+  //appending axis to svg
   axes
     .append("g")
     .attr("class", "x-axis")
     .call(xAxis)
-    .attr("transform", `translate(${[-50, height]})`);
+    .attr("transform", `translate(${[-10, height]})`);
   axes
     .append("g")
     .attr("class", "y-axis")
+    .call(yAxis)
+    .attr("transform", `translate(${[20, 0]})`);
 
-    .call(yAxis);
-  // .attr("transform", `translate(${[margin, 0]},0)`);
   svg.append("g").attr("class", "draw");
 
   //Styling domains n ticks
@@ -112,7 +100,6 @@ const init = () => {
     d3.select(this).select("line").attr("opacity", 0);
     d3.select(this).select("text").attr("y", `10`).attr("x", `-50`);
   });
-  console.log(yAxisTicks);
 
   // drawing chart legend
   const map = d3
@@ -144,51 +131,35 @@ const init = () => {
     .attr("height", "50");
 };
 
-// init()
-
 /*************************Drawing Functions********************* */
-
 const test = (year) => {
-  const datum = bigSet.data
-    .filter((el) => el.year === year)
-    .sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents))
-    // .map((x) => x.numberOfStudents);
-  // .sort((a, b) => d3.ascending(a, b));
-  const subjectAbbreviations = bigSet.subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`);
-  console.log(datum);
+  const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   draw(datum, year);
 };
 
+/*************************Drawing Functions********************* */
 const draw = (datum, abbrev) => {
-  const scores = datum.map( x => x.numberOfStudents);
-  const subjects = datum.map( x => x.subject);
-  const subjectAbbreviations = ["", ...subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`)];
+  console.log(bigSet);
+  const scores = datum.map((x) => x.numberOfStudents);
+  const subjectAbbreviations = ["", ...datum.map((x) => x.subject).map((data) => `${data.slice(0, 3).toUpperCase()}`)];
 
   //sorting subjects axis
   const xAxis = d3
     .axisBottom(scaleX)
     .tickPadding(10)
     .tickFormat((d, i) => subjectAbbreviations[i]);
-  axes
-    .select("g.x-axis")
-    // .attr("class", "y-axis")
-    .call(xAxis);
+  axes.select("g.x-axis").transition().call(xAxis);
+
   // drawing bars
   const g = d3.select("g.draw");
   g.selectAll("rect")
     .data(scores)
     .join("rect")
     .transition()
-    // .duration(1000)
     .attr("width", "50")
-    .attr("height", (d) => {
-      // console.log(d, scaleY(350 - d));
-      return scaleY(400 - d);
-    })
-    // .attr("height", (d) => scaleY(350 - d))
-    .attr("transform", (k, i) => `translate(${[scaleX(i) - 5 + margin, scaleY(0) + margin]}) scale(1,-1)`)
-    // .attr("transform", (k) => `translate(${[scaleX(k[0]), scaleY(k[1])]})`)
-    .attr("fill", (k, i) => colorScale(i));
+    .attr("height", (d) => scaleY(400 - d))
+    .attr("transform", (_, i) => `translate(${[scaleX(i) + 25, scaleY(0) + margin]}) scale(1,-1)`)
+    .attr("fill", (_, i) => colorScale(i));
 
   // addign text
   g.selectAll("text")
@@ -198,9 +169,16 @@ const draw = (datum, abbrev) => {
     .transition()
     .duration(1000)
     .attr("y", (d) => scaleY(d) + 70)
-    .attr("x", (d, i) => scaleX(i) + 60)
+    .attr("x", (_, i) => scaleX(i) + 40)
     .style("fill", "white");
 
   //adding title
   d3.select("text.titletext").text(` for The ${abbrev} Academic Year`);
+};
+
+window.onload = () => {
+  // getStructuredData({ period: "2011-12", type: "year" });
+  setTimeout(() => {
+    // test("2011-12");
+  }, 100);
 };

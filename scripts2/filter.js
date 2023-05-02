@@ -76,6 +76,7 @@ const handleInputs = () => {
     if (input.checked) {
       yearh.textContent = `Filter by Year:  ${input.value}`;
       test(input.value);
+      console.log(input.value);
     }
     input.addEventListener("change", (e) => {
       //calling function to update data
@@ -86,9 +87,9 @@ const handleInputs = () => {
 };
 
 //loading default data
-window.onload = () => {
+// window.onload = () => {
   // getStructuredData({ period: "2011-12", type: "year" });
   setTimeout(() => {
     handleInputs();
   }, 10);
-};
+// };
