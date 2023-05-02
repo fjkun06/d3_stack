@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="css/main.css"> -->
+  <title>Data Visualization Assignment</title>
+  <style>
+    svg rect {
+      transition: height 500ms ease-in-out;
+    }
+
+    .legend,
+    .maptext {
+      font-weight: bold;
+      font-size: 16px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .maptext {
+      font-weight: normal;
+      font-size: 12px;
+
+    }
+
+    svg g.title text{
+      font-weight: bold;
+      font-size: 12px;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <!----------------------------Loader Section------------------------------------------>
+    <section id="body">
+      <nav>
+        <p class="">DATA VISUALIZATION ASSIGNMENT</p>
+      </nav>
+      <main>
+        <aside id="year">
+          <h4 id="yearh">Filter by Year</h4>
+
+        </aside>
+
+        <section class="graphboard year">
+          <h3></h3>
+          <ul class="">
+
+          </ul>
+        </section>
+      </main>
+
+    </section>
+
+  </main>
+  <script src="scripts2/d3.v7.min.js"></script>
+  <script src="scripts2/filter.js"></script>
+  <!-- <script src="scripts/script.js"></script> -->
+  <script src="scripts2/data2.js"></script>
+  <script src="scripts2/inputs.js"></script>
+
+</body>
+
+</html>
