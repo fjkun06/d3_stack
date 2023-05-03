@@ -155,9 +155,11 @@
       align-items: flex-start;
       gap: 10px;
       @media only screen and (width < 1650px) {
-        width: 94vw;
+        // width: 94vw;
       }
       @media only screen and (width < 890px) {
+        height: auto;
+        padding: 1rem 0rem;
         width: 94vw;
       }
 svg{
