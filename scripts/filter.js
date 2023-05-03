@@ -51,11 +51,11 @@ const feedYears = (data = []) => {
 const feedSubjects = (data = []) => {
   const jahr = data.map((item, index) =>
     index === 0
-      ? `<span class="">
+      ? `<span class="jahr">
         <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} checked />
         <label for="choice${index}n">${item.name}</label>
         </span>`
-      : `<span class="">
+      : `<span class="jahr">
         <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} />
         <label for="choice${index}n">${item.name}</label>
         </span>`
@@ -72,24 +72,34 @@ const handleInputs = () => {
   const g1 = document.querySelector("#g1");
   const cp1 = document.querySelector("#cp1");
   const cp2 = document.querySelector("#cp2");
-  const yearContainer = document.querySelector("#year");
-
+  const yearContainer = document.querySelector("#subject");
+  // const yearContainer = document.querySelector("#year");
+  
   //handling dropdowns
-  closeSvg.addEventListener("click", () => {
-    const years = d3.select("#year").selectAll("span.jahr")._groups[0];
+  closeSvg.addEventListener("click", (e) => {
+    console.log(e);
+    const years = d3.select("#subject").selectAll("span.jahr")._groups[0];
+    // const years = d3.select("#year").selectAll("span.jahr")._groups[0];
+    const subjectContainer = d3.select("#year");
+    // const subjectContainer = d3.select("#subject");
     const data = Array.from(years);
-    d3.select("#cp1").transition().duration(250)
-    d3.select("#cp2").transition().duration(250)
+  console.log(e);
+
+    d3.select("#cp1").transition().duration(250);
+    d3.select("#cp2").transition().duration(250);
     //displaying or hiding list elements using classes
     data.forEach((el, i) => el.classList.toggle("yeartoggle"));
 
     if (data.every((el) => el.classList.contains("yeartoggle"))) {
+      yearContainer.style.height = "50px";
       g1.setAttribute("transform", "scale(0.75) translate(3,4)");
       cp1.setAttribute("d", "M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z");
       cp2.setAttribute("d", "M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z");
     }
 
     if (data.every((el) => !el.classList.contains("yeartoggle"))) {
+      yearContainer.style.height = "400px";
+       subjectContainer.style('height' ,"50px");
       g1.setAttribute("transform", "scale(0.75) translate(3,2)");
       cp1.setAttribute("d", "M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z");
       cp2.setAttribute("d", "M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z");
@@ -120,10 +130,34 @@ const handleInputs = () => {
   inputsSubject.forEach((input, i) => {
     if (input.checked) {
       getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
-      subjecth.textContent = `Filter by Subject:  ${input.value} <span>V</span>`;
+      subjecth.innerHTML = `Filter by Subject:  ${input.value} 
+      <span id="close2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+        <g id="g1" transform="scale(0.75) translate(3,2)">
+          <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+          <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+          <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+          <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+        </g>
+      </svg>
+    </span>`;
     }
     input.addEventListener("change", (e) => {
-      subjecth.textContent = `Filter by Subject:  ${e.target.value} <span>V</span>`;
+      subjecth.innerHTML = `Filter by Subject:  ${e.target.value} 
+      <span id="clos2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+        <g id="g1" transform="scale(0.75) translate(3,2)">
+          <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+          <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+          <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+          <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+        </g>
+      </svg>
+    </span>`;
       //calling function to update data
       getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
       // getStructuredData({ period: e.target.value, type: "subject" });

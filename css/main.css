@@ -1,12 +1,21 @@
+@keyframes fadein {
+  to {
+    opacity: 1;
+  }
+}
 .jahr {
   display: flex;
   display: flex;
   flex-direction: row;
   place-items: center;
+  opacity: 0;
+  animation: fadein 0.55s ease-in 0s 1 forwards;
 }
 
 .yeartoggle {
   display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 }
 
 * {
@@ -303,9 +312,9 @@ main #body main #filters aside {
   padding-inline-start: 15px;
   padding-top: 10px;
   gap: 10px;
-  transition: height 0.25s ease-in-out;
+  transition: height 0.5s ease-in-out;
 }
-main #body main #filters aside #yearh {
+main #body main #filters aside #yearh, main #body main #filters aside #subjecth {
   text-transform: capitalize;
   color: whitesmoke;
   width: inherit;
@@ -314,19 +323,19 @@ main #body main #filters aside #yearh {
   flex-direction: row;
   place-items: center;
 }
-main #body main #filters aside #yearh span {
+main #body main #filters aside #yearh span, main #body main #filters aside #subjecth span {
   width: 20px;
   height: 20px;
   display: flex;
   flex-direction: column;
   place-items: center;
 }
-main #body main #filters aside #yearh span svg {
+main #body main #filters aside #yearh span svg, main #body main #filters aside #subjecth span svg {
   width: inherit;
   height: inherit;
   transition: all 0.25s ease-in-out;
 }
-main #body main #filters aside #yearh span svg g path:d {
+main #body main #filters aside #yearh span svg g path:d, main #body main #filters aside #subjecth span svg g path:d {
   transition: all 0.25s ease-in-out;
 }
 main #body main #filters aside span {
