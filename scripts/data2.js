@@ -11,7 +11,7 @@ const width = 700;
 // const width = 1100;
 const height = 400;
 const margin = 50;
-const svg = d3.select("svg#s1")
+const svg = d3.select("svg#s1");
 // .style("border", "1px solid red");
 // .style("transform", "translate(0px, 40px)");
 const scaleX = d3
@@ -81,10 +81,15 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
 
 /*************************Drawing Axes********************* */
 const init = () => {
-  const datum = bigSet.data.filter((el) => el.year === '2011-12').sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents)).map((el) => el.subject);
+  const datum = bigSet.data
+    .filter((el) => el.year === "2011-12")
+    .sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents))
+    .map((el) => el.subject);
   const detailedSubjects = [...datum].map((subj) => `${subj} (${subj.slice(0, 3).toUpperCase()})`);
+  const fedSubjects = [...datum].map((subj) => Object.assign({}, { name: subj, abbrev: subj.slice(0, 3).toUpperCase() }));
+
   console.log(detailedSubjects);
-  feedSubjects(detailedSubjects);
+  feedSubjects(fedSubjects);
 
   const subjectWithAbbreviation = bigSet.subjects.map((data) => `${data} (${data.slice(0, 3).toUpperCase()})`);
   const subjectAbbreviations = ["", ...bigSet.subjects.map((data) => `${data.slice(0, 3).toUpperCase()}`)];
@@ -127,10 +132,12 @@ const init = () => {
   // drawing chart legend
   //adding legend to labels
   // console.log(d3.select("#subject").selectAll("label"));
-  d3.select("#subject").datum(detailedSubjects)
-    .selectAll("label").data(d=>d)
+  d3.select("#subject")
+    .datum(detailedSubjects)
+    .selectAll("label")
+    .data((d) => d)
     .each(function (datum, i) {
-      d3.select(this).text(d => d)
+      d3.select(this).text((d) => d);
       d3.select(this).insert("span").attr("class", "legspan").style("background-color", colorScale(i));
       // console.log([...d3.select(this)._groups[0]][0].textContent);
       // console.log(datum);
@@ -188,11 +195,12 @@ draw = (datum, abbrev) => {
   d3.select("text.titletext").text(` for The ${abbrev} Academic Year`);
 
   //updating subjects legend
-  d3.select("#subject").datum(detailedSubjects)
-  .selectAll("label").data(d=>d)
-  .each(function (datum, i) {
-    d3.select(this).text(d => d)
-    d3.select(this).insert("span").attr("class", "legspan").style("background-color", colorScale(i));
-  
-  });
+  d3.select("#subject")
+    .datum(detailedSubjects)
+    .selectAll("label")
+    .data((d) => d)
+    .each(function (datum, i) {
+      d3.select(this).text((d) => d);
+      d3.select(this).insert("span").attr("class", "legspan").style("background-color", colorScale(i));
+    });
 };
