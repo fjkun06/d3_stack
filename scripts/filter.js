@@ -68,25 +68,28 @@ const feedSubjects = (data = []) => {
 /*************************Handling inputs********************* */
 
 const handleInputs = () => {
-  const closeSvg = document.querySelector("#close");
+  const yearSvg = document.querySelector("#close");
+  const subjectSvg = document.querySelector("#closer");
   const g1 = document.querySelector("#g1");
   const cp1 = document.querySelector("#cp1");
   const cp2 = document.querySelector("#cp2");
-  const yearContainer = document.querySelector("#subject");
-  // const yearContainer = document.querySelector("#year");
-  
-  //handling dropdowns
-  closeSvg.addEventListener("click", (e) => {
-    console.log(e);
-    const years = d3.select("#subject").selectAll("span.jahr")._groups[0];
-    // const years = d3.select("#year").selectAll("span.jahr")._groups[0];
-    const subjectContainer = d3.select("#year");
-    // const subjectContainer = d3.select("#subject");
-    const data = Array.from(years);
-  console.log(e);
+  const g2 = document.querySelector("#g2");
+  const cpc1 = document.querySelector("#cpc1");
+  const cpc2 = document.querySelector("#cpc2");
+  console.log(subjectSvg, yearSvg);
+  // const yearContainer = document.querySelector("#subject");
+  /*************************Handling year dropdowns********************* */
+  yearSvg.addEventListener("click", (e) => {
+    // const years = d3.select("#subject").selectAll("span.jahr")._groups[0];
+    const years = d3.select("#year").selectAll("span.jahr")._groups[0];
+    const subjects = d3.select("#subject").selectAll("span.jahr")._groups[0];
 
-    d3.select("#cp1").transition().duration(250);
-    d3.select("#cp2").transition().duration(250);
+    // const subjectContainer = d3.select("#year");
+    const yearContainer = document.querySelector("#year");
+    const subjectContainer = d3.select("#subject");
+    const data = Array.from(years);
+    const dataOff = Array.from(subjects);
+
     //displaying or hiding list elements using classes
     data.forEach((el, i) => el.classList.toggle("yeartoggle"));
 
@@ -98,11 +101,41 @@ const handleInputs = () => {
     }
 
     if (data.every((el) => !el.classList.contains("yeartoggle"))) {
+      dataOff.forEach((el, i) => el.classList.add("yeartoggle"));
       yearContainer.style.height = "400px";
-       subjectContainer.style('height' ,"50px");
+      subjectContainer.style("height", "50px");
       g1.setAttribute("transform", "scale(0.75) translate(3,2)");
       cp1.setAttribute("d", "M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z");
       cp2.setAttribute("d", "M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z");
+    }
+  });
+
+  /*************************Handling subject dropdowns********************* */
+  subjectSvg.addEventListener("click", (e) => {
+    const subjects = d3.select("#subject").selectAll("span.jahr")._groups[0];
+    const years = d3.select("#year").selectAll("span.jahr")._groups[0];
+    const subjectContainer = document.querySelector("#subject");
+    const yearContainer = d3.select("#year");
+    const data = Array.from(subjects);
+    const dataOff = Array.from(years);
+    console.log(data);
+    //displaying or hiding list elements using classes
+    data.forEach((el, i) => el.classList.toggle("yeartoggle"));
+
+    if (data.every((el) => el.classList.contains("yeartoggle"))) {
+      subjectContainer.style.height = "50px";
+      g2.setAttribute("transform", "scale(0.75) translate(3,4)");
+      cpc1.setAttribute("d", "M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z");
+      cpc2.setAttribute("d", "M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z");
+    }
+
+    if (data.every((el) => !el.classList.contains("yeartoggle"))) {
+      dataOff.forEach((el, i) => el.classList.add("yeartoggle"));
+      subjectContainer.style.height = "400px";
+      yearContainer.style("height", "50px");
+      g2.setAttribute("transform", "scale(0.75) translate(3,2)");
+      cpc1.setAttribute("d", "M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z");
+      cpc2.setAttribute("d", "M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z");
     }
   });
 
@@ -116,13 +149,37 @@ const handleInputs = () => {
     if (input.checked) {
       getStructuredData({ period: input.value, type: "year" });
       // yearh.textContent = `Filter by Year:  ${input.value}`;
-      // yearh.innerHTML = `<h4>Filter by Year:  ${input.value} <span style='display:inline;'><svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm107.31 259.31a16 16 0 01-22.62 0L256 222.63l-84.69 84.68a16 16 0 01-22.62-22.62l96-96a16 16 0 0122.62 0l96 96a16 16 0 010 22.62z"/></svg></span></h4>`;
+      // yearh.innerHTML = `Filter by Year: ${input.value}
+      // <span id="close">
+      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      //     <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+      //     <g id="g1" transform="scale(0.75) translate(3,2)">
+      //       <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+      //       <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+      //       <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      //       <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+      //     </g>
+      //   </svg>
+      // </span>`;
     }
     input.addEventListener("change", (e) => {
       //calling function to update data
       getStructuredData({ period: e.target.value, type: "year" });
       // yearh.textContent = `Filter by Year:  ${e.target.value}`;
-      // yearh.innerHTML = `<h4>Filter by Year:  ${input.value} <span style='display:inline;'>V</span></h4>`;
+      // yearh.innerHTML = `Filter by Year: ${e.target.value}
+      // <span id="close">
+      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      //     <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+      //     <g id="g1" transform="scale(0.75) translate(3,2)">
+      //       <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+      //       <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+      //       <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      //       <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+      //     </g>
+      //   </svg>
+      // </span>`;
     });
   });
 
@@ -130,34 +187,34 @@ const handleInputs = () => {
   inputsSubject.forEach((input, i) => {
     if (input.checked) {
       getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
-      subjecth.innerHTML = `Filter by Subject:  ${input.value} 
-      <span id="close2">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-        <g id="g1" transform="scale(0.75) translate(3,2)">
-          <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-          <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-          <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-          <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      //   subjecth.innerHTML = `Filter by Subject:  ${input.value}
+      //   <span id="closer">
+      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      //   <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+      //   <g id="g2" transform="scale(0.75) translate(3,2)">
+      //     <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+      //     <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+      //     <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      //     <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
 
-        </g>
-      </svg>
-    </span>`;
+      //   </g>
+      // </svg>
+      // </span>`;
     }
     input.addEventListener("change", (e) => {
-      subjecth.innerHTML = `Filter by Subject:  ${e.target.value} 
-      <span id="clos2">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-        <g id="g1" transform="scale(0.75) translate(3,2)">
-          <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-          <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-          <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-          <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      //   subjecth.innerHTML = `Filter by Subject:  ${e.target.value}
+      //   <span id="closer">
+      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      //               <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+      //               <g id="g2" transform="scale(0.75) translate(3,2)">
+      //                 <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+      //                 <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+      //                 <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      //                 <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
 
-        </g>
-      </svg>
-    </span>`;
+      //               </g>
+      //             </svg>
+      // </span>`;
       //calling function to update data
       getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
       // getStructuredData({ period: e.target.value, type: "subject" });

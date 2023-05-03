@@ -57,7 +57,7 @@
       }
       /*****************Filter Section******************************/
       #filters {
-        border: 1px solid lemonchiffon;
+        // border: 1px solid lemonchiffon;
         @include mixins.flex;
         padding: 1rem;
         gap: 2rem;
@@ -71,6 +71,7 @@
         aside {
           @include mixins.size(200px, 300px);
           @include mixins.size(400px, 370px);
+          align-self: flex-start;
           border-radius: 10px;
           box-shadow: 0 0 20px #2d3436;
           @include mixins.flex(column);
@@ -92,6 +93,7 @@
               @include mixins.size(20px);
               // border: 1px solid lemonchiffon;
               @include mixins.flex(column);
+              cursor: pointer;
               // margin-top: 200px;
               // display: contents;
               // background-color: #fff;

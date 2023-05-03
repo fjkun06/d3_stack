@@ -280,7 +280,6 @@ main #body main {
   }
 }
 main #body main #filters {
-  border: 1px solid lemonchiffon;
   display: flex;
   flex-direction: row;
   place-items: center;
@@ -302,6 +301,7 @@ main #body main #filters aside {
   height: 300px;
   width: 400px;
   height: 370px;
+  align-self: flex-start;
   border-radius: 10px;
   box-shadow: 0 0 20px #2d3436;
   display: flex;
@@ -329,6 +329,7 @@ main #body main #filters aside #yearh span, main #body main #filters aside #subj
   display: flex;
   flex-direction: column;
   place-items: center;
+  cursor: pointer;
 }
 main #body main #filters aside #yearh span svg, main #body main #filters aside #subjecth span svg {
   width: inherit;
