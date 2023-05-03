@@ -52,7 +52,7 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   //displaying year options
   feedSubjects(bigSet2.detailedSubjects);
   init2();
-  test2({id:'Biology',type:"subject"});
+  // test2({id:'Biology',type:"subject"});
 });
 
 /*************************Drawing Axes********************* */
@@ -87,6 +87,23 @@ console.log(id);
   setTimeout(() => {
     drawTooltips();
   }, 1000);
+
+  //removing previous svg
+  // svg.remove()
+svg.selectAll("g").each(function(){
+  // d3.select(this).remove();
+  // console.log(d3.select(this));
+})
+
+// svg.select('g.draw').remove()
+
+console.log([...d3.select('body')._groups[0][0].children]);
+[...d3.select('body')._groups[0][0].children].forEach(x =>{
+ if( x.id === "s1") x.style.display = 'none';
+ if( x.id === "s2") x.style.display = 'block';
+}  )
+// [...d3.select('body')._groups[0][0].children].forEach(x => x.id === "s1" && x.remove() )
+// [...d3.select('body')._groups[0][0].children].forEach(x => console.log(x.id))
 };
 
 draw2 = (datum) => {
@@ -187,3 +204,5 @@ function drawTooltips() {
     });
   });
 }
+
+
