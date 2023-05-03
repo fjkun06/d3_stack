@@ -16,7 +16,7 @@ const feedYearList = (data, period) => {
   mainYearContainerHeading.textContent = `Current Period: ${period}`;
   // mainHeading.textContent = `Current Period: ${period}`;
   const list = data.map((item) => `<li>Subject: ${item.subject}, NumberOfStudents: ${item.numberOfStudents} </li>`);
-  mainYearContainer.innerHTML = list.join("");
+  // mainYearContainer.innerHTML = list.join("");
   // main.innerHTML = list.join("");
 };
 
