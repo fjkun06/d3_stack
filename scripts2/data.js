@@ -8,7 +8,10 @@ const bigSet2 = {
 const width2 = 800;
 
 /*************************Drawing Axes and Configuring Scale********************* */
-const svg2 = d3.select("svg#s2").style("border", "1px solid red").style("transform", "translate(0px, 40px)");
+const svg2 = d3.select("svg#s2")
+.style("border", "1px solid red")
+.style("transform", "translate(0px, 40px) scale(1)")
+// .style("transform", "translate(0px, 40px) scale(0.9)");
 const axes2 = svg2.append("g").attr("class", "axes").attr("transform", `translate(${margin},${margin})`);
 const colorScale2 = d3.scaleOrdinal(d3.schemeDark2);
 let scaleXCurve = d3
@@ -19,7 +22,10 @@ let scaleXCurve = d3
 let scaleYCurve = d3.scaleLinear().domain([0, 1]).range([height, margin]).nice();
 // let scaleYCurve = d3.scaleLinear().domain([0, 120]).range([height, margin]).nice();
 /*************************Adding legends********************* */
-svg2.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(10,170) rotate(90)").attr("class", "legend");
+svg2.append("g").append("text").text("Number Of Students")
+.attr("fill", "black")
+.attr("transform", "translate(0,170) rotate(90)")
+.attr("class", "legend");
 svg2.append("g").append("text").text("Years").attr("fill", "black").attr("transform", "translate(320,500)").attr("class", "legend");
 svg2.append("g").attr("class", "map");
 svg2.append("g").attr("class", "title2");
@@ -133,8 +139,8 @@ draw2 = (datum22) => {
   const line = d3
     .line()
     .x((d) => scaleXC(d[0]))
-    .y((d) => scaleYC(d[1]));
-  // .curve(d3.curveNatural);
+    .y((d) => scaleYC(d[1]))
+  .curve(d3.curveNatural);
   const datum2 = [
     [0, 130],
     [1, 144],

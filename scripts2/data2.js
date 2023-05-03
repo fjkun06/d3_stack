@@ -131,9 +131,9 @@ const init = () => {
 
 /*************************Drawing Functions********************* */
 const test = (year) => {
-  const datum = bigSet.data.filter((el) => el.subject === 'Computer Science').sort((a, b) => d3.ascending(a.year, b.year));
+  // const datum = bigSet.data.filter((el) => el.subject === 'Computer Science').sort((a, b) => d3.ascending(a.year, b.year));
   // const datum = bigSet.data.filter((el) => el.subject === 'Computer Science').sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
-  // const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
+  const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   draw(datum, year);
   console.log(datum.map((x,index) => [index,x.numberOfStudents]));
 };
