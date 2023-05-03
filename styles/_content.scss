@@ -4,7 +4,7 @@
     @include mixins.flex;
     display: none;
     @include mixins.size(inherit);
-    @include mixins.size(inherit,auto);
+    @include mixins.size(inherit, auto);
     /***************************************Navbar Section******************************/
     nav {
       align-self: flex-start;
@@ -47,53 +47,63 @@
     main {
       gap: 100px;
       @include mixins.flex;
+      justify-content: center;
+      border: 1px solid red;
       /*****************Filter Section******************************/
-      aside {
-        @include mixins.size(200px, 300px);
+      #filters {
+        border: 1px solid lemonchiffon;
+        @include mixins.flex;
+        padding: 1rem;
+        gap: 2rem;
+        width: auto;
+        height: auto;
+        aside {
+          @include mixins.size(200px, 300px);
 
-        &:last-of-type {
-          @include mixins.size(400px, 350px);
-          span {
-            // width: 400px;
+          &:last-of-type {
+            @include mixins.size(400px, 350px);
+            span {
+              // width: 400px;
+            }
           }
-        }
-        border-radius: 10px;
-        box-shadow: 0 0 20px #2d3436;
-        @include mixins.flex(column);
-        justify-content: center;
-        align-items: flex-start;
-        padding-inline-start: 15px;
-        gap: 10px;
-
-        h4 {
-          text-transform: capitalize;
-          color: whitesmoke;
-          width: inherit;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-        }
-
-        span {
-          @include mixins.flex;
-          width: 100%;
+          border-radius: 10px;
+          box-shadow: 0 0 20px #2d3436;
+          @include mixins.flex(column);
+          justify-content: center;
+          align-items: flex-start;
+          padding-inline-start: 15px;
           gap: 10px;
 
-          input[type="radio"]:checked {
-            background-color: #2d3436;
-          }
-          input[type="radio"] {
-            margin-top: 1.5px;
-            border: 2px solid white;
-            box-shadow: 0 0 0 1px #2d3436;
-            appearance: none;
-            border-radius: 50%;
-            @include mixins.size(12px);
-            background-color: lightblue;
-            transition: all ease-in 0.2s;
+          h4 {
+            text-transform: capitalize;
+            color: whitesmoke;
+            width: inherit;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
           }
 
-          label {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            color: whitesmoke;
+          span {
+            @include mixins.flex;
+            width: 100%;
+            gap: 10px;
+
+            input[type="radio"]:checked {
+              background-color: #2d3436;
+            }
+            input[type="radio"] {
+              margin-top: 1.5px;
+              border: 2px solid white;
+              box-shadow: 0 0 0 1px #2d3436;
+              appearance: none;
+              border-radius: 50%;
+              @include mixins.size(12px);
+              background-color: lightblue;
+              transition: all ease-in 0.2s;
+            }
+
+            label {
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+              color: whitesmoke;
+            }
           }
         }
       }
@@ -102,7 +112,7 @@
     /*****************List Section******************************/
     .graphboard {
       box-shadow: 0 0 20px #2d3436;
-      @include mixins.size(600px, 360px);
+      @include mixins.size(700px, 400px);
       // @include mixins.size(600px, auto);
       padding: 10px 0px 10px 30px;
       @include mixins.flex(column);
@@ -116,25 +126,22 @@
         @include mixins.flex(column);
         gap: 10px;
         li {
-          width: 5050px;
+          width: 550px;
           color: aliceblue;
           font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         }
       }
-
-     
     }
 
+    // .year{
+    //   margin-top: -500px;
 
-    .year{
-      margin-top: -500px;
+    // }
 
-    }
-
-    .subject{
-      margin-bottom: 100px;
-      margin-top: -500px;
-      margin-left: 535px;
-    }
+    // .subject{
+    //   margin-bottom: 100px;
+    //   margin-top: -500px;
+    //   margin-left: 535px;
+    // }
   }
 }

@@ -23,11 +23,11 @@ const feedYearList = (data, period) => {
 //Display years and registration as per subject filter
 const feedSubjectList = (data, period) => {
   //making heading dynamic
-  mainSubjectContainerHeading.textContent = `Current Subject: ${period}`;
+  // mainSubjectContainerHeading.textContent = `Current Subject: ${period}`;
   // mainHeading.textContent = `Current Subject: ${period}`;
   const list = [...new Array(data.years.length).fill()].map((_, i) => `<li>Period: ${data.years[i]}, NumberOfStudents: ${data.numberOfStudents[i]} </li>`);
   // main.innerHTML = list.join("");
-  mainSubjectContainer.innerHTML = list.join("");
+  // mainSubjectContainer.innerHTML = list.join("");
 };
 
 //display a list of years to use as filter

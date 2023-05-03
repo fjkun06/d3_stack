@@ -37,7 +37,11 @@ main {
   background-size: cover;
   @include mixins.size(min(100vw, 100vw), 100vh);
   @include mixins.grid;
+  overflow-x: hidden;
+
+  @media only screen and (width> 1500px) {
   overflow: hidden;
+  }
 
   /***************************************Abstract Section******************************/
   p {
