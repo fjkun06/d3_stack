@@ -68,6 +68,87 @@ const feedSubjects = (data = []) => {
 /*************************Handling inputs********************* */
 
 const handleInputs = () => {
+  const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
+  const yearh = document.querySelector("#yearh");
+  const inputsSubject = Array.from(document.querySelectorAll(".subjectfilter"));
+  const subjecth = document.querySelector("#subjecth");
+  //handling changes for the years
+  inputsYear.forEach((input, i) => {
+    if (input.checked) {
+      getStructuredData({ period: input.value, type: "year" });
+      yearh.textContent = `Filter by Year:  ${input.value}`;
+      yearh.innerHTML = `Filter by Year: ${input.value}
+      <span id="close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+          <g id="g1" transform="scale(0.75) translate(3,2)">
+            <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+            <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+            <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+            <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+          </g>
+        </svg>
+      </span>`;
+    }
+    input.addEventListener("change", (e) => {
+      //calling function to update data
+      getStructuredData({ period: e.target.value, type: "year" });
+      yearh.textContent = `Filter by Year:  ${e.target.value}`;
+      yearh.innerHTML = `Filter by Year: ${e.target.value}
+      <span id="close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+          <g id="g1" transform="scale(0.75) translate(3,2)">
+            <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+            <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+            <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+            <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+          </g>
+        </svg>
+      </span>`;
+    });
+  });
+
+  //handling changes for the subjects
+  inputsSubject.forEach((input, i) => {
+    if (input.checked) {
+      getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      subjecth.innerHTML = `Filter by Subject:  ${input.value}
+        <span id="closer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+        <g id="g2" transform="scale(0.75) translate(3,2)">
+          <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+          <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+          <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+          <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+        </g>
+      </svg>
+      </span>`;
+    }
+    input.addEventListener("change", (e) => {
+      subjecth.innerHTML = `Filter by Subject:  ${e.target.value}
+        <span id="closer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
+                    <g id="g2" transform="scale(0.75) translate(3,2)">
+                      <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+                      <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                      <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+                      <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+
+                    </g>
+                  </svg>
+      </span>`;
+      //calling function to update data
+      getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      // getStructuredData({ period: e.target.value, type: "subject" });
+    });
+  });
+
   const yearSvg = document.querySelector("#close");
   const subjectSvg = document.querySelector("#closer");
   const g1 = document.querySelector("#g1");
@@ -76,7 +157,6 @@ const handleInputs = () => {
   const g2 = document.querySelector("#g2");
   const cpc1 = document.querySelector("#cpc1");
   const cpc2 = document.querySelector("#cpc2");
-  console.log(subjectSvg, yearSvg);
   // const yearContainer = document.querySelector("#subject");
   /*************************Handling year dropdowns********************* */
   yearSvg.addEventListener("click", (e) => {
@@ -118,7 +198,6 @@ const handleInputs = () => {
     const yearContainer = d3.select("#year");
     const data = Array.from(subjects);
     const dataOff = Array.from(years);
-    console.log(data);
     //displaying or hiding list elements using classes
     data.forEach((el, i) => el.classList.toggle("yeartoggle"));
 
@@ -137,88 +216,6 @@ const handleInputs = () => {
       cpc1.setAttribute("d", "M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z");
       cpc2.setAttribute("d", "M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z");
     }
-  });
-
-  const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
-  const yearh = document.querySelector("#yearh");
-  const inputsSubject = Array.from(document.querySelectorAll(".subjectfilter"));
-  const subjecth = document.querySelector("#subjecth");
-
-  //handling changes for the years
-  inputsYear.forEach((input, i) => {
-    if (input.checked) {
-      getStructuredData({ period: input.value, type: "year" });
-      // yearh.textContent = `Filter by Year:  ${input.value}`;
-      // yearh.innerHTML = `Filter by Year: ${input.value}
-      // <span id="close">
-      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      //     <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-      //     <g id="g1" transform="scale(0.75) translate(3,2)">
-      //       <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-      //       <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-      //       <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-      //       <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-      //     </g>
-      //   </svg>
-      // </span>`;
-    }
-    input.addEventListener("change", (e) => {
-      //calling function to update data
-      getStructuredData({ period: e.target.value, type: "year" });
-      // yearh.textContent = `Filter by Year:  ${e.target.value}`;
-      // yearh.innerHTML = `Filter by Year: ${e.target.value}
-      // <span id="close">
-      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      //     <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-      //     <g id="g1" transform="scale(0.75) translate(3,2)">
-      //       <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-      //       <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-      //       <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-      //       <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-      //     </g>
-      //   </svg>
-      // </span>`;
-    });
-  });
-
-  //handling changes for the subjects
-  inputsSubject.forEach((input, i) => {
-    if (input.checked) {
-      getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
-      //   subjecth.innerHTML = `Filter by Subject:  ${input.value}
-      //   <span id="closer">
-      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      //   <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-      //   <g id="g2" transform="scale(0.75) translate(3,2)">
-      //     <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-      //     <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-      //     <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-      //     <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-      //   </g>
-      // </svg>
-      // </span>`;
-    }
-    input.addEventListener("change", (e) => {
-      //   subjecth.innerHTML = `Filter by Subject:  ${e.target.value}
-      //   <span id="closer">
-      //   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      //               <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-      //               <g id="g2" transform="scale(0.75) translate(3,2)">
-      //                 <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-      //                 <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-      //                 <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-      //                 <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-      //               </g>
-      //             </svg>
-      // </span>`;
-      //calling function to update data
-      getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
-      // getStructuredData({ period: e.target.value, type: "subject" });
-    });
   });
 };
 
