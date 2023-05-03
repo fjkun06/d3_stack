@@ -53,11 +53,11 @@ const feedSubjects = (data = []) => {
     index === 0
       ? `<span class="jahr">
         <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} checked />
-        <label for="choice${index}n">${item.name}</label>
+        <label for="choice${index}n">${item.name}  (${item.abbrev})</label>
         </span>`
       : `<span class="jahr">
         <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} />
-        <label for="choice${index}n">${item.name}</label>
+        <label for="choice${index}n">${item.name}  (${item.abbrev})</label>
         </span>`
   );
 
@@ -75,7 +75,7 @@ const handleInputs = () => {
   //handling changes for the years
   inputsYear.forEach((input, i) => {
     if (input.checked) {
-      getStructuredData({ period: input.value, type: "year" });
+      test(input.value);
       yearh.textContent = `Filter by Year:  ${input.value}`;
       yearh.innerHTML = `Filter by Year: ${input.value}
       <span id="close">
@@ -93,7 +93,8 @@ const handleInputs = () => {
     }
     input.addEventListener("change", (e) => {
       //calling function to update data
-      getStructuredData({ period: e.target.value, type: "year" });
+      test(e.target.value);
+      console.log(e.target.value);
       yearh.textContent = `Filter by Year:  ${e.target.value}`;
       yearh.innerHTML = `Filter by Year: ${e.target.value}
       <span id="close">
@@ -114,7 +115,7 @@ const handleInputs = () => {
   //handling changes for the subjects
   inputsSubject.forEach((input, i) => {
     if (input.checked) {
-      getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      // getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
       subjecth.innerHTML = `Filter by Subject:  ${input.value}
         <span id="closer">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -130,6 +131,8 @@ const handleInputs = () => {
       </span>`;
     }
     input.addEventListener("change", (e) => {
+      test2({id:e.target.nextElementSibling.textContent.slice(0, -3).trim(),type:'subject'});
+
       subjecth.innerHTML = `Filter by Subject:  ${e.target.value}
         <span id="closer">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -144,7 +147,7 @@ const handleInputs = () => {
                   </svg>
       </span>`;
       //calling function to update data
-      getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
+      // getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
       // getStructuredData({ period: e.target.value, type: "subject" });
     });
   });
@@ -219,10 +222,11 @@ const handleInputs = () => {
   });
 };
 
+
 //loading default data
 window.onload = () => {
-  getStructuredData({ period: "2011-12", type: "year" });
+  // getStructuredData({ period: "2011-12", type: "year" });
   setTimeout(() => {
     handleInputs();
-  }, 3000);
+  }, 1000);
 };
