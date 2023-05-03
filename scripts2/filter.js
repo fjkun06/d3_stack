@@ -53,11 +53,11 @@ const feedSubjects = (data = []) => {
     index === 0
       ? `<span class="">
         <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} checked />
-        <label for="choice${index}n">${item.name}</label>
+        <label for="choice${index}n">${item.name} ${item.abbrev}</label>
         </span>`
       : `<span class="">
         <input type="radio" id="choice${index}n" class="subjectfilter" name="subject" value=${item.abbrev} />
-        <label for="choice${index}n">${item.name}</label>
+        <label for="choice${index}n">${item.name} ${item.abbrev}</label>
         </span>`
   );
 
@@ -90,11 +90,13 @@ const handleInputs = () => {
   inputsSubject.forEach((input, i) => {
     if (input.checked) {
       // getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
-      subjecth.textContent = `Filter by Subject:  ${input.nextElementSibling.textContent ?? 'Biology'}`;
+      subjecth.textContent = `Filter by Subject:  ${input.nextElementSibling.textContent.slice(0, -3).trim() ?? 'Biology'}`;
     }
     input.addEventListener("change", (e) => {
       subjecth.textContent = `Filter by Subject:  ${e.target.nextElementSibling.textContent}`;
-      console.log(e.target.nextElementSibling.textContent);
+      // console.log(e.target.nextElementSibling.textContent);
+      // console.log(e.target.nextElementSibling.textContent.slice(0, -3).trim());
+      test2({id:e.target.nextElementSibling.textContent.slice(0, -3).trim(),type:'subject'});
       //calling function to update data
       // getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
       // getStructuredData({ period: e.target.value, type: "subject" });

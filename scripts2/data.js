@@ -52,7 +52,7 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   //displaying year options
   feedSubjects(bigSet2.detailedSubjects);
   init2();
-  test2("2011-12");
+  test2({id:'Biology',type:"subject"});
 });
 
 /*************************Drawing Axes********************* */
@@ -79,11 +79,11 @@ const init2 = () => {
 };
 
 /*************************Drawing Functions********************* */
-const test2 = (year) => {
+const test2 = ({ id, type }) => {
   // const datum = bigSet2.data.filter((el) => el.subject === "Computer Science").sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
-  const datum = bigSet.data.filter((el) => el.subject === "Human Biology").sort((a, b) => d3.ascending(a.year, b.year));
-
-  draw2(datum, year);
+  const datum = bigSet.data.filter((el) => el.subject === id).sort((a, b) => d3.ascending(a.year, b.year));
+console.log(id);
+  draw2(datum, id);
   setTimeout(() => {
     drawTooltips();
   }, 1000);
