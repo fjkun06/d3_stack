@@ -45,16 +45,16 @@ d3.select("g.title2")
   .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
   .attr("fill", "black")
   .attr("x", 120)
-  .attr("y", 10);
+  .attr("y", 25);
 d3.select("g.title2")
   .append("text")
-  .attr("class", "titletext")
+  .attr("class", "titletext2")
   .text(` for Biology between 2011-19`)
   .style("font-weight", "bold")
   .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
   .attr("fill", "black")
-  .attr("x", 280)
-  .attr("y", 25);
+  .attr("x", 240)
+  .attr("y", 45);
 
 /*************************Data Fetching********************* */
 d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
@@ -121,12 +121,16 @@ const test2 = ({ id, type }) => {
   d3.select(".graphboard").select("svg#s1").style("display", "none");
 };
 
-draw2 = (datum,id) => {
+draw2 = (datum, id) => {
   const years = [...datum?.map((x) => x.year)];
   const wye = d3.symbol().type(d3.symbolWye).size(80);
   const dataset = datum.map((x, index) => [index, x.numberOfStudents]);
   const data = [dataset];
-  console.log(dataset, datum);
+  console.log(dataset, id);
+  d3.select("text.titletext2")
+    .text(`for ${id} between 2011-19`)
+    .attr("x", id.length > 10 ? (id.length > 26 ? 160 : 230) : 270);
+
   const scaleXC = d3
     .scaleLinear()
     .domain([0, 8])
@@ -175,7 +179,7 @@ draw2 = (datum,id) => {
     // .attr("d", line)
     .style("stroke", colorScale);
 
-    //intersection markers
+  //intersection markers
   g.selectAll("path.point")
     .data((d) => d[0])
     .join("path")
@@ -198,10 +202,10 @@ draw2 = (datum,id) => {
     .attr("width", 20)
     .attr("height", 20)
     // .attr("d", line)
-    .style("opacity", '0')
+    .style("opacity", "0")
     .style("fill", "red")
     .style("cursor", "pointer")
-    .attr("transform", (k) => `translate(${[scaleXC(k[0])-10, scaleYC(k[1])-10]})`);
+    .attr("transform", (k) => `translate(${[scaleXC(k[0]) - 10, scaleYC(k[1]) - 10]})`);
 
   g.selectAll("text.ttext")
     .data((d) => d[0]) // binds each [x,y] to a <text> element
@@ -209,12 +213,12 @@ draw2 = (datum,id) => {
     .attr("class", "ttext")
     .style("font-weight", "bold")
     .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
-  
+
     // .enter().append("text")
     .text((d) => `(Year:${years[d[0]]},Students: ${d[1]})`)
     .transition()
     .duration(1000)
-    .attr("x", (d,i) => i === 7 || i === 6 ? scaleXC(d[0]) -200 : scaleXC(d[0])) // positions the text near (x,y)
+    .attr("x", (d, i) => (i === 7 || i === 6 ? scaleXC(d[0]) - 200 : scaleXC(d[0]))) // positions the text near (x,y)
     .attr("y", (d) => scaleYC(d[1]))
     .attr("fill", "black")
     .attr("opacity", 0);
