@@ -50,10 +50,10 @@
       @include mixins.flex;
       justify-content: center;
       // border: 1px solid red;
-      @media only screen and (width < 1500px) {
+      @media only screen and (width < 1650px) {
         @include mixins.flex(column);
         // @include mixins.size(inherit, auto);
-        height: auto;
+        // height: auto;
         justify-content: center;
       }
       /*****************Filter Section******************************/
@@ -65,7 +65,7 @@
         width: auto;
         height: auto;
 
-        @media only screen and (width < 480px) {
+        @media only screen and (width < 890px) {
           @include mixins.flex(column);
           align-items: flex-start;
         }
@@ -144,7 +144,7 @@
       @include mixins.flex(column);
       align-items: flex-start;
       gap: 10px;
-      @media only screen and (width < 480px) {
+      @media only screen and (width < 890px) {
         width: 94vw;
       }
 

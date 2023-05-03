@@ -276,12 +276,11 @@ main #body main {
   justify-content: center;
   /*****************Filter Section******************************/
 }
-@media only screen and (width < 1500px) {
+@media only screen and (width < 1650px) {
   main #body main {
     display: flex;
     flex-direction: column;
     place-items: center;
-    height: auto;
     justify-content: center;
   }
 }
@@ -294,7 +293,7 @@ main #body main #filters {
   width: auto;
   height: auto;
 }
-@media only screen and (width < 480px) {
+@media only screen and (width < 890px) {
   main #body main #filters {
     display: flex;
     flex-direction: column;
@@ -378,7 +377,7 @@ main #body .graphboard {
   align-items: flex-start;
   gap: 10px;
 }
-@media only screen and (width < 480px) {
+@media only screen and (width < 890px) {
   main #body .graphboard {
     width: 94vw;
   }
