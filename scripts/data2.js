@@ -55,8 +55,10 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   bigSet.years = [...bigSet.years];
   bigSet.subjects = [...bigSet.subjects];
   bigSet.scores = [...bigSet.scores];
+  bigSet2.detailedSubjects = [...bigSet.subjects].map((subj) => Object.assign({}, { name: subj, abbrev: subj.slice(0, 3).toUpperCase() }));
 
   //displaying year options
+  feedSubjects(bigSet2.detailedSubjects);
   feedYears(bigSet.years);
   init();
   test("2011-12");
@@ -130,6 +132,12 @@ const init = () => {
     })
     .attr("width", "50")
     .attr("height", "50");
+    //adding legend to labels
+    console.log(d3.select('#subject').selectAll('label'));
+    d3.select('#subject').selectAll('label').each(function () {
+      console.log([...d3.select(this)._groups[0]][0]);   
+    })
+
 };
 
 /*************************Drawing Functions********************* */

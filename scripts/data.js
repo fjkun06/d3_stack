@@ -50,7 +50,7 @@ d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
   bigSet2.scores = [...bigSet2.scores];
 
   //displaying year options
-  feedSubjects(bigSet2.detailedSubjects);
+  // feedSubjects(bigSet2.detailedSubjects);
   init2();
   // test2({id:'Biology',type:"subject"});
 });
