@@ -79,6 +79,8 @@
           padding-inline-start: 15px;
           padding-top: 10px;
           gap: 10px;
+          transition: height 0.25s ease-in-out;
+
 
           #yearh {
             text-transform: capitalize;
@@ -97,7 +99,7 @@
               svg {
                 @include mixins.size(inherit);
                 transition: all 0.25s ease-in-out;
-                g path {
+                g path:d{
                   transition: all 0.25s ease-in-out;
                 }
               }

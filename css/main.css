@@ -303,6 +303,7 @@ main #body main #filters aside {
   padding-inline-start: 15px;
   padding-top: 10px;
   gap: 10px;
+  transition: height 0.25s ease-in-out;
 }
 main #body main #filters aside #yearh {
   text-transform: capitalize;
@@ -325,7 +326,7 @@ main #body main #filters aside #yearh span svg {
   height: inherit;
   transition: all 0.25s ease-in-out;
 }
-main #body main #filters aside #yearh span svg g path {
+main #body main #filters aside #yearh span svg g path:d {
   transition: all 0.25s ease-in-out;
 }
 main #body main #filters aside span {
