@@ -307,8 +307,7 @@ main #body main #filters {
   }
 }
 main #body main #filters aside {
-  width: 200px;
-  height: 300px;
+  overflow: hidden;
   width: 400px;
   height: 370px;
   align-self: flex-start;
@@ -324,7 +323,8 @@ main #body main #filters aside {
   gap: 10px;
   transition: height 0.5s ease-in-out;
 }
-main #body main #filters aside #yearh, main #body main #filters aside #subjecth {
+main #body main #filters aside #yearh,
+main #body main #filters aside #subjecth {
   text-transform: capitalize;
   color: whitesmoke;
   width: inherit;
@@ -333,7 +333,10 @@ main #body main #filters aside #yearh, main #body main #filters aside #subjecth 
   flex-direction: row;
   place-items: center;
 }
-main #body main #filters aside #yearh span#close, main #body main #filters aside #yearh #closer, main #body main #filters aside #subjecth span#close, main #body main #filters aside #subjecth #closer {
+main #body main #filters aside #yearh span#close,
+main #body main #filters aside #yearh #closer,
+main #body main #filters aside #subjecth span#close,
+main #body main #filters aside #subjecth #closer {
   width: 20px;
   height: 20px;
   display: flex;
@@ -341,15 +344,22 @@ main #body main #filters aside #yearh span#close, main #body main #filters aside
   place-items: center;
   cursor: pointer;
 }
-main #body main #filters aside #yearh span#close svg, main #body main #filters aside #yearh #closer svg, main #body main #filters aside #subjecth span#close svg, main #body main #filters aside #subjecth #closer svg {
+main #body main #filters aside #yearh span#close svg,
+main #body main #filters aside #yearh #closer svg,
+main #body main #filters aside #subjecth span#close svg,
+main #body main #filters aside #subjecth #closer svg {
   width: inherit;
   height: inherit;
   transition: all 0.25s ease-in-out;
 }
-main #body main #filters aside #yearh span#close svg g path:d, main #body main #filters aside #yearh #closer svg g path:d, main #body main #filters aside #subjecth span#close svg g path:d, main #body main #filters aside #subjecth #closer svg g path:d {
+main #body main #filters aside #yearh span#close svg g path:d,
+main #body main #filters aside #yearh #closer svg g path:d,
+main #body main #filters aside #subjecth span#close svg g path:d,
+main #body main #filters aside #subjecth #closer svg g path:d {
   transition: all 0.25s ease-in-out;
 }
-main #body main #filters aside #yearh span, main #body main #filters aside #subjecth span {
+main #body main #filters aside #yearh span,
+main #body main #filters aside #subjecth span {
   width: auto;
 }
 main #body main #filters aside span {

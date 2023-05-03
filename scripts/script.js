@@ -10,12 +10,12 @@ const cancel = (timestamp) => {
   const elapsed = timestamp - count;
   // console.log(elapsed);
   //do this after 5s
-  if (elapsed > 48) {
-  // if (elapsed > 4800) {
+  // if (elapsed > 48) {
+  if (elapsed > 4800) {
     content.style.display = "grid";
   }
-  if (elapsed > 50) {
-  // if (elapsed > 5000) {
+  // if (elapsed > 50) {
+  if (elapsed > 5000) {
     // document.querySelector("body main").style.overflow = "";
     loader.style.display = "none";
     cancelAnimationFrame(timer);

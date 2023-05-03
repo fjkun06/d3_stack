@@ -27,10 +27,8 @@ const axes = svg.append("g").attr("class", "axes").attr("transform", `translate(
 
 const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 /*************************Adding legends********************* */
-svg.append("g").append("text").text("Number Of Students").attr("fill", "black")
-.style("font-weight", "bold").attr("transform", "translate(10,170) rotate(90)").attr("class", "legend");
-svg.append("g").append("text").text("Subjects").attr("fill", "black")
-.style("font-weight", "bold").attr("transform", "translate(320,493)").attr("class", "legend");
+svg.append("g").append("text").text("Number Of Students").attr("fill", "black").style("font-weight", "bold").attr("transform", "translate(10,170) rotate(90)").attr("class", "legend");
+svg.append("g").append("text").text("Subjects").attr("fill", "black").style("font-weight", "bold").attr("transform", "translate(320,493)").attr("class", "legend");
 svg.append("g").attr("class", "map");
 svg.append("g").attr("class", "title");
 //adding title
@@ -90,7 +88,6 @@ const init = () => {
   const detailedSubjects = [...datum].map((subj) => `${subj} (${subj.slice(0, 3).toUpperCase()})`);
   const fedSubjects = [...datum].map((subj) => Object.assign({}, { name: subj, abbrev: subj.slice(0, 3).toUpperCase() }));
 
-  console.log(detailedSubjects);
   feedSubjects(fedSubjects);
 
   const subjectWithAbbreviation = bigSet.subjects.map((data) => `${data} (${data.slice(0, 3).toUpperCase()})`);
@@ -153,8 +150,8 @@ const test = (year) => {
   const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   draw(datum, year);
   //removing previous svg
-  d3.select('.graphboard').select('svg#s1').style('display', 'block');
-  d3.select('.graphboard').select('svg#s2').style('display', 'none');
+  d3.select(".graphboard").select("svg#s1").style("display", "block");
+  d3.select(".graphboard").select("svg#s2").style("display", "none");
 };
 
 /*************************Drawing Functions********************* */
