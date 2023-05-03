@@ -90,7 +90,7 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             @include mixins.flex;
 
-            span {
+            span#close,#closer {
               @include mixins.size(20px);
               // border: 1px solid lemonchiffon;
               @include mixins.flex(column);
@@ -105,6 +105,9 @@
                   transition: all 0.25s ease-in-out;
                 }
               }
+            }
+            span{
+              width: auto;
             }
           }
 
@@ -144,6 +147,9 @@
       @include mixins.flex(column);
       align-items: flex-start;
       gap: 10px;
+      @media only screen and (width < 1650px) {
+        width: 94vw;
+      }
       @media only screen and (width < 890px) {
         width: 94vw;
       }
@@ -151,6 +157,7 @@ svg{
   @include mixins.size(inherit);
   // fill: white;
   background-color: #fff;
+  border-radius: 5px;
   // @include mixins.size(auto);
 &>*{
   // transform: scale(1.2);

@@ -7,8 +7,8 @@ const bigSet = {
 //function to group data by category
 /*************************Drawing Axes and Configuring Scale********************* */
 
-// const width = 700;
-const width = 1100;
+const width = 700;
+// const width = 1100;
 const height = 400;
 const margin = 50;
 const svg = d3.select("svg#s1")

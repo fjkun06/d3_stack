@@ -50,6 +50,7 @@ main {
   background-size: cover;
   width: 100vw;
   height: 100vh;
+  min-height: 120vh;
   width: 100vw;
   height: auto;
   display: grid;
@@ -331,7 +332,7 @@ main #body main #filters aside #yearh, main #body main #filters aside #subjecth 
   flex-direction: row;
   place-items: center;
 }
-main #body main #filters aside #yearh span, main #body main #filters aside #subjecth span {
+main #body main #filters aside #yearh span#close, main #body main #filters aside #yearh #closer, main #body main #filters aside #subjecth span#close, main #body main #filters aside #subjecth #closer {
   width: 20px;
   height: 20px;
   display: flex;
@@ -339,13 +340,16 @@ main #body main #filters aside #yearh span, main #body main #filters aside #subj
   place-items: center;
   cursor: pointer;
 }
-main #body main #filters aside #yearh span svg, main #body main #filters aside #subjecth span svg {
+main #body main #filters aside #yearh span#close svg, main #body main #filters aside #yearh #closer svg, main #body main #filters aside #subjecth span#close svg, main #body main #filters aside #subjecth #closer svg {
   width: inherit;
   height: inherit;
   transition: all 0.25s ease-in-out;
 }
-main #body main #filters aside #yearh span svg g path:d, main #body main #filters aside #subjecth span svg g path:d {
+main #body main #filters aside #yearh span#close svg g path:d, main #body main #filters aside #yearh #closer svg g path:d, main #body main #filters aside #subjecth span#close svg g path:d, main #body main #filters aside #subjecth #closer svg g path:d {
   transition: all 0.25s ease-in-out;
+}
+main #body main #filters aside #yearh span, main #body main #filters aside #subjecth span {
+  width: auto;
 }
 main #body main #filters aside span {
   width: 100%;
@@ -379,6 +383,11 @@ main #body .graphboard {
   align-items: flex-start;
   gap: 10px;
 }
+@media only screen and (width < 1650px) {
+  main #body .graphboard {
+    width: 94vw;
+  }
+}
 @media only screen and (width < 890px) {
   main #body .graphboard {
     width: 94vw;
@@ -388,4 +397,5 @@ main #body .graphboard svg {
   width: inherit;
   height: inherit;
   background-color: #fff;
+  border-radius: 5px;
 }/*# sourceMappingURL=main.css.map */

@@ -36,6 +36,7 @@ main {
   background-position: center;
   background-size: cover;
   @include mixins.size(min(100vw, 100vw), 100vh);
+  min-height: 120vh;
   @include mixins.size(min(100vw, 100vw), auto);
   @include mixins.grid;
   overflow-x: hidden;

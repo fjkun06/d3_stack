@@ -69,46 +69,22 @@ const feedSubjects = (data = []) => {
 
 const handleInputs = () => {
   const inputsYear = Array.from(document.querySelectorAll(".yearfilter"));
-  const yearh = document.querySelector("#yearh");
+  const yearh = document.querySelector("#yeah");
   const inputsSubject = Array.from(document.querySelectorAll(".subjectfilter"));
-  const subjecth = document.querySelector("#subjecth");
+  const subjecth = document.querySelector("#subj");
   //handling changes for the years
   inputsYear.forEach((input, i) => {
     if (input.checked) {
       test(input.value);
-      yearh.textContent = `Filter by Year:  ${input.value}`;
-      yearh.innerHTML = `Filter by Year: ${input.value}
-      <span id="close">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-          <g id="g1" transform="scale(0.75) translate(3,2)">
-            <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-            <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-            <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-            <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
+      yearh.textContent = `Filter by Year: ${input.value}`;
 
-          </g>
-        </svg>
-      </span>`;
     }
     input.addEventListener("change", (e) => {
       //calling function to update data
       test(e.target.value);
       console.log(e.target.value);
-      yearh.textContent = `Filter by Year:  ${e.target.value}`;
-      yearh.innerHTML = `Filter by Year: ${e.target.value}
-      <span id="close">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <circle id="c1" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-          <g id="g1" transform="scale(0.75) translate(3,2)">
-            <path id="cp1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-            <path id="cp2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-            <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-            <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-          </g>
-        </svg>
-      </span>`;
+      yearh.textContent = `Filter by Year: ${e.target.value}`;
+   
     });
   });
 
@@ -116,36 +92,12 @@ const handleInputs = () => {
   inputsSubject.forEach((input, i) => {
     if (input.checked) {
       // getStructuredData({ period: input.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
-      subjecth.innerHTML = `Filter by Subject:  ${input.value}
-        <span id="closer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-        <g id="g2" transform="scale(0.75) translate(3,2)">
-          <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-          <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-          <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-          <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-        </g>
-      </svg>
-      </span>`;
+      subjecth.innerHTML = `Filter by Subject:  ${input.value}`;
     }
     input.addEventListener("change", (e) => {
       test2({id:e.target.nextElementSibling.textContent.slice(0, -3).trim(),type:'subject'});
 
-      subjecth.innerHTML = `Filter by Subject:  ${e.target.value}
-        <span id="closer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <circle id="c2" r="7.5" cx='8' cy="8" fill="transparent" stroke-width="1" stroke="white" />
-                    <g id="g2" transform="scale(0.75) translate(3,2)">
-                      <path id="cpc1" fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
-                      <path id="cpc2" fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-                      <!-- <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-                      <!-- <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" /> -->
-
-                    </g>
-                  </svg>
-      </span>`;
+      subjecth.innerHTML = `Filter by Subject:  ${e.target.value}`;
       //calling function to update data
       // getStructuredData({ period: e.target.nextElementSibling.textContent.slice(0, -6).trim(), type: "subject" });
       // getStructuredData({ period: e.target.value, type: "subject" });
