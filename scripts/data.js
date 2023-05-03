@@ -89,21 +89,9 @@ console.log(id);
   }, 1000);
 
   //removing previous svg
-  // svg.remove()
-svg.selectAll("g").each(function(){
-  // d3.select(this).remove();
-  // console.log(d3.select(this));
-})
+d3.select('.graphboard').select('svg#s2').style('display', 'block');
+d3.select('.graphboard').select('svg#s1').style('display', 'none');
 
-// svg.select('g.draw').remove()
-
-console.log([...d3.select('body')._groups[0][0].children]);
-[...d3.select('body')._groups[0][0].children].forEach(x =>{
- if( x.id === "s1") x.style.display = 'none';
- if( x.id === "s2") x.style.display = 'block';
-}  )
-// [...d3.select('body')._groups[0][0].children].forEach(x => x.id === "s1" && x.remove() )
-// [...d3.select('body')._groups[0][0].children].forEach(x => console.log(x.id))
 };
 
 draw2 = (datum) => {
@@ -171,6 +159,7 @@ console.log(dataset,datum);
     // .attr("d", line)
     // .style("stroke", 'red')
     .style("fill", "gold")
+    .style("cursor", "pointer")
     .attr("transform", (k) => `translate(${[scaleXC(k[0]), scaleYC(k[1])]})`);
 
   g.selectAll("text.ttext")

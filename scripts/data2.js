@@ -150,10 +150,9 @@ const test = (year) => {
   // const datum = bigSet.data.filter((el) => el.subject === 'Computer Science').sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   draw(datum, year);
-  [...d3.select("body")._groups[0][0].children].forEach((x) => {
-    if (x.id === "s2") x.style.display = "none";
-    if (x.id === "s1") x.style.display = "block";
-  });
+  //removing previous svg
+  d3.select('.graphboard').select('svg#s1').style('display', 'block');
+  d3.select('.graphboard').select('svg#s2').style('display', 'none');
 };
 
 /*************************Drawing Functions********************* */
