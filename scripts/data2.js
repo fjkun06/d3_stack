@@ -27,8 +27,10 @@ const axes = svg.append("g").attr("class", "axes").attr("transform", `translate(
 
 const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 /*************************Adding legends********************* */
-svg.append("g").append("text").text("Number Of Students").attr("fill", "black").style("font-weight", "bold").attr("transform", "translate(10,170) rotate(90)").attr("class", "legend");
-svg.append("g").append("text").text("Subjects").attr("fill", "black").style("font-weight", "bold").attr("transform", "translate(320,493)").attr("class", "legend");
+svg.append("g").append("text").text("Number Of Students").attr("fill", "black")
+.style("font-weight", "bold").attr("transform", "translate(10,170) rotate(90)").attr("class", "legend");
+svg.append("g").append("text").text("Subjects").attr("fill", "black")
+.style("font-weight", "bold").attr("transform", "translate(320,493)").attr("class", "legend");
 svg.append("g").attr("class", "map");
 svg.append("g").attr("class", "title");
 //adding title

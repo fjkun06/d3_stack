@@ -175,6 +175,7 @@ draw2 = (datum,id) => {
     // .attr("d", line)
     .style("stroke", colorScale);
 
+    //intersection markers
   g.selectAll("path.point")
     .data((d) => d[0])
     .join("path")
@@ -188,46 +189,46 @@ draw2 = (datum,id) => {
     .style("fill", "gold")
     .style("cursor", "pointer")
     .attr("transform", (k) => `translate(${[scaleXC(k[0]), scaleYC(k[1])]})`);
-  g.selectAll("path.point")
+  g.selectAll("rect.pointt")
     .data((d) => d[0])
-    .join("path")
+    .join("rect")
     .transition()
     .duration(1000) // same as
-    // .data(data).enter().append("path")
-    .attr("class", "point")
-    .attr("d", wye)
+    .attr("class", "pointt")
+    .attr("width", 20)
+    .attr("height", 20)
     // .attr("d", line)
-    // .style("stroke", 'red')
-    .style("fill", "gold")
+    .style("opacity", '0')
+    .style("fill", "red")
     .style("cursor", "pointer")
-    .attr("transform", (k) => `translate(${[scaleXC(k[0]), scaleYC(k[1])]})`);
+    .attr("transform", (k) => `translate(${[scaleXC(k[0])-10, scaleYC(k[1])-10]})`);
 
   g.selectAll("text.ttext")
     .data((d) => d[0]) // binds each [x,y] to a <text> element
     .join("text") // same as
     .attr("class", "ttext")
-
+    .style("font-weight", "bold")
+    .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
+  
     // .enter().append("text")
     .text((d) => `(Year:${years[d[0]]},Students: ${d[1]})`)
     .transition()
     .duration(1000)
-    .attr("x", (d) => scaleXC(d[0])) // positions the text near (x,y)
+    .attr("x", (d,i) => i === 7 || i === 6 ? scaleXC(d[0]) -200 : scaleXC(d[0])) // positions the text near (x,y)
     .attr("y", (d) => scaleYC(d[1]))
     .attr("fill", "black")
     .attr("opacity", 0);
 
   //adding interactivity
-
-  svg2.selectAll("path.dataset").on("mouseleave", function (_, d) {});
 };
 
 function drawTooltips() {
-  svg2.selectAll("path.point").on("mouseenter", function (_, d, i) {
+  svg2.selectAll("rect.pointt").on("mouseover", function (_, d, i) {
     svg2.selectAll(".ttext").each(function (datu, i) {
       datu === d && d3.select(this).transition().duration(250).attr("opacity", 1);
     });
   });
-  svg2.selectAll("path.point").on("mouseleave", function (_, d, i) {
+  svg2.selectAll("rect.pointt").on("mouseout", function (_, d, i) {
     svg2.selectAll(".ttext").each(function (datum, i) {
       datum === d && d3.select(this).transition().duration(250).attr("opacity", 0);
     });
