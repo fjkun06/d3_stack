@@ -8,9 +8,7 @@ const bigSet2 = {
 const width2 = 800;
 
 /*************************Drawing Axes and Configuring Scale********************* */
-const svg2 = d3.select("svg#s2")
-.style("border", "1px solid red")
-.style("transform", "translate(0px, 40px) scale(1)")
+const svg2 = d3.select("svg#s2").style("border", "1px solid red").style("transform", "translate(0px, 40px) scale(1)");
 // .style("transform", "translate(0px, 40px) scale(0.9)");
 const axes2 = svg2.append("g").attr("class", "axes").attr("transform", `translate(${margin},${margin})`);
 const colorScale2 = d3.scaleOrdinal(d3.schemeDark2);
@@ -22,10 +20,7 @@ let scaleXCurve = d3
 let scaleYCurve = d3.scaleLinear().domain([0, 1]).range([height, margin]).nice();
 // let scaleYCurve = d3.scaleLinear().domain([0, 120]).range([height, margin]).nice();
 /*************************Adding legends********************* */
-svg2.append("g").append("text").text("Number Of Students")
-.attr("fill", "black")
-.attr("transform", "translate(0,170) rotate(90)")
-.attr("class", "legend");
+svg2.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(0,170) rotate(90)").attr("class", "legend");
 svg2.append("g").append("text").text("Years").attr("fill", "black").attr("transform", "translate(320,500)").attr("class", "legend");
 svg2.append("g").attr("class", "map");
 svg2.append("g").attr("class", "title2");
@@ -85,33 +80,27 @@ const init2 = () => {
 
 /*************************Drawing Functions********************* */
 const test2 = (year) => {
-  const datum = bigSet2.data.filter((el) => el.subject === "Computer Science").sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
+  // const datum = bigSet2.data.filter((el) => el.subject === "Computer Science").sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
+  const datum = bigSet.data.filter((el) => el.subject === "Human Biology").sort((a, b) => d3.ascending(a.year, b.year));
+
   draw2(datum, year);
   setTimeout(() => {
     drawTooltips();
   }, 1000);
 };
 
-draw2 = (datum22) => {
-  const years = [...datum22?.map((x) => x.year)];
-  console.log(years, datum22);
+draw2 = (datum) => {
+  const years = [...datum?.map((x) => x.year)];
   const wye = d3.symbol().type(d3.symbolWye).size(80);
-  const datum = [
-    [0, 144],
-    [1, 130],
-    [2, 211],
-    [3, 217],
-    [4, 263],
-    [5, 274],
-    [6, 320],
-    [7, 330],
-  ];
+  const dataset = datum.map((x, index) => [index, x.numberOfStudents]);
+  const data = [dataset];
+console.log(dataset,datum);
   const scaleXC = d3
     .scaleLinear()
     .domain([0, 8])
     // .domain([0, 7])
     .range([margin, width2 - margin]);
-  const [a, b] = d3.extent(datum, (d) => d[1]);
+  const [a, b] = d3.extent(dataset, (d) => d[1]);
   const scaleYC = d3
     .scaleLinear()
     .domain([a, b + 10])
@@ -140,20 +129,8 @@ draw2 = (datum22) => {
     .line()
     .x((d) => scaleXC(d[0]))
     .y((d) => scaleYC(d[1]))
-  .curve(d3.curveNatural);
-  const datum2 = [
-    [0, 130],
-    [1, 144],
-    [2, 211],
-    [3, 217],
-    [4, 263],
-    [5, 274],
-    [6, 320],
-    [7, 330],
-  ];
+    // .curve(d3.curveNatural);
 
-  data = [datum];
-  console.log(data);
   const g = d3.select("g.draw2").datum(data).attr("fill", "none");
   g.selectAll("path.dataset")
     .data((d) => d)
