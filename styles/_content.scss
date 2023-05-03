@@ -5,6 +5,7 @@
     display: none;
     @include mixins.size(inherit);
     @include mixins.size(100vw, auto);
+    align-self: flex-start;
     /***************************************Navbar Section******************************/
     nav {
       align-self: flex-start;

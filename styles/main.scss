@@ -42,6 +42,9 @@ main {
   @media only screen and (width> 1500px) {
     overflow: hidden;
   }
+  @media only screen and (width< 1500px) {
+    overflow-x: hidden;
+  }
 
   /***************************************Abstract Section******************************/
   p {

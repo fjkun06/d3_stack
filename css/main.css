@@ -61,6 +61,11 @@ main {
     overflow: hidden;
   }
 }
+@media only screen and (width < 1500px) {
+  main {
+    overflow-x: hidden;
+  }
+}
 main p {
   color: white;
 }
@@ -209,6 +214,7 @@ main #body {
   height: inherit;
   width: 100vw;
   height: auto;
+  align-self: flex-start;
   /***************************************Navbar Section******************************/
   /***************************************Content Section******************************/
   /*****************List Section******************************/
