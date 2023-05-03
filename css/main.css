@@ -50,8 +50,11 @@ main {
   background-size: cover;
   width: 100vw;
   height: 100vh;
+  width: 100vw;
+  height: auto;
   display: grid;
   place-items: center;
+  overflow-x: hidden;
   /***************************************Abstract Section******************************/
   /***************************************Loader Section******************************/
   /***************************************Content Section******************************/
@@ -370,7 +373,6 @@ main #body .graphboard {
   box-shadow: 0 0 20px #2d3436;
   width: 700px;
   height: 400px;
-  padding: 10px 0px 10px 30px;
   display: flex;
   flex-direction: column;
   place-items: center;
@@ -382,18 +384,8 @@ main #body .graphboard {
     width: 94vw;
   }
 }
-main #body .graphboard h3 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: whitesmoke;
-}
-main #body .graphboard ul {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  gap: 10px;
-}
-main #body .graphboard ul li {
-  width: 550px;
-  color: aliceblue;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+main #body .graphboard svg {
+  width: inherit;
+  height: inherit;
+  background-color: #fff;
 }/*# sourceMappingURL=main.css.map */

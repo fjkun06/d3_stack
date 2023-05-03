@@ -7,10 +7,13 @@ const bigSet = {
 //function to group data by category
 /*************************Drawing Axes and Configuring Scale********************* */
 
-const width = 700;
+// const width = 700;
+const width = 1100;
 const height = 400;
 const margin = 50;
-const svg = d3.select("svg#s1").style("border", "1px solid red").style("transform", "translate(0px, 40px)");
+const svg = d3.select("svg#s1")
+.style("border", "1px solid red")
+// .style("transform", "translate(0px, 40px)");
 const scaleX = d3
   .scaleLinear()
   .domain([0, 10])
