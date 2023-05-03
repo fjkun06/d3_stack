@@ -24,7 +24,7 @@ svg2
   .style("font-weight", "bold")
   .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
   .attr("fill", "black")
-  .attr("transform", "translate(0,170) rotate(90)")
+  .attr("transform", "translate(10,170) rotate(90)")
   .attr("class", "legend");
 svg2
   .append("g")
@@ -33,7 +33,7 @@ svg2
   .attr("fill", "black")
   .style("font-weight", "bold")
   .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
-  .attr("transform", "translate(320,500)")
+  .attr("transform", "translate(320,460)")
   .attr("class", "legend");
 svg2.append("g").attr("class", "map");
 svg2.append("g").attr("class", "title2");
