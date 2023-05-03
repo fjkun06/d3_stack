@@ -153,10 +153,8 @@ const test = (year) => {
 draw = (datum, abbrev) => {
   const scores = datum.map((x) => x.numberOfStudents);
   const subjectAbbreviations = ["", ...datum.map((x) => x.subject).map((data) => `${data.slice(0, 3).toUpperCase()}`)];
-  const subjects = ["", ...datum.map((x) => x.subject)]
   const detailedSubjects = [...datum.map((x) => x.subject)].map((subj) => `${subj} (${subj.slice(0, 3).toUpperCase()})`);
 
-  console.log('sortedsubjects: ',subjects);
   //sorting subjects axis
   const xAxis = d3
     .axisBottom(scaleX)
@@ -190,14 +188,11 @@ draw = (datum, abbrev) => {
   d3.select("text.titletext").text(` for The ${abbrev} Academic Year`);
 
   //updating subjects legend
-  feedSubjects(detailedSubjects);
-
-  // d3.select("#subject").datum(abbrev)
-  // .selectAll("label").data(d=>d)
-  // .each(function (datum, i) {
-  //   d3.select(this).text(d => d)
-  //   d3.select(this).insert("span").attr("class", "legspan").style("background-color", colorScale(i));
-  //   // console.log([...d3.select(this)._groups[0]][0].textContent);
-  //   // console.log(datum);
-  // });
+  d3.select("#subject").datum(detailedSubjects)
+  .selectAll("label").data(d=>d)
+  .each(function (datum, i) {
+    d3.select(this).text(d => d)
+    d3.select(this).insert("span").attr("class", "legspan").style("background-color", colorScale(i));
+  
+  });
 };
