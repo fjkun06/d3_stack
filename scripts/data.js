@@ -8,25 +8,53 @@ const bigSet2 = {
 const width2 = 800;
 
 /*************************Drawing Axes and Configuring Scale********************* */
-const svg2 = d3.select("svg#s2").style("border", "1px solid red").style("transform", "translate(0px, 40px) scale(1)");
-// .style("transform", "translate(0px, 40px) scale(0.9)");
+const svg2 = d3.select("svg#s2");
 const axes2 = svg2.append("g").attr("class", "axes").attr("transform", `translate(${margin},${margin})`);
 const colorScale2 = d3.scaleOrdinal(d3.schemeDark2);
 let scaleXCurve = d3
   .scaleLinear()
   .domain([0, 9])
-  // .domain([0, 7])
   .range([margin, width2 - margin]);
 let scaleYCurve = d3.scaleLinear().domain([0, 1]).range([height, margin]).nice();
-// let scaleYCurve = d3.scaleLinear().domain([0, 120]).range([height, margin]).nice();
 /*************************Adding legends********************* */
-svg2.append("g").append("text").text("Number Of Students").attr("fill", "black").attr("transform", "translate(0,170) rotate(90)").attr("class", "legend");
-svg2.append("g").append("text").text("Years").attr("fill", "black").attr("transform", "translate(320,500)").attr("class", "legend");
+svg2
+  .append("g")
+  .append("text")
+  .text("Number Of Students")
+  .style("font-weight", "bold")
+  .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
+  .attr("fill", "black")
+  .attr("transform", "translate(0,170) rotate(90)")
+  .attr("class", "legend");
+svg2
+  .append("g")
+  .append("text")
+  .text("Years")
+  .attr("fill", "black")
+  .style("font-weight", "bold")
+  .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
+  .attr("transform", "translate(320,500)")
+  .attr("class", "legend");
 svg2.append("g").attr("class", "map");
 svg2.append("g").attr("class", "title2");
 //adding title
-d3.select("g.title2").append("text").text(`The Distribution of Enrollment across The Top 10 Majors at Stanford University`).attr("fill", "black").attr("x", 120).attr("y", 10);
-d3.select("g.title2").append("text").attr("class", "titletext").text(` for The 2011-12 Academic Year`).attr("fill", "black").attr("x", 280).attr("y", 25);
+d3.select("g.title2")
+  .append("text")
+  .text(`Trend in Enrollment across The Top 10 Majors at Stanford University`)
+  .style("font-weight", "bold")
+  .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
+  .attr("fill", "black")
+  .attr("x", 120)
+  .attr("y", 10);
+d3.select("g.title2")
+  .append("text")
+  .attr("class", "titletext")
+  .text(` for Biology between 2011-19`)
+  .style("font-weight", "bold")
+  .style("font-family", "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif")
+  .attr("fill", "black")
+  .attr("x", 280)
+  .attr("y", 25);
 
 /*************************Data Fetching********************* */
 d3.csv("../StanfordTopTenMajors2010s.csv", (bunch) => {
@@ -82,24 +110,23 @@ const init2 = () => {
 const test2 = ({ id, type }) => {
   // const datum = bigSet2.data.filter((el) => el.subject === "Computer Science").sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   const datum = bigSet.data.filter((el) => el.subject === id).sort((a, b) => d3.ascending(a.year, b.year));
-console.log(id);
+  console.log(id);
   draw2(datum, id);
   setTimeout(() => {
     drawTooltips();
   }, 1000);
 
   //removing previous svg
-d3.select('.graphboard').select('svg#s2').style('display', 'block');
-d3.select('.graphboard').select('svg#s1').style('display', 'none');
-
+  d3.select(".graphboard").select("svg#s2").style("display", "block");
+  d3.select(".graphboard").select("svg#s1").style("display", "none");
 };
 
-draw2 = (datum) => {
+draw2 = (datum,id) => {
   const years = [...datum?.map((x) => x.year)];
   const wye = d3.symbol().type(d3.symbolWye).size(80);
   const dataset = datum.map((x, index) => [index, x.numberOfStudents]);
   const data = [dataset];
-console.log(dataset,datum);
+  console.log(dataset, datum);
   const scaleXC = d3
     .scaleLinear()
     .domain([0, 8])
@@ -133,8 +160,8 @@ console.log(dataset,datum);
   const line = d3
     .line()
     .x((d) => scaleXC(d[0]))
-    .y((d) => scaleYC(d[1]))
-    // .curve(d3.curveNatural);
+    .y((d) => scaleYC(d[1]));
+  // .curve(d3.curveNatural);
 
   const g = d3.select("g.draw2").datum(data).attr("fill", "none");
   g.selectAll("path.dataset")
@@ -148,6 +175,19 @@ console.log(dataset,datum);
     // .attr("d", line)
     .style("stroke", colorScale);
 
+  g.selectAll("path.point")
+    .data((d) => d[0])
+    .join("path")
+    .transition()
+    .duration(1000) // same as
+    // .data(data).enter().append("path")
+    .attr("class", "point")
+    .attr("d", wye)
+    // .attr("d", line)
+    // .style("stroke", 'red')
+    .style("fill", "gold")
+    .style("cursor", "pointer")
+    .attr("transform", (k) => `translate(${[scaleXC(k[0]), scaleYC(k[1])]})`);
   g.selectAll("path.point")
     .data((d) => d[0])
     .join("path")
@@ -193,5 +233,3 @@ function drawTooltips() {
     });
   });
 }
-
-
