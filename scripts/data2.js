@@ -11,8 +11,7 @@ const width = 700;
 // const width = 1100;
 const height = 400;
 const margin = 50;
-const svg = d3.select("svg#s1")
-.style("border", "1px solid red")
+const svg = d3.select("svg#s1").style("border", "1px solid red");
 // .style("transform", "translate(0px, 40px)");
 const scaleX = d3
   .scaleLinear()
@@ -132,12 +131,24 @@ const init = () => {
     })
     .attr("width", "50")
     .attr("height", "50");
-    //adding legend to labels
-    console.log(d3.select('#subject').selectAll('label'));
-    d3.select('#subject').selectAll('label').each(function () {
-      console.log([...d3.select(this)._groups[0]][0]);   
-    })
-
+  //adding legend to labels
+  console.log(d3.select("#subject").selectAll("label"));
+  d3.select("#subject")
+    .selectAll("label")
+    .each(function (_,i) {
+      // [...d3.select(this)._groups[0]][0]
+      d3.select(this)
+        .insert("span")
+        .attr("class", 'legspan')
+        // .attr("width", 20)
+        // .attr("height", 10)
+        .style("background-color", colorScale(i))
+        // .attr("y", i * 20)
+        // .attr("transform", " translate(0, -9)")
+        // .attr("x", -30);
+      //  [...d3.select(this)._groups[0]][0].innerHTML
+      console.log([...d3.select(this)._groups[0]][0].innerHTML);
+    });
 };
 
 /*************************Drawing Functions********************* */
@@ -146,10 +157,10 @@ const test = (year) => {
   // const datum = bigSet.data.filter((el) => el.subject === 'Computer Science').sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   const datum = bigSet.data.filter((el) => el.year === year).sort((a, b) => d3.ascending(a.numberOfStudents, b.numberOfStudents));
   draw(datum, year);
-  [...d3.select('body')._groups[0][0].children].forEach(x =>{
-    if( x.id === "s2") x.style.display = 'none';
-    if( x.id === "s1") x.style.display = 'block';
-   }  )
+  [...d3.select("body")._groups[0][0].children].forEach((x) => {
+    if (x.id === "s2") x.style.display = "none";
+    if (x.id === "s1") x.style.display = "block";
+  });
 };
 
 /*************************Drawing Functions********************* */
@@ -189,4 +200,3 @@ draw = (datum, abbrev) => {
   //adding title
   d3.select("text.titletext").text(` for The ${abbrev} Academic Year`);
 };
-

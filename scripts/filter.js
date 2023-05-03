@@ -95,7 +95,7 @@ const handleInputs = () => {
       subjecth.innerHTML = `Filter by Subject:  ${input.value}`;
     }
     input.addEventListener("change", (e) => {
-      test2({id:e.target.nextElementSibling.textContent.slice(0, -3).trim(),type:'subject'});
+      test2({id:e.target.nextElementSibling.textContent.slice(0, -6).trim(),type:'subject'});
 
       subjecth.innerHTML = `Filter by Subject:  ${e.target.value}`;
       //calling function to update data
@@ -136,9 +136,9 @@ const handleInputs = () => {
     }
 
     if (data.every((el) => !el.classList.contains("yeartoggle"))) {
-      dataOff.forEach((el, i) => el.classList.add("yeartoggle"));
+      // dataOff.forEach((el, i) => el.classList.add("yeartoggle"));
       yearContainer.style.height = "400px";
-      subjectContainer.style("height", "50px");
+      // subjectContainer.style("height", "50px");
       g1.setAttribute("transform", "scale(0.75) translate(3,2)");
       cp1.setAttribute("d", "M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z");
       cp2.setAttribute("d", "M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z");
